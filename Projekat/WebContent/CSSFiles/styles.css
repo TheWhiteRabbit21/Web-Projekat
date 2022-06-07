@@ -5,6 +5,10 @@ tr {
 	cursor: pointer;
 }
 
+th {
+	padding: 5px;
+}
+
 #error {
 	color: red;
 }
