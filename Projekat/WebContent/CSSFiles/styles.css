@@ -16,3 +16,8 @@ th {
 #success {
 	color: green;	
 }
+
+input.obaveznoPolje {
+	
+	background-color: lightcoral;
+}
