@@ -13,23 +13,31 @@
 	<form id="registracionaForma">
 	<table>
 	
-		<tr><td>Korisnicko ime:* </td><td><input class="obaveznoPolje" type="text" name="username"></td></tr>
-		<tr><td>Lozinka:* </td><td><input class="obaveznoPolje" type="password" name="password"></td></tr>
-		<tr><td>Ime:* </td><td><input class="obaveznoPolje" type="text" name="ime"></td></tr>
-		<tr><td>Prezime:* </td><td><input class="obaveznoPolje" type="text" name="prezime"></td></tr>
-		<tr><td>Pol: </td><td><input type="radio" name="pol" checked> Musko &nbsp;&nbsp; <input type="radio" name="pol"> Zensko </td></tr>
-		<!-- dodati datum rodjenja -->
+		<tr><td>Korisnicko ime:* </td>
+			<td><input class="obaveznoPolje" type="text" id="username"></td></tr>
+		<tr><td>Lozinka:* </td>
+			<td><input class="obaveznoPolje" type="password" id="password"></td></tr>
+		<tr><td>Ime:* </td>
+			<td><input class="obaveznoPolje" type="text" id="ime"></td></tr>
+		<tr><td>Prezime:* </td>
+			<td><input class="obaveznoPolje" type="text" id="prezime"></td></tr>
+		<tr><td>Datum rodjenja:*</td>
+			<td><input class="obaveznoPolje" type="text" id="datum"></td></tr>
+		<tr><td>Pol: </td>
+			<td><input type="radio" name="pol" checked> Musko &nbsp;&nbsp; 
+				<input type="radio" name="pol"> Zensko </td></tr>
 		
 		<tr><td><input type="submit" value="Registruj se"></td></tr>
 	</table>
 	
 	<p> Polja oznacena sa * se <b><em>moraju</em></b> popuniti. </p>
-	
 	<a href="index.html">Pocetna stranica</a>
 	
 	<!--  <p id="error" hidden="true"></p>
 	<p id="success" hidden="true"></p>-->
 	
+	<p id="error"></p>
+
 	</form>
 	
 </body>
