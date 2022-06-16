@@ -67,7 +67,7 @@ public class KorisnikDAO {
 			
 			for(Korisnik k : car)
 			{
-				korisnici.put(k.getKorisnickoIme(),k);
+				korisnici.put(k.getUsername(),k);
 			}
 			
 			System.out.println(korisnici);

@@ -1,23 +1,36 @@
 $(document).ready(() => {
+	//window.alert("radi java script fajl");
+	
 	$('#registracionaForma').submit((event) => {
+		
+		//window.alert("radi reg forma dugme");
+		
 		event.preventDefault();
 		let username = $('#username').val();
-		let password = $('#password').val();
+		let lozinka = $('#password').val();
 		let ime = $('#ime').val();
 		let prezime = $('#prezime').val();
-		let datum = $('#datum').val();
-        let pol = $('.pol').val();
+        //let pol = $('.pol').val();
+		let datumRodjenja = $('#datum').val();
 
-		console.log('username', username);
-		console.log('password', password);
+		let pol = 1;
+		let uloga = 0;
+		let deleted = false;
+		
+		//console.log('username', username);
+		//console.log('password', password);
+		
+		console.log(JSON.stringify({username, lozinka, ime, prezime, pol, datumRodjenja, uloga, deleted}))
+		
+		
 		$.post({
-				url: 'Projekat/registracija',
-				data: JSON.stringify({username, password, ime, prezime, datum, pol}),
+				url: 'rest/register',
+				data: JSON.stringify({username, lozinka, ime, prezime, pol, datumRodjenja, uloga, deleted}),
 				contentType: 'application/json',
 
 				success: function() {
 					//window.location="./main.html";
-                    window.location="./login.html";
+                    window.location="./index.html";
                 },
 				
 				statusCode: {

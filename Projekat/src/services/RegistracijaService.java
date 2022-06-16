@@ -32,7 +32,7 @@ public class RegistracijaService {
 	}
 
 	@POST
-	@Path("/registracija")
+	@Path("/register")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response register(Korisnik korisnik, @Context HttpServletRequest request){
@@ -40,7 +40,7 @@ public class RegistracijaService {
 		System.out.println(korisnik);
 
 		KorisnikDAO korisnikDAO = (KorisnikDAO) ctx.getAttribute("korisnikDAO");
-		boolean loggedUser = korisnikDAO.find(korisnik.getKorisnickoIme());
+		boolean loggedUser = korisnikDAO.find(korisnik.getUsername());
 		System.out.println(loggedUser+"register klasa");
 
 		/*if (loggedUser == true) {
