@@ -30,7 +30,7 @@ $(document).ready(() => {
 
 				success: function() {
 					//window.location="./main.html";
-                    window.location="./index.html";
+                    window.location="main.html";
                 },
 				
 				statusCode: {

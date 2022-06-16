@@ -108,11 +108,6 @@ public class KorisnikDAO {
 				fileWriter.write(string);*/
 				
 				
-				
-				
-				
-				
-				
 			} catch (IOException e) {
 				e.printStackTrace();
 				
@@ -137,18 +132,6 @@ public class KorisnikDAO {
 				}
 			}
 		}
-    	
-    	
-    	
-    	
-    	
-    	
-    	
-    	
-    	
-    	
-    	
-    	
     	
     	
     	

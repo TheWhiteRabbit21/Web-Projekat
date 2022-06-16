@@ -43,7 +43,7 @@ public class RegistracijaService {
 
 		KorisnikDAO korisnikDao = (KorisnikDAO) ctx.getAttribute("korisnikDAO");
 		boolean loggedUser = korisnikDao.find(korisnik.getUsername());
-		//System.out.println(loggedUser + " /register klasa");
+		System.out.println(loggedUser + " /register klasa, true=postoji vec sa tim imenom korisnik");
 
 		if (loggedUser == true) {
 			//return Response.status(400).entity("Korisnicko ime vec postoji!").build();
@@ -58,11 +58,6 @@ public class RegistracijaService {
 
 		String contextPath = ctx.getRealPath("");
 		korisnikDao.dodaj(korisnik, contextPath);
-		//System.out.println(korisnikDao);
-		
-		
-		
-		//System.out.println("Vraca 200 code, korisnik= " + korisnik + ", korisnikDao= " + korisnikDao);
 		
 		return Response.status(200).build();
 	}
@@ -71,8 +66,6 @@ public class RegistracijaService {
 		String regex = "^[\\p{L} ]*$";
 		return Pattern.matches(regex, word);
 	}
-
-
 
 
 }
