@@ -1,5 +1,7 @@
 package services;
 
+import java.util.regex.Pattern;
+
 import javax.annotation.PostConstruct;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
@@ -37,43 +39,38 @@ public class RegistracijaService {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response register(Korisnik korisnik, @Context HttpServletRequest request){
 
-		System.out.println(korisnik);
+		//System.out.println(korisnik);
 
-		KorisnikDAO korisnikDAO = (KorisnikDAO) ctx.getAttribute("korisnikDAO");
-		boolean loggedUser = korisnikDAO.find(korisnik.getUsername());
-		System.out.println(loggedUser+"register klasa");
+		KorisnikDAO korisnikDao = (KorisnikDAO) ctx.getAttribute("korisnikDAO");
+		boolean loggedUser = korisnikDao.find(korisnik.getUsername());
+		//System.out.println(loggedUser + " /register klasa");
 
-		/*if (loggedUser == true) {
+		if (loggedUser == true) {
 			//return Response.status(400).entity("Korisnicko ime vec postoji!").build();
 			return Response.status(400).build();
 		}
 
-		boolean ime=isValidExpression(user.getIme());
-		boolean prezime=isValidExpression(user.getPrezime());*/
+		boolean ime=isValidExpression(korisnik.getIme());
+		boolean prezime=isValidExpression(korisnik.getPrezime());
 
+		if(!ime) return Response.status(401).build();
+		if(!prezime) return Response.status(402).build();
 
-
-
-
-
-
-
-
-
+		String contextPath = ctx.getRealPath("");
+		korisnikDao.dodaj(korisnik, contextPath);
+		//System.out.println(korisnikDao);
+		
+		
+		
+		//System.out.println("Vraca 200 code, korisnik= " + korisnik + ", korisnikDao= " + korisnikDao);
+		
 		return Response.status(200).build();
-
-
 	}
 
-
-
-
-
-
-
-
-
-
+	private boolean isValidExpression(String word) {
+		String regex = "^[\\p{L} ]*$";
+		return Pattern.matches(regex, word);
+	}
 
 
 
