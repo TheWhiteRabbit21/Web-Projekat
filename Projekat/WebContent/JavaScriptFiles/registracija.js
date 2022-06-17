@@ -7,25 +7,25 @@ $(document).ready(() => {
 		
 		event.preventDefault();
 		let username = $('#username').val();
-		let lozinka = $('#password').val();
+		let password = $('#password').val();
 		let ime = $('#ime').val();
 		let prezime = $('#prezime').val();
         //let pol = $('.pol').val();
 		let datumRodjenja = $('#datum').val();
 
-		let pol = 1;
+		let pol = 0;
 		let uloga = 0;
 		let deleted = false;
 		
 		//console.log('username', username);
 		//console.log('password', password);
 		
-		console.log(JSON.stringify({username, lozinka, ime, prezime, pol, datumRodjenja, uloga, deleted}))
+		console.log(JSON.stringify({username, password, ime, prezime, pol, datumRodjenja, uloga, deleted}))
 		
 		
 		$.post({
 				url: 'rest/register',
-				data: JSON.stringify({username, lozinka, ime, prezime, pol, datumRodjenja, uloga, deleted}),
+				data: JSON.stringify({username, password, ime, prezime, pol, datumRodjenja, uloga, deleted}),
 				contentType: 'application/json',
 
 				success: function() {

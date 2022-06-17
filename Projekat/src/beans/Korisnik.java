@@ -9,7 +9,7 @@ import enums.Uloga;
 public class Korisnik implements Serializable{
 
 	private String username;
-	private String lozinka;
+	private String password;
 	private String ime;
 	private String prezime;
 	private Pol pol;
@@ -21,11 +21,11 @@ public class Korisnik implements Serializable{
 		super();
 	}
 
-	public Korisnik(String username, String lozinka, String ime, String prezime, Pol pol, String datumRodjenja,
+	public Korisnik(String username, String password, String ime, String prezime, Pol pol, String datumRodjenja,
 			Uloga uloga, boolean deleted) {
 		super();
 		this.username = username;
-		this.lozinka = lozinka;
+		this.password = password;
 		this.ime = ime;
 		this.prezime = prezime;
 		this.pol = pol;
@@ -42,12 +42,12 @@ public class Korisnik implements Serializable{
 		this.username = username;
 	}
 
-	public String getLozinka() {
-		return lozinka;
+	public String getPassword() {
+		return password;
 	}
 
-	public void setLozinka(String lozinka) {
-		this.lozinka = lozinka;
+	public void setPassword(String password) {
+		this.password = password;
 	}
 
 	public String getIme() {

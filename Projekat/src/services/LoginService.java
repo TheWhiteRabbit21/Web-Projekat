@@ -12,8 +12,8 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import beans.User;
-import dao.UserDAO;
+import beans.Korisnik;
+import dao.KorisnikDAO;
 
 @Path("")
 public class LoginService {
@@ -30,9 +30,9 @@ public class LoginService {
 	public void init() {
 		// Ovaj objekat se instancira vi�e puta u toku rada aplikacije
 		// Inicijalizacija treba da se obavi samo jednom
-		if (ctx.getAttribute("userDAO") == null) {
+		if (ctx.getAttribute("korisnikDAO") == null) {
 	    	String contextPath = ctx.getRealPath("");
-			ctx.setAttribute("userDAO", new UserDAO(contextPath));
+			ctx.setAttribute("korisnikDAO", new KorisnikDAO(contextPath));
 		}
 	}
 	
@@ -40,13 +40,18 @@ public class LoginService {
 	@Path("/login")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response login(User user, @Context HttpServletRequest request) {
-		UserDAO userDao = (UserDAO) ctx.getAttribute("userDAO");
-		User loggedUser = userDao.find(user.getUsername(), user.getPassword());
-		if (loggedUser != null) {
+	public Response login(Korisnik korisnik, @Context HttpServletRequest request) {
+		
+		KorisnikDAO korisnikDao = (KorisnikDAO) ctx.getAttribute("korisnikDAO");
+
+		Korisnik loggedUser = korisnikDao.find(korisnik.getUsername(), korisnik.getPassword());
+		System.out.println("loggedUser= " + loggedUser);
+		//System.out.println("korisnik= " + korisnik);
+		if (loggedUser == null) {
 			return Response.status(400).entity("Invalid username and/or password").build();
 		}
-		request.getSession().setAttribute("user", loggedUser);
+		//request.getSession().setAttribute("korisnik", loggedUser);
+		request.getSession().setAttribute("korisnik", loggedUser);
 		return Response.status(200).build();
 	}
 	
@@ -63,7 +68,7 @@ public class LoginService {
 	@Path("/currentUser")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public User login(@Context HttpServletRequest request) {
-		return (User) request.getSession().getAttribute("user");
+	public Korisnik login(@Context HttpServletRequest request) {
+		return (Korisnik) request.getSession().getAttribute("korisnik");
 	}
 }

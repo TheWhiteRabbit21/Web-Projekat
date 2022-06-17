@@ -46,7 +46,7 @@ public class KorisnikDAO {
 			return null;
 		}
 		Korisnik korisnik = korisnici.get(username);
-		if (!korisnik.getLozinka().equals(password)) {
+		if (!korisnik.getPassword().equals(password)) {
 			return null;
 		}
 		return korisnik;
@@ -87,10 +87,6 @@ public class KorisnikDAO {
     		
 		} catch (FileNotFoundException fnfe) {
 			try {
-				
-				
-				
-				
 				if(file.createNewFile()) {
 					System.out.println("File created: " + file.getName());
 				}
@@ -133,9 +129,6 @@ public class KorisnikDAO {
 				}
 			}
 		}
-    	
-    	
-    	
     	
     	
 		/*try
@@ -214,7 +207,7 @@ public class KorisnikDAO {
 			//ex.printStackTrace();
 			
 			}catch (IOException e) {
-				// TODO: handle exception
+				
 			} finally {
 				
 			}
