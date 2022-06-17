@@ -6,6 +6,7 @@ import javax.annotation.PostConstruct;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
@@ -16,7 +17,7 @@ import javax.ws.rs.core.Response;
 import beans.Korisnik;
 import dao.KorisnikDAO;
 
-@Path("")
+@Path("/register")
 public class RegistracijaService {
 
     @Context
@@ -34,7 +35,7 @@ public class RegistracijaService {
 	}
 
 	@POST
-	@Path("/register")
+	@Path("/")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response register(Korisnik korisnik, @Context HttpServletRequest request){
@@ -67,5 +68,14 @@ public class RegistracijaService {
 		return Pattern.matches(regex, word);
 	}
 
+	@GET
+	@Path("/uspesnaRegistracija")
+	@Produces(MediaType.APPLICATION_JSON)
+	public String getKorisnik() {
+		KorisnikDAO dao = (KorisnikDAO) ctx.getAttribute("korisnikDAO");
+		return dao.getTrenutniKorisnikUsername();
+	}
+	
+	
 
 }

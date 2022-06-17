@@ -29,8 +29,9 @@ $(document).ready(() => {
 				contentType: 'application/json',
 
 				success: function() {
+					//alert("usao je u success");
 					//window.location="./main.html";
-                    window.location="main.html";
+                    window.location="mainPage.html";
                 },
 				
 				statusCode: {

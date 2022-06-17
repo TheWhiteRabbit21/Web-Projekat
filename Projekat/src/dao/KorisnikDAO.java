@@ -19,7 +19,8 @@ import beans.Korisnik;
 public class KorisnikDAO {
 
     private HashMap<String, Korisnik> korisnici = new HashMap<>();
-
+    private Korisnik trenutniKorisnik = new Korisnik();
+    
 	public KorisnikDAO() {
 		
 	}
@@ -177,6 +178,7 @@ public class KorisnikDAO {
 			objectMapper.configure(DeserializationFeature.ACCEPT_SINGLE_VALUE_AS_ARRAY, true);
 			objectMapper.configure(DeserializationFeature.ACCEPT_EMPTY_STRING_AS_NULL_OBJECT, true);
 			ArrayList<Korisnik> temp = new ArrayList<>();
+			trenutniKorisnik = k;
 
 			Korisnik[] car = objectMapper.readValue(file, Korisnik[].class);
 			//System.out.println("register User: "+ car);
@@ -192,7 +194,6 @@ public class KorisnikDAO {
 			
 			//System.out.println(korisnici);
 
-
 		}
 		catch (Exception ex) {
 			
@@ -206,10 +207,8 @@ public class KorisnikDAO {
 			ArrayList<Korisnik> temp = new ArrayList<>();
 			
 			temp.add(k);
+			trenutniKorisnik = k;
 			objectMapper.writeValue(new File(contextPath + "/users.json"), temp);
-			
-			
-			
 			
 			//System.out.println(ex);
 			//ex.printStackTrace();
@@ -219,16 +218,14 @@ public class KorisnikDAO {
 			} finally {
 				
 			}
-			
-			
-			
-			
 		} finally {
 			
 		}
+	}
 
-
-
+	public String getTrenutniKorisnikUsername() {
+		System.out.println("Trenutni korisnik je: " + trenutniKorisnik.getUsername());
+		return trenutniKorisnik.getUsername();
 	}
 
 
