@@ -1,22 +1,32 @@
 <!DOCTYPE html>
 <html>
 <head>
-
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
 <link rel="stylesheet" type="text/css" href="CSSFiles/styles.css">
 <script type="text/javascript" src="JavaScriptFiles/jquery-3.3.1.min.js"></script>
-<script type="text/javascript" src="JavaScriptFiles/index.js"></script>
-<title>Pocetna stranica</title>
-
+<script type="text/javascript" src="JavaScriptFiles/pretraga.js"></script>
+<title>Pretraga sportskih objekata</title>
 </head>
 <body>
-	<h1> Dobrodosli na sajt!</h1>
-	<div>
-	<a href="registracija.html"> Registracija </a> <br />
-	<a href="login.html"> Login </a> <br />
-	<a href="pretraga.html"> Pretrazi Sportske objekte</a>
-	</div>
-	<div style="margin-top:30px">
+
+
+<h1>Pretraga sportskih objekata: </h1>
+
+<div>
+
+	<form id="sportskiObjektiform">
+      <label>Naziv</label>
+      <input type="text" id="naziv" placeholder="Naziv" />
+      <label>Tip Objekta</label>
+      <input type="text" id="tipObjekta" placeholder="Tip Objekta" />
+            
+      <button type="submit">Pretrazi</button>
+       
+    </form>
+
+</div>
+
+<div style="margin-top:30px">
 	
 		<table border="1" id="tabelaSportskihObjekata">
 		<caption> Raspolozivi sportski objekti: </caption>
@@ -38,9 +48,17 @@
 			
 		</table>
 	</div>
-	
-	
-	
-	
+
+
+
+
+
+
+
+
+
+
+
+
 </body>
 </html>

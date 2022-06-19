@@ -18,7 +18,7 @@ public class SportskiObjekatDAO {
 	}
 	
 	/***
-	 * @param contextPath Putanja do aplikacije u Tomcatu. Može se pristupiti samo iz servleta.
+	 * @param contextPath Putanja do aplikacije u Tomcatu. Moï¿½e se pristupiti samo iz servleta.
 	 */
 	public SportskiObjekatDAO(String contextPath) {
 		loadSportskiObjekti(contextPath);
@@ -71,6 +71,35 @@ public class SportskiObjekatDAO {
 		
 	}
 	
-	
+	public Collection<SportskiObjekat> pretraziSportskeObjekte(SportskiObjekat sportskiObjekat, String contextPath){
+
+		HashMap<String, SportskiObjekat> vrati = new HashMap<String, SportskiObjekat>();
+		HashMap<String, SportskiObjekat> brisi = new HashMap<String, SportskiObjekat>();
+
+		for(SportskiObjekat so: sportskiObjekti.values()) {
+			vrati.put(so.getNaziv(), so);
+		}
+
+		for(SportskiObjekat so : vrati.values())
+		{
+			if (!(so.getNaziv().contains(sportskiObjekat.getNaziv())) && (!brisi.containsKey(so.getNaziv())))
+	         {
+	             brisi.put(so.getNaziv(),so);
+	         }
+
+			if (!(so.getTipObjekta().contains(sportskiObjekat.getTipObjekta())) && (!brisi.containsKey(so.getNaziv())))
+	         {
+	             brisi.put(so.getNaziv(),so);
+	         }
+
+		}
+
+		for(SportskiObjekat so: brisi.values()) {
+			vrati.remove(so.getNaziv());
+		}
+
+		return vrati.values();
+
+	}
 	
 }

@@ -6,6 +6,7 @@ import javax.annotation.PostConstruct;
 import javax.servlet.ServletContext;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
@@ -38,10 +39,34 @@ public class SportskiObjektiService {
 		return dao.findAll();
 	}
 
+	@GET
+	@Path("/pretraga/{pretragaString}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Collection<SportskiObjekat> pretragaSportskihObjekata(@PathParam("pretragaString") String pretragaString){
 
+		SportskiObjekatDAO dao = (SportskiObjekatDAO) ctx.getAttribute("sportskiObjekatDAO");
 
+		if(pretragaString.contains("%20")){
+			pretragaString.replace("%20", " ");
+		}
+		
+		String [] parts = pretragaString.split(",");
+		SportskiObjekat sportskiObjekat = null;
+		//System.out.println(parts);
+		try{
+			sportskiObjekat = new SportskiObjekat(parts[0], parts[1]);
+		}
+		catch(Exception e){
+			System.out.println(e);
+		}
 
+		System.out.println(sportskiObjekat);
+		String contextPath = ctx.getRealPath("");
+		Collection<SportskiObjekat> so = dao.pretraziSportskeObjekte(sportskiObjekat, contextPath);
 
+		return so;
+
+	}
 
 
 }

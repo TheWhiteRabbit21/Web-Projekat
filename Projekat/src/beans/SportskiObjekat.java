@@ -23,7 +23,14 @@ public class SportskiObjekat {
 		this.radnoVreme = radnoVreme;
 	}
 	
-	
+	public SportskiObjekat(String naziv, String tipObjekta) {
+		super();
+		this.naziv = naziv;
+		this.tipObjekta = tipObjekta;
+	}
+
+
+
 	public String getNaziv() {
 		return naziv;
 	}

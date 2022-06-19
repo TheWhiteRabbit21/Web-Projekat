@@ -55,7 +55,6 @@ public class LoginService {
 		return Response.status(200).build();
 	}
 	
-	
 	@POST
 	@Path("/logout")
 	@Consumes(MediaType.APPLICATION_JSON)

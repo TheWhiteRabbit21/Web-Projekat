@@ -1,5 +1,6 @@
 package beans;
 
+@SuppressWarnings("serial")
 public class Kupac extends Korisnik {
 
 	
