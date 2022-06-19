@@ -23,6 +23,11 @@ public class SportskiObjekat {
 		this.radnoVreme = radnoVreme;
 	}
 	
+	public SportskiObjekat(String naziv) {
+		super();
+		this.naziv = naziv;
+	}
+
 	public SportskiObjekat(String naziv, String tipObjekta) {
 		super();
 		this.naziv = naziv;
@@ -30,6 +35,10 @@ public class SportskiObjekat {
 	}
 
 
+	public SportskiObjekat(String tipObjekta, int i, int j) {
+		super();
+		this.tipObjekta = tipObjekta;
+	}
 
 	public String getNaziv() {
 		return naziv;

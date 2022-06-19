@@ -13,8 +13,8 @@ function addSportskiObjekatTr(sportskiObjekat) {
 	$('#tabelaSportskihObjekata tbody').append(tr);
 }
 
-/*$(document).ready(function() {
-	$.get({
+$(document).ready(function() {
+	/*$.get({
 		//url: 'rest/products',
 		url: 'rest/sportskiObjekti',
         success: function(sportskiObjekti) {
@@ -22,30 +22,88 @@ function addSportskiObjekatTr(sportskiObjekat) {
 				addSportskiObjekatTr(sportskiObjekat);
 			}
 		}
-	});
-});*/
+	});*/
+
 
 $('#sportskiObjektiform').submit((event) => {
 
+	//window.alert("usao u submit");
+	
     event.preventDefault();
 
     let naziv = $('#naziv').val();
     let tipObjekta = $('#tipObjekta').val();
 
-    let url = 'rest/sportskiObjekti/pretraga/';
-    url += naziv + "," + tipObjekta;
+    let url = 'rest/pretraga/';
     
-    $.get({
+    
+    if(naziv === "" && tipObjekta === ""){
+		url = 'rest/sportskiObjekti';
+		$.get({
         url: url,
         contentType: 'application/json',
         success: function(sportskiObjekti) {
             $("#tabelaSportskihObjekata tbody").html("");
+            console.log(sportskiObjekti);
             for (let sportskiObjekat of sportskiObjekti) {
                 addSportskiObjekatTr(sportskiObjekat);
             }
             $('#naziv').val('');
             $('#tipObjekta').val('');
-        },
-    })
+        	},
+    	})
+	}
+    else if(naziv === ""){
+    	url += "findTipObjekta/" + tipObjekta;
+    	$.get({
+        url: url,
+        contentType: 'application/json',
+        success: function(sportskiObjekti) {
+            $("#tabelaSportskihObjekata tbody").html("");
+            console.log(sportskiObjekti);
+            for (let sportskiObjekat of sportskiObjekti) {
+                addSportskiObjekatTr(sportskiObjekat);
+            }
+            $('#naziv').val('');
+            $('#tipObjekta').val('');
+        	},
+    	})
+	}
+	else if(tipObjekta === ""){
+		url += "findNaziv/" + naziv;
+		$.get({
+        url: url,
+        contentType: 'application/json',
+        success: function(sportskiObjekti) {
+            $("#tabelaSportskihObjekata tbody").html("");
+            console.log(sportskiObjekti);
+            for (let sportskiObjekat of sportskiObjekti) {
+                addSportskiObjekatTr(sportskiObjekat);
+            }
+            $('#naziv').val('');
+            $('#tipObjekta').val('');
+        	},
+    	})
+	}
+	else{
+		url += naziv + "," + tipObjekta;
+		$.get({
+        url: url,
+        contentType: 'application/json',
+        success: function(sportskiObjekti) {
+            $("#tabelaSportskihObjekata tbody").html("");
+            console.log(sportskiObjekti);
+            for (let sportskiObjekat of sportskiObjekti) {
+                addSportskiObjekatTr(sportskiObjekat);
+            }
+            $('#naziv').val('');
+            $('#tipObjekta').val('');
+        	},
+    	})
+	}
+    
+    
+
+	});
 
 });

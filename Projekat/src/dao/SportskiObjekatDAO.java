@@ -84,6 +84,7 @@ public class SportskiObjekatDAO {
 		{
 			if (!(so.getNaziv().contains(sportskiObjekat.getNaziv())) && (!brisi.containsKey(so.getNaziv())))
 	         {
+				System.out.print("izbrisao je jedan!");
 	             brisi.put(so.getNaziv(),so);
 	         }
 
@@ -98,8 +99,73 @@ public class SportskiObjekatDAO {
 			vrati.remove(so.getNaziv());
 		}
 
+		System.out.println(vrati.values());
+		
 		return vrati.values();
 
 	}
+	
+	public Collection<SportskiObjekat> pretraziSportskeObjektePoTipuObjekta(SportskiObjekat sportskiObjekat, String contextPath){
+
+		HashMap<String, SportskiObjekat> vrati = new HashMap<String, SportskiObjekat>();
+		HashMap<String, SportskiObjekat> brisi = new HashMap<String, SportskiObjekat>();
+
+		for(SportskiObjekat so: sportskiObjekti.values()) {
+			vrati.put(so.getNaziv(), so);
+		}
+
+		for(SportskiObjekat so : vrati.values())
+		{
+			if (!(so.getTipObjekta().contains(sportskiObjekat.getTipObjekta())) && (!brisi.containsKey(so.getNaziv())))
+	         {
+	             brisi.put(so.getNaziv(),so);
+	         }
+		}
+
+		for(SportskiObjekat so: brisi.values()) {
+			vrati.remove(so.getNaziv());
+		}
+
+		System.out.println(vrati.values());
+		
+		return vrati.values();
+
+	}
+	
+	
+	
+	public Collection<SportskiObjekat> pretraziSportskeObjektePoNazivu(SportskiObjekat sportskiObjekat, String contextPath){
+
+		HashMap<String, SportskiObjekat> vrati = new HashMap<String, SportskiObjekat>();
+		HashMap<String, SportskiObjekat> brisi = new HashMap<String, SportskiObjekat>();
+
+		for(SportskiObjekat so: sportskiObjekti.values()) {
+			vrati.put(so.getNaziv(), so);
+		}
+
+		for(SportskiObjekat so : vrati.values())
+		{
+			if (!(so.getNaziv().contains(sportskiObjekat.getNaziv())) && (!brisi.containsKey(so.getNaziv())))
+	         {
+				//System.out.print("izbrisao je jedan!");
+	             brisi.put(so.getNaziv(),so);
+	         }
+
+		}
+
+		for(SportskiObjekat so: brisi.values()) {
+			vrati.remove(so.getNaziv());
+		}
+
+		System.out.println(vrati.values());
+		
+		return vrati.values();
+
+	}
+	
+	
+	
+	
+	
 	
 }

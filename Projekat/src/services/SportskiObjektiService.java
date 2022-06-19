@@ -14,7 +14,7 @@ import javax.ws.rs.core.MediaType;
 import beans.SportskiObjekat;
 import dao.SportskiObjekatDAO;
 
-@Path("/sportskiObjekti")
+@Path("/")
 public class SportskiObjektiService {
 
     @Context
@@ -32,7 +32,7 @@ public class SportskiObjektiService {
 	}
 
 	@GET
-	@Path("/")
+	@Path("/sportskiObjekti")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Collection<SportskiObjekat> getSportskeObjekte() {
 		SportskiObjekatDAO dao = (SportskiObjekatDAO) ctx.getAttribute("sportskiObjekatDAO");
@@ -52,7 +52,7 @@ public class SportskiObjektiService {
 		
 		String [] parts = pretragaString.split(",");
 		SportskiObjekat sportskiObjekat = null;
-		//System.out.println(parts);
+		
 		try{
 			sportskiObjekat = new SportskiObjekat(parts[0], parts[1]);
 		}
@@ -68,5 +68,62 @@ public class SportskiObjektiService {
 
 	}
 
+	@GET
+	@Path("/pretraga/findTipObjekta/{pretragaString}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Collection<SportskiObjekat> pretragaSportskihObjekataPoTipu(@PathParam("pretragaString") String pretragaString){
+
+		SportskiObjekatDAO dao = (SportskiObjekatDAO) ctx.getAttribute("sportskiObjekatDAO");
+
+		if(pretragaString.contains("%20")){
+			pretragaString.replace("%20", " ");
+		}
+		
+		//String [] parts = pretragaString.split(",");
+		SportskiObjekat sportskiObjekat = null;
+		//System.out.println(parts);
+		try{
+			sportskiObjekat = new SportskiObjekat(pretragaString, -1, -1);
+		}
+		catch(Exception e){
+			System.out.println(e);
+		}
+
+		//System.out.println(sportskiObjekat);
+		String contextPath = ctx.getRealPath("");
+		Collection<SportskiObjekat> so = dao.pretraziSportskeObjektePoTipuObjekta(sportskiObjekat, contextPath);
+
+		return so;
+
+	}
+	
+	@GET
+	@Path("/pretraga/findNaziv/{pretragaString}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Collection<SportskiObjekat> pretragaSportskihObjekataPoNazivu(@PathParam("pretragaString") String pretragaString){
+
+		SportskiObjekatDAO dao = (SportskiObjekatDAO) ctx.getAttribute("sportskiObjekatDAO");
+
+		if(pretragaString.contains("%20")){
+			pretragaString.replace("%20", " ");
+		}
+		
+		SportskiObjekat sportskiObjekat = null;
+		
+		try{
+			sportskiObjekat = new SportskiObjekat(pretragaString);
+		}
+		catch(Exception e){
+			System.out.println(e);
+		}
+
+		//System.out.println(sportskiObjekat);
+		String contextPath = ctx.getRealPath("");
+		Collection<SportskiObjekat> so = dao.pretraziSportskeObjektePoNazivu(sportskiObjekat, contextPath);
+
+		return so;
+
+	}
+	
 
 }
