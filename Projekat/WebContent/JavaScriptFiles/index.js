@@ -9,8 +9,6 @@ function addSportskiObjekatTr(sportskiObjekat) {
 	let tdProsecnaOcena = $('<td>' + sportskiObjekat.prosecnaOcena + '</td>');
 	let tdRadnoVreme = $('<td>' + sportskiObjekat.radnoVreme + '</td>');
 	
-	
-	
 	tr.append(tdNaziv).append(tdTipObjekta).append(tdSadrzaj).append(tdStatus).append(tdMapa).append(tdLogo).append(tdProsecnaOcena).append(tdRadnoVreme);
 	//tr.click(clickClosure(sportskiObjekat));
 	$('#tabelaSportskihObjekata tbody').append(tr);
@@ -18,7 +16,6 @@ function addSportskiObjekatTr(sportskiObjekat) {
 
 $(document).ready(function() {
 	$.get({
-		//url: 'rest/products',
 		url: 'rest/sportskiObjekti',
         success: function(sportskiObjekti) {
 			for (let sportskiObjekat of sportskiObjekti) {

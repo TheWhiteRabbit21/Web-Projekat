@@ -35,7 +35,10 @@ public class SportskiObjekatDAO {
 		BufferedReader in = null;
 		try {
 			File file = new File(contextPath + "/sportskiObjekti.txt");
+			
+			//Ovo ispisuje putanju u konzolu
 			System.out.println(file.getCanonicalPath());
+			
 			in = new BufferedReader(new FileReader(file));
 			String line, naziv = "", tipObjekta = "", sadrzaj = "", status = "", mapa = "";
 			String logo = "", prosecnaOcena = "", radnoVreme = "";
