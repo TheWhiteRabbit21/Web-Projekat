@@ -17,7 +17,7 @@ import javax.ws.rs.core.Response;
 import beans.Korisnik;
 import dao.KorisnikDAO;
 
-@Path("")
+@Path("/register")
 public class RegistracijaService {
 
     @Context
@@ -35,15 +35,16 @@ public class RegistracijaService {
 	}
 
 	@POST
-	@Path("/register")
+	@Path("")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response register(Korisnik korisnik, @Context HttpServletRequest request){
 
-		System.out.println(korisnik);
+		//System.out.println(korisnik);
 
 		KorisnikDAO korisnikDao = (KorisnikDAO) ctx.getAttribute("korisnikDAO");
 		boolean loggedUser = korisnikDao.find(korisnik.getUsername());
+		
 		System.out.println(loggedUser + " //register klasa, ako true -> postoji vec sa tim imenom korisnik");
 
 		if (loggedUser == true) {

@@ -15,7 +15,7 @@ import javax.ws.rs.core.Response;
 import beans.Korisnik;
 import dao.KorisnikDAO;
 
-@Path("")
+@Path("/login")
 public class LoginService {
 	
 	@Context
@@ -37,7 +37,7 @@ public class LoginService {
 	}
 	
 	@POST
-	@Path("/login")
+	@Path("")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response login(Korisnik korisnik, @Context HttpServletRequest request) {

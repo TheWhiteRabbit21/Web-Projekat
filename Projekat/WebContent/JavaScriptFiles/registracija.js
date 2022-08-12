@@ -10,16 +10,11 @@ $(document).ready(() => {
 		let passwordVal = $('#password').val();
 		let imeVal = $('#ime').val();
 		let prezimeVal = $('#prezime').val();
-        //let polVal = $('#pol').val();
 		let datumRodjenjaVal = $('#datum').val();
 
 		let username = document.getElementById("username")
-		//let password = document.getElementById("password")
 		let ime = document.getElementById("ime")
 		let prezime = document.getElementById("prezime")
-		//let pol = document.getElementsByName("pol")[0]
-		//let datumRodjenja = document.getElementById("datumRodjenja")
-		//let pol = $('#pol').val();
 		let pol = "";
 		let datumRodjenja = $('#datum').val();
 		let uloga = 0;
@@ -28,9 +23,6 @@ $(document).ready(() => {
 		let validationFlag = true;
 
 		pol = proveriPol();
-
-		//console.log('username', username);
-		//console.log('password', password);
 		
 		//console.log(JSON.stringify({username, password, ime, prezime, pol, datumRodjenja, uloga, deleted}))
 		
@@ -46,14 +38,6 @@ $(document).ready(() => {
 		}
 		
 		//window.alert(username);
-		//window.alert(username.value);
-		
-		//let usernameValue = username.value;
-		//let passwordValue = password.value;
-		//let imeValue = ime.value;
-		//let prezimeValue = prezime.value;
-		
-		
 		
 		if(validationFlag)
 		{

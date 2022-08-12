@@ -6,15 +6,15 @@ $(document).ready(function() {
 	
 	
 	
-	$.get({
+	/*$.get({
 		url: 'rest/register/uspesnaRegistracija',
         success: function(korisnik) {
 			alert("Usao je u javaScript od uspesneRegistracije");
-			/*let pkorisnik = korisnik;
+			let pkorisnik = korisnik;
 			let p = $('Korisnik ' + pkorisnik + ' je uspesno registrovan!');
 			$('#potvrdaRegistracije').append(p);
-			*/
+			
 			
 		}
-	});
+	});*/
 });

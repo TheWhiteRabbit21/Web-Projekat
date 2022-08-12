@@ -42,6 +42,7 @@ public class KorisnikDAO {
 	
 	
 	public Korisnik find(String username, String password) {
+		
 		if (!korisnici.containsKey(username)) {
 			return null;
 		}
@@ -53,6 +54,19 @@ public class KorisnikDAO {
 	}
 
     public boolean find(String username) {
+    	
+    	
+//    	for(Map.Entry<String, Korisnik> entry : korisnici.entrySet())
+//			System.out.println("Key = " + entry.getKey() +
+//					", Username = " + entry.getValue().getUsername());
+//		
+//		System.out.println("--------------------------------");
+//
+//		System.out.println("prosledjen username find funkciji: " + username);
+		
+		
+		
+		
 		if (!korisnici.containsKey(username)) {
 			return false;
 		}
