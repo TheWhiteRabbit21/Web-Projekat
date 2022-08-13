@@ -53,8 +53,6 @@ public class LoginService {
 		}
 		request.getSession().setAttribute("korisnik", loggedUser);
 		return loggedUser;
-		
-		
 		//return Response.status(200).build();
 	}
 	

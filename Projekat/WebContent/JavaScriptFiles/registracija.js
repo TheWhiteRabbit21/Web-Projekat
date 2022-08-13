@@ -45,10 +45,6 @@ $(document).ready(() => {
 			console.log(JSON.stringify({usernameVal, passwordVal, imeVal, prezimeVal, pol, datumRodjenjaVal, uloga, deleted}))
 			
 			
-			
-			
-			
-			
 			$.post({
 					url: 'rest/register',
 					data: JSON.stringify({"username" : usernameVal, "password" : passwordVal, "ime" : imeVal, "prezime" : prezimeVal, pol, "datumRodjenja" : datumRodjenjaVal, uloga, deleted}),
@@ -57,7 +53,7 @@ $(document).ready(() => {
 					success: function() {
 						//alert("usao je u success");
 						//window.location="./main.html";
-						window.location="mainPage.html";
+						window.location="login.html";
 					},
 					statusCode: {
 						401: function() {
@@ -80,8 +76,6 @@ $(document).ready(() => {
 						},
 					},	
 				})
-				
-				
 				
 				
 		}
