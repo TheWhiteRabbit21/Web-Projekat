@@ -18,6 +18,8 @@ import beans.Korisnik;
 
 public class KorisnikDAO {
 
+	private String ctx;
+	
     private HashMap<String, Korisnik> korisnici = new HashMap<>();
     private Korisnik trenutniKorisnik = new Korisnik();
     
@@ -31,6 +33,7 @@ public class KorisnikDAO {
 
 	public KorisnikDAO(String contextPath) {
 		loadUsers(contextPath);
+		ctx = contextPath;
 	}
 
     /**
@@ -42,6 +45,8 @@ public class KorisnikDAO {
 	
 	
 	public Korisnik find(String username, String password) {
+		
+		loadUsers(ctx);
 		
 		if (!korisnici.containsKey(username)) {
 			return null;
@@ -81,6 +86,7 @@ public class KorisnikDAO {
     	FileWriter fileWriter = null;
     	BufferedReader in = null;
     	File file = null;
+    	korisnici = null;
     	
     	try {
 			file = new File(filePath);
@@ -178,7 +184,7 @@ public class KorisnikDAO {
 		try
 		{
 			System.out.println("usao u KorisnikDAO.dodaj");
-			//System.out.println(contextPath);
+			System.out.println(contextPath);
 			File file = new File(contextPath + "/users.json");
 			ObjectMapper objectMapper = new ObjectMapper();
 

@@ -16,7 +16,6 @@ $(document).ready(() => {
 		let ime = document.getElementById("ime")
 		let prezime = document.getElementById("prezime")
 		let pol = "";
-		let datumRodjenja = $('#datum').val();
 		let uloga = 0;
 		let deleted = false;
 				
@@ -45,6 +44,11 @@ $(document).ready(() => {
 			
 			console.log(JSON.stringify({usernameVal, passwordVal, imeVal, prezimeVal, pol, datumRodjenjaVal, uloga, deleted}))
 			
+			
+			
+			
+			
+			
 			$.post({
 					url: 'rest/register',
 					data: JSON.stringify({"username" : usernameVal, "password" : passwordVal, "ime" : imeVal, "prezime" : prezimeVal, pol, "datumRodjenja" : datumRodjenjaVal, uloga, deleted}),
@@ -55,7 +59,6 @@ $(document).ready(() => {
 						//window.location="./main.html";
 						window.location="mainPage.html";
 					},
-					
 					statusCode: {
 						401: function() {
 							$('#error').text("Greska pri unosu, ime moraju biti slova!");
@@ -77,6 +80,10 @@ $(document).ready(() => {
 						},
 					},	
 				})
+				
+				
+				
+				
 		}
 
 	})

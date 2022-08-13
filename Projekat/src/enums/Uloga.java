@@ -1,8 +1,8 @@
 package enums;
 
 public enum Uloga {
-	KUPAC,
-	MENADZER,
-	ADMINISTRATOR,
-	TRENER
+	KUPAC,			//0
+	MENADZER,		//1
+	ADMINISTRATOR,	//2
+	TRENER			//3
 }
