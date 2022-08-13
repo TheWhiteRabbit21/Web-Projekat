@@ -8,11 +8,14 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.StringTokenizer;
 
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import beans.Korisnik;
+import enums.Pol;
+import enums.Uloga;
 
 
 
@@ -86,7 +89,7 @@ public class KorisnikDAO {
     	FileWriter fileWriter = null;
     	BufferedReader in = null;
     	File file = null;
-    	korisnici = null;
+    	korisnici.clear();
     	
     	try {
 			file = new File(filePath);
@@ -103,7 +106,7 @@ public class KorisnikDAO {
 				korisnici.put(k.getUsername(),k);
 			}
     		
-    		
+			
     		
 		} catch (FileNotFoundException fnfe) {
 			try {
@@ -113,17 +116,6 @@ public class KorisnikDAO {
 				else {
 					System.out.println("File not created");
 				}
-				
-				
-				/*fileWriter = new FileWriter(file);
-				
-				ObjectMapper objectMapper = new ObjectMapper();
-				objectMapper.configure(SerializationFeature.INDENT_OUTPUT, true);
-				objectMapper.getFactory().configure(JsonGenerator.Feature.ESCAPE_NON_ASCII, true);
-				
-				String string = objectMapper.writeValueAsString(users);
-				fileWriter.write(string);*/
-				
 				
 			} catch (IOException e) {
 				e.printStackTrace();
@@ -151,31 +143,12 @@ public class KorisnikDAO {
 		}
     	
     	
-		/*try
-		{
-			File file = new File(contextPath + "/users.json");
-			//System.out.println(contextPath);
-			ObjectMapper objectMapper = new ObjectMapper();
-			objectMapper.configure(DeserializationFeature.ACCEPT_SINGLE_VALUE_AS_ARRAY, true);
-			objectMapper.configure(DeserializationFeature.ACCEPT_EMPTY_STRING_AS_NULL_OBJECT, true);
-			
-			Korisnik[] car = objectMapper.readValue(file, Korisnik[].class);
-			//System.out.println("load User: "+car);
-			
-			for(Korisnik k : car)
-			{
-				korisnici.put(k.getUsername(),k);
-			}
-			
-			//System.out.println(korisnici);
-			
-		}
-		catch (Exception ex) {
-			System.out.println(ex);
-			ex.printStackTrace();
-		} finally {
-			
-		}*/
+    	
+    	
+    	loadAdministrators(contextPath);
+    	
+    	
+    	
     
     }
 
@@ -236,33 +209,73 @@ public class KorisnikDAO {
 		}
 	}
 
+	
+	
 	public String getTrenutniKorisnikUsername() {
 		System.out.println("Trenutni korisnik je: " + trenutniKorisnik.getUsername());
 		return trenutniKorisnik.getUsername();
 	}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+	
+	
+	public void loadAdministrators(String contextPath) {
+		
+		
+		String filePath = contextPath + "administratori.txt";
+    	BufferedReader in = null;
+    	File file = null;
+		
+    	try {
+			file = new File(filePath);
+			
+			//Ovo ispisuje putanju u konzolu
+			System.out.println(file.getCanonicalPath());
+			
+			in = new BufferedReader(new FileReader(file));
+			String line, username = "", password = "", ime = "", prezime = "", polString = "", datumRodjenja = "";
+			StringTokenizer st;
+			while ((line = in.readLine()) != null) {
+				line = line.trim();
+				if (line.equals("") || line.indexOf('#') == 0)
+					continue;
+				st = new StringTokenizer(line, ";");
+				while (st.hasMoreTokens()) {
+					username = st.nextToken().trim();
+					password = st.nextToken().trim();
+					ime = st.nextToken().trim();
+					prezime = st.nextToken().trim();
+					polString = st.nextToken().trim();
+					datumRodjenja = st.nextToken().trim();
+				}
+				
+				Pol pol = null;
+				
+				if(polString.equalsIgnoreCase("MUSKO")) {
+					pol = Pol.MUSKO;
+				}
+				else {pol = Pol.ZENSKO;}
+				
+				korisnici.put(username, new Korisnik(username, password, ime, prezime,
+						pol, datumRodjenja, Uloga.ADMINISTRATOR, false));
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if ( in != null ) {
+				try {
+					in.close();
+				}
+				catch (Exception e) { }
+			}
+		}
+    	
+    	
+    	
+    	
+    	
+		
+		
+	}
 
 
 }

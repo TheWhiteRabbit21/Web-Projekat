@@ -1,2 +1,2 @@
-admin;admin;Nemanja;Milutinovic;MUSKO;05-07;ADMINISTRATOR;false
-proba;proba;ImeProba;PrezimeProba;ZENSKO;01-01;ADMINISTRATOR;false
+admin;admin;Nemanja;Milutinovic;MUSKO;05-07
+proba;proba;ImeProba;PrezimeProba;ZENSKO;01-01

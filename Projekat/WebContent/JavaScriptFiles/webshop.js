@@ -1,5 +1,5 @@
 // Closure koji će zapamtiti trenutni proizvod
-function clickClosure(product){
+/*function clickClosure(product){
 	return function() {
 		// Parametar product prosleđen u gornju funkciju će biti vidljiv u ovoj
 		// Ovo znači da je funkcija "zapamtila" za koji je proizvod vezana
@@ -53,4 +53,4 @@ $(document).ready(function() {
 			}
 		});
 	});
-});
+});*/
