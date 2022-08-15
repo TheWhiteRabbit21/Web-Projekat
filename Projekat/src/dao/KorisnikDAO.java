@@ -276,6 +276,26 @@ public class KorisnikDAO {
 		
 		
 	}
+	
+	
+	
+	//TODO napraviti SetTrenutni korisnik ili generisati, da imamo current usera u programu
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 
 
 }
