@@ -1,9 +1,7 @@
 $(document).ready(() => {
-	//window.alert("radi java script fajl");
 	
-	$('#registracionaForma').submit((event) => {
-		
-		//window.alert("radi reg forma dugme");
+	
+	$('#dodajKorisnikaForm').submit((event) => {
 		
 		event.preventDefault();
 		let usernameVal = $('#username').val();
@@ -16,12 +14,13 @@ $(document).ready(() => {
 		let ime = document.getElementById("ime")
 		let prezime = document.getElementById("prezime")
 		let pol = "";
-		let uloga = 0; //kupac - trebalo bi da moze i uloga = "KUPAC"
+		let uloga = "";
 		let deleted = false;
 				
 		let validationFlag = true;
 
 		pol = proveriPol();
+		uloga = proveriUlogu();
 		
 		//console.log(JSON.stringify({username, password, ime, prezime, pol, datumRodjenja, uloga, deleted}))
 		
@@ -51,9 +50,8 @@ $(document).ready(() => {
 					contentType: 'application/json',
 
 					success: function() {
-						//alert("usao je u success");
-						//window.location="./main.html";
-						window.location="login.html";
+						$('#success').text("Uspesno dodat novi korisnik!");
+						$("#success").show().delay(5000).fadeOut();
 					},
 					statusCode: {
 						401: function() {
@@ -79,17 +77,44 @@ $(document).ready(() => {
 				
 				
 		}
-
+		
+		
+		
 	})
-})
-
-function proveriSlova(unos) {    
-    return unos.value[0] >= 'A' && unos.value[0] <= 'Z';
+	
+	
+	
+function proveriSlova(unos) 
+{    
+   	return unos.value[0] >= 'A' && unos.value[0] <= 'Z';
 }
 
-function proveriPol() {
+function proveriPol() 
+{
 	let pol = $('#pol').val();
 	if(!pol){console.log("Pol nije unesen!")}
 	return pol;
 }
-
+	
+	
+function proveriUlogu() 
+{
+	let uloga = $('#uloga').val();
+	if(!uloga){console.log("Uloga nije unesena!")}
+	return uloga;
+}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+})

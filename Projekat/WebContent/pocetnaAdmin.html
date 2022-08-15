@@ -1,10 +1,56 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="ISO-8859-1">
+	<meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+	<link rel="stylesheet" type="text/css" href="CSSFiles/styles.css">
+	<script type="text/javascript" src="JavaScriptFiles/jquery-3.3.1.min.js"></script>
+	<script type="text/javascript" src="JavaScriptFiles/pocetnaAdmin.js"></script>
 <title>Administrator main page</title>
 </head>
 <body>
-	<h1>Pocetna strana administratora</h1>
+	<h1>Pocetna strana administratora:</h1><br/>
+	
+	<h3>Dodavanje novog korisnika:</h3><br/>
+	
+	<form id="dodajKorisnikaForm">
+	<table>
+	
+		<tr><td>Korisnicko ime:* </td>
+			<td><input class="obaveznoPolje" type="text" id="username"></td></tr>
+		<tr><td>Lozinka:* </td>
+			<td><input class="obaveznoPolje" type="password" id="password"></td></tr>
+		<tr><td>Ime:* </td>
+			<td><input class="obaveznoPolje" type="text" id="ime"></td></tr>
+		<tr><td>Prezime:* </td>
+			<td><input class="obaveznoPolje" type="text" id="prezime"></td></tr>
+		<tr><td>Datum rodjenja: </td>
+			<td><input type="text" id="datum"></td></tr>
+		<tr><td>Pol: </td>
+			<td><select id="pol">
+    			<option value="1"></option>
+    			<option value="MUSKO">Musko</option>
+    			<option value="ZENSKO">Zensko</option>
+			</select> </td>	
+		</tr>
+		<tr><td>Uloga: </td>
+			<td><select id="uloga">
+    			<option value="1"></option>
+    			<option value="MENADZER">MENADZER</option>
+    			<option value="TRENER">TRENER</option>
+			</select> </td>	
+		</tr>
+		<tr><td><button type="submit">Dodaj Korisnika</button></td></tr>
+	</table>
+	
+	<p> Polja oznacena sa * se <b><em>moraju</em></b> popuniti. </p>
+	<a href="index.html">Pocetna stranica</a>
+	
+	<p id="error"></p>
+	<p id="success"></p>
+
+	</form>
+	
+	
+	
 </body>
 </html>

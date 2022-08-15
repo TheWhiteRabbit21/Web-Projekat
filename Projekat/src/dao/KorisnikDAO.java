@@ -72,7 +72,7 @@ public class KorisnikDAO {
 //
 //		System.out.println("prosledjen username find funkciji: " + username);
 		
-		
+    	loadUsers(ctx);
 		
 		
 		if (!korisnici.containsKey(username)) {
