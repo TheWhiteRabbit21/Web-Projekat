@@ -2,16 +2,49 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
-	<link rel="stylesheet" type="text/css" href="CSSFiles/styles.css">
-	<script type="text/javascript" src="JavaScriptFiles/jquery-3.3.1.min.js"></script>
-	<script type="text/javascript" src="JavaScriptFiles/profilKorisnika.js"></script>
 	<title> Profil Korisnika </title>
+	<link rel="stylesheet" type="text/css" href="CSSFiles/styles.css">
+	<link href="CSSFiles/toast.css" rel="stylesheet" />
+	<script src="JavaScriptFiles/jquery-3.3.1.min.js"></script>
+	<script src="JavaScriptFiles/toast.js"></script>
+	
+	
 </head>
 <body>
 
 	<h1> Profil korisnika: </h1><br/>
-
-
+	
+	
+	<div id ="korisnickeInformacije">
+	
+	<label>Username:</label>
+	<input type="text" v-model="korisnik.username" v-bind:disabled="mode=='BROWSE'" /> <br />
+	
+	<label>Ime:</label>
+	<input type="text" v-model="korisnik.ime" v-bind:disabled="mode=='BROWSE'" /> <br />
+	<label>Prezime:</label>
+	<input type="text" v-model="korisnik.prezime" v-bind:disabled="mode=='BROWSE'" /> <br />
+	
+	<label>Pol:</label>
+	<input type="text" v-model="korisnik.pol" v-bind:disabled="mode=='BROWSE'" /> <br />
+	<label>Datum rođenja:</label>
+	<input type="text" v-model="korisnik.datumRodjenja" v-bind:disabled="mode=='BROWSE'" /> <br />
+	
+	<button v-on:click="updateKorisnik(korisnik)" v-bind:disabled="mode=='BROWSE'">Save</button>
+	<button v-on:click="cancelEditing" v-bind:disabled="mode=='BROWSE'">Cancel</button> <br />
+	
+	
+	<button v-on:click="editKorisnik" v-bind:disabled="mode=='EDIT'">Edit</button><br />
+	
+	
+	</div>
+	
+	
+	<script src="JavaScriptFiles/vue.js"></script>
+	<script src="JavaScriptFiles/axios.js"></script>
+	<script src="JavaScriptFiles/moment.min.js"></script>
+	<script src="JavaScriptFiles/profilKorisnika.js"></script>
+	
 
 </body>
 </html>
