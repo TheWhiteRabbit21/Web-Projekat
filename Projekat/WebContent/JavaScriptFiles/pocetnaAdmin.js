@@ -1,5 +1,32 @@
 $(document).ready(() => {
 	
+	//-----------------------------------------------------------------------//
+	
+	function addKorisnikTr(korisnik){
+		let tr = $('<tr></tr>');
+		let tdUsername = $('<td>' + korisnik.username + '</td>');
+		let tdIme = $('<td>' + korisnik.ime + '</td>');
+		let tdPrezime = $('<td>' + korisnik.prezime + '</td>');
+		let tdPol = $('<td>' + korisnik.pol + '</td>');
+		let tdUloga = $('<td>' + korisnik.uloga + '</td>');
+		let tdDatumRodjenja = $('<td>' + korisnik.datumRodjenja + '</td>');
+	
+		tr.append(tdUsername).append(tdIme).append(tdPrezime).append(tdPol).append(tdUloga).append(tdDatumRodjenja);
+		$('#tabelaKorisnika tbody').append(tr);
+	}
+	
+	$.get({
+		url: 'rest/korisnici',
+		success: function(korisnici){
+			for(let korisnik of korisnici){
+				addKorisnikTr(korisnik);
+			}
+		}
+	})
+	
+	
+	
+	//-----------------------------------------------------------------------//
 	
 	$('#dodajKorisnikaForm').submit((event) => {
 		
@@ -81,8 +108,7 @@ $(document).ready(() => {
 		
 		
 	})
-	
-	
+		
 	
 function proveriSlova(unos) 
 {    
@@ -95,8 +121,7 @@ function proveriPol()
 	if(!pol){console.log("Pol nije unesen!")}
 	return pol;
 }
-	
-	
+
 function proveriUlogu() 
 {
 	let uloga = $('#uloga').val();
@@ -104,7 +129,7 @@ function proveriUlogu()
 	return uloga;
 }
 	
-	
+
 	
 	
 	

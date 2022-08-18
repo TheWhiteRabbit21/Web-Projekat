@@ -23,10 +23,15 @@ $(document).ready(function() {
 				if(korisnik!=null)
 					{
 						//$('#odjava').attr('hidden', false); 
-						if(korisnik.uloga == "KUPAC" || korisnik.uloga == "MENADZER") //uloga-0 -> kupac / uloga-1 -> menadzer
+						if(korisnik.uloga == "KUPAC") //uloga-0 -> kupac
 						{
 							//window.location='./kupac.html';
-							window.location='kupac.html';
+							window.location='pocetnaKupac.html';
+						}
+						else if(korisnik.uloga == "MENADZER") //uloga-1 -> menadzer
+						{
+							//window.location='./pocetnaAdmin.html';
+							window.location='pocetnaMenadzer.html';
 						}
 					 	else if(korisnik.uloga == "ADMINISTRATOR") //uloga-2 -> administrator
 						{
@@ -36,7 +41,7 @@ $(document).ready(function() {
 						else if(korisnik.uloga == "TRENER") //uloga-3 -> trener
 						{
 							//window.location='./trener.html';
-							window.location='trener.html';
+							window.location='pocetnaTrener.html';
 						}
 					}
 					else{

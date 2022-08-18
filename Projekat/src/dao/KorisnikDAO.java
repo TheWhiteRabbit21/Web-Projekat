@@ -7,6 +7,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.StringTokenizer;
 
@@ -46,6 +47,9 @@ public class KorisnikDAO {
 	 * @return
 	 */
 	
+	public Collection<Korisnik> findAll() {
+		return korisnici.values();
+	}
 	
 	public Korisnik find(String username, String password) {
 		
@@ -81,7 +85,6 @@ public class KorisnikDAO {
 		
 		return true;
 	}
-
 
     private void loadUsers(String contextPath) {
 		
