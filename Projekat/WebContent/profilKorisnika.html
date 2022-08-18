@@ -18,7 +18,10 @@
 	<div id ="korisnickeInformacije">
 	
 	<label>Username:</label>
-	<input type="text" v-model="korisnik.username" v-bind:disabled="mode=='BROWSE'" /> <br />
+	<label>{{korisnik.username}}</label> <br />
+	<!--  <input type="text" v-model="korisnik.username"/> <br />-->
+	<label>Password:</label>
+	<input type="password" v-model="korisnik.password" v-bind:disabled="mode=='BROWSE'" /> <br />
 	
 	<label>Ime:</label>
 	<input type="text" v-model="korisnik.ime" v-bind:disabled="mode=='BROWSE'" /> <br />

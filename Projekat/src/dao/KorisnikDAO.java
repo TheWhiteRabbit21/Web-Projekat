@@ -141,22 +141,16 @@ public class KorisnikDAO {
 				}
 			}
 		}
-    	
-    	
-    	
-    	
+    	    	
     	loadAdministrators(contextPath);
-    	
-    	
-    	
-    
+
     }
 
 	public void dodaj(Korisnik k, String contextPath){
 
 		try
 		{
-			System.out.println("usao u KorisnikDAO.dodaj");
+			//System.out.println("usao u KorisnikDAO.dodaj");
 			System.out.println(contextPath);
 			File file = new File(contextPath + "/users.json");
 			ObjectMapper objectMapper = new ObjectMapper();
@@ -175,6 +169,8 @@ public class KorisnikDAO {
 			}
 			temp.add(k);
 			objectMapper.writeValue(new File(contextPath + "/users.json"), temp);
+			
+			loadUsers(contextPath);
 			
 			//Korisnik r = korisnici.put(k.getUsername(), k);
 			
@@ -208,16 +204,12 @@ public class KorisnikDAO {
 			
 		}
 	}
-
-	
 	
 	public String getTrenutniKorisnikUsername() {
 		System.out.println("Trenutni korisnik je: " + trenutniKorisnik.getUsername());
 		return trenutniKorisnik.getUsername();
 	}
 
-	
-	
 	public void loadAdministrators(String contextPath) {
 		
 		
@@ -277,15 +269,49 @@ public class KorisnikDAO {
 		
 	}
 	
+	public void izmeni(Korisnik k, String contextPath) {
+		
+		ArrayList<Korisnik> temp = new ArrayList<>();
+		
+    	for(HashMap.Entry<String, Korisnik> entry : korisnici.entrySet()) 
+    	{
+			//System.out.println("Key = " + entry.getKey() + ", Username = " + entry.getValue().getUsername());
+    	
+			if(k.getUsername().equalsIgnoreCase(entry.getValue().getUsername())) {
+				entry.getValue().setIme(k.getIme());
+				entry.getValue().setPrezime(k.getPrezime());
+				entry.getValue().setDatumRodjenja(k.getDatumRodjenja());
+				entry.getValue().setPassword(k.getPassword());
+				entry.getValue().setPol(k.getPol());
+			}
+			temp.add(entry.getValue());
+    	}
+    	
+		upisiUFajl(temp, contextPath);
+		
+	}
 	
-	
-	//TODO napraviti SetTrenutni korisnik ili generisati, da imamo current usera u programu
-	
-	
-	
-	
-	
-	
+	public void upisiUFajl(ArrayList<Korisnik> kf, String contextPath) {
+		
+		try
+		{
+		ObjectMapper objectMapper = new ObjectMapper();
+
+		objectMapper.configure(DeserializationFeature.ACCEPT_SINGLE_VALUE_AS_ARRAY, true);
+		objectMapper.configure(DeserializationFeature.ACCEPT_EMPTY_STRING_AS_NULL_OBJECT, true);
+		
+		objectMapper.writeValue(new File(contextPath + "/users.json"), kf);
+		}
+		
+		catch (Exception ex) {
+			System.out.println(ex);
+			ex.printStackTrace();
+			
+		} finally {
+			
+		}
+		
+	}
 	
 	
 	

@@ -6,7 +6,6 @@ import javax.annotation.PostConstruct;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.Consumes;
-import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
@@ -68,14 +67,27 @@ public class RegistracijaService {
 		String regex = "^[\\p{L} ]*$";
 		return Pattern.matches(regex, word);
 	}
-
-	@GET
-	@Path("/uspesnaRegistracija")
+	
+	@POST
+	@Path("/updatejson")
 	@Produces(MediaType.APPLICATION_JSON)
-	public String getKorisnik() {
-		KorisnikDAO dao = (KorisnikDAO) ctx.getAttribute("korisnikDAO");
-		return dao.getTrenutniKorisnikUsername();
+	@Consumes(MediaType.APPLICATION_JSON)
+	public void saveKorisnik(Korisnik korisnik) {
+		
+		System.out.println("Saving korisnik: " + korisnik);
+		
+		KorisnikDAO korisnikDao = (KorisnikDAO) ctx.getAttribute("korisnikDAO");
+
+		String contextPath = ctx.getRealPath("");
+		
+		//korisnikDao.obrisi(korisnik, contextPath);
+		//korisnikDao.dodaj(korisnik, contextPath);
+		
+		korisnikDao.izmeni(korisnik, contextPath);
+		
+		
 	}
+	
 	
 	
 
