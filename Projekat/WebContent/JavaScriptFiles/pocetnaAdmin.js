@@ -1,6 +1,6 @@
 $(document).ready(() => {
 	
-	//-----------------------------------------------------------------------//
+	//--------------------------------------------------------------------------------------//
 	
 	function addKorisnikTr(korisnik){
 		let tr = $('<tr></tr>');
@@ -26,7 +26,7 @@ $(document).ready(() => {
 	
 	
 	
-	//-----------------------------------------------------------------------//
+	//--------------------------------------------------------------------------------------//
 	
 	$('#dodajKorisnikaForm').submit((event) => {
 		
@@ -77,27 +77,27 @@ $(document).ready(() => {
 					contentType: 'application/json',
 
 					success: function() {
-						$('#success').text("Uspesno dodat novi korisnik!");
-						$("#success").show().delay(5000).fadeOut();
+						$('#successKorisnik').text("Uspesno dodat novi korisnik!");
+						$("#successKorisnik").show().delay(5000).fadeOut();
 					},
 					statusCode: {
 						401: function() {
-							$('#error').text("Greska pri unosu, ime moraju biti slova!");
-							$("#error").show().delay(5000).fadeOut();
+							$('#errorKorisnik').text("Greska pri unosu, ime moraju biti slova!");
+							$("#errorKorisnik").show().delay(5000).fadeOut();
 						},
 
 						400: function() {
-							$('#error').text("Greska pri unosu, korisnicko ime vec postoji!");
-							$("#error").show().delay(5000).fadeOut();
+							$('#errorKorisnik').text("Greska pri unosu, korisnicko ime vec postoji!");
+							$("#errorKorisnik").show().delay(5000).fadeOut();
 						},
 						
 						402: function() {
-							$('#error').text("Greska pri unosu, prezime moraju biti slova!");
-							$("#error").show().delay(5000).fadeOut();
+							$('#errorKorisnik').text("Greska pri unosu, prezime moraju biti slova!");
+							$("#errorKorisnik").show().delay(5000).fadeOut();
 						},
 						403: function() {
-							$('#error').text("Greska pri unosu, telefon mora biti broj!");
-							$("#error").show().delay(5000).fadeOut();
+							$('#errorKorisnik').text("Greska pri unosu, telefon mora biti broj!");
+							$("#errorKorisnik").show().delay(5000).fadeOut();
 						},
 					},	
 				})
@@ -108,6 +108,76 @@ $(document).ready(() => {
 		
 		
 	})
+		
+	//--------------------------------------------------------------------------------------//
+		
+		
+		
+		
+		
+		
+		$('#dodajSportskiObjekatForm').submit((event) => {
+		
+		event.preventDefault();
+		let naziv = $('#naziv').val();
+		let tipObjekta = $('#tipObjekta').val();
+		let sadrzaj = $('#sadrzaj').val();
+		let status = $('#status').val();
+		let mapa = $('#mapa').val();
+		let logo = $('#logo').val();
+		let prosecnaOcena = $('#prosecnaOcena').val();
+		let radnoVreme = $('#radnoVreme').val();
+		let menadzer = document.getElementById("menadzer").value;
+		
+		//console.log(JSON.stringify({username, password, ime, prezime, pol, datumRodjenja, uloga, deleted}))
+		//window.alert(username);
+		
+		
+			//window.alert("salje post zahtev");
+			
+		console.log(JSON.stringify({naziv, tipObjekta, sadrzaj, 
+			status, mapa, logo, prosecnaOcena, radnoVreme, menadzer}))
+			
+		$.post({
+				url: 'rest/dodajSportskiObjekat',
+				data: JSON.stringify({naziv, tipObjekta, sadrzaj, 
+					status, mapa, logo, prosecnaOcena, radnoVreme, menadzer}),
+				contentType: 'application/json',
+
+				success: function() {
+					
+					$('#successDodajSO').text("Uspesno dodat novi sportski Objekat!");
+					$("#successDodajSO").show().delay(5000).fadeOut();
+				},
+				statusCode: {
+
+					400: function() {
+						$('#errorDodajSO').text("Greska pri unosu, ime vec postoji!");
+						$("#errorDodajSO").show().delay(5000).fadeOut();
+					},
+				},	
+			})
+				
+			
+		
+		
+		
+	})
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+	
+		
+	//--------------------------------------------------------------------------------------//
 		
 	
 function proveriSlova(unos) 
@@ -130,16 +200,7 @@ function proveriUlogu()
 }
 	
 
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+	//--------------------------------------------------------------------------------------//
 	
 	
 })

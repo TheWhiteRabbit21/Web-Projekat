@@ -2,15 +2,24 @@ package dao;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.StringTokenizer;
+
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import beans.SportskiObjekat;
 
 public class SportskiObjekatDAO {
 
+	private String ctx;
+	
 	private HashMap<String, SportskiObjekat> sportskiObjekti = new HashMap<String, SportskiObjekat>();
 	
 	public SportskiObjekatDAO() {
@@ -20,17 +29,87 @@ public class SportskiObjekatDAO {
 	/***
 	 * @param contextPath Putanja do aplikacije u Tomcatu. Mo�e se pristupiti samo iz servleta.
 	 */
+	
 	public SportskiObjekatDAO(String contextPath) {
 		loadSportskiObjekti(contextPath);
+		ctx = contextPath;
 	}
-	
 	
 	public Collection<SportskiObjekat> findAll(){
 		return sportskiObjekti.values();
 	}
 	
+	public boolean find(String name) {
+		
+		loadSportskiObjekti(ctx);
+		
+		if(!sportskiObjekti.containsKey(name)) {
+			return false;
+		}
+		
+		return true;
+	}
 	
 	private void loadSportskiObjekti(String contextPath) {
+		
+		String filePath = contextPath + "sportskiObjekti.json";
+    	FileWriter fileWriter = null;
+    	BufferedReader in = null;
+    	File file = null;
+    	sportskiObjekti.clear();
+    	
+    	try {
+			file = new File(filePath);
+    		in = new BufferedReader(new FileReader(file));
+    		
+    		ObjectMapper objectMapper = new ObjectMapper();
+			objectMapper.configure(DeserializationFeature.ACCEPT_SINGLE_VALUE_AS_ARRAY, true);
+			objectMapper.configure(DeserializationFeature.ACCEPT_EMPTY_STRING_AS_NULL_OBJECT, true);
+			
+			SportskiObjekat[] so = objectMapper.readValue(file, SportskiObjekat[].class);
+
+			for(SportskiObjekat s : so)
+			{
+				sportskiObjekti.put(s.getNaziv(), s);
+			}
+    		
+		} catch (FileNotFoundException fnfe) {
+			try {
+				if(file.createNewFile()) {
+					System.out.println("File created: " + file.getName());
+				}
+				else {
+					System.out.println("File not created");
+				}
+				
+			} catch (IOException e) {
+				e.printStackTrace();
+			}finally {
+				if (fileWriter != null) {
+					try {
+						fileWriter.close();
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				}
+			}
+		}	catch (Exception ex) {
+			ex.printStackTrace();
+		} finally {
+			if (in != null) {
+				try {
+					in.close();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		
+		loadSportskiObjektiTXT(contextPath);
+		
+	}
+	
+	private void loadSportskiObjektiTXT(String contextPath) {
 		
 		BufferedReader in = null;
 		try {
@@ -41,7 +120,7 @@ public class SportskiObjekatDAO {
 			
 			in = new BufferedReader(new FileReader(file));
 			String line, naziv = "", tipObjekta = "", sadrzaj = "", status = "", mapa = "";
-			String logo = "", prosecnaOcena = "", radnoVreme = "";
+			String logo = "", prosecnaOcena = "", radnoVreme = "", menadzer = "";
 			StringTokenizer st;
 			while ((line = in.readLine()) != null) {
 				line = line.trim();
@@ -55,11 +134,12 @@ public class SportskiObjekatDAO {
 					status = st.nextToken().trim();
 					mapa = "-";
 					logo = "-";
+					menadzer = "-";
 					prosecnaOcena = st.nextToken().trim();
 					radnoVreme = st.nextToken().trim();
 				}
 				sportskiObjekti.put(naziv, new SportskiObjekat(naziv, tipObjekta, sadrzaj, status,
-						mapa, logo, Double.parseDouble(prosecnaOcena), radnoVreme));
+						mapa, logo, Double.parseDouble(prosecnaOcena), radnoVreme, menadzer));
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -72,6 +152,62 @@ public class SportskiObjekatDAO {
 			}
 		}
 		
+	}
+	
+	
+	public void dodaj(SportskiObjekat s, String contextPath){
+
+		try
+		{
+			//System.out.println("usao u KorisnikDAO.dodaj");
+			System.out.println(contextPath);
+			File file = new File(contextPath + "/sportskiObjekti.json");
+			ObjectMapper objectMapper = new ObjectMapper();
+
+			objectMapper.configure(DeserializationFeature.ACCEPT_SINGLE_VALUE_AS_ARRAY, true);
+			objectMapper.configure(DeserializationFeature.ACCEPT_EMPTY_STRING_AS_NULL_OBJECT, true);
+			ArrayList<SportskiObjekat> temp = new ArrayList<>();
+			//trenutniKorisnik = k;
+
+			SportskiObjekat[] so = objectMapper.readValue(file, SportskiObjekat[].class);
+			//System.out.println("register User: "+ car);
+			
+			for(SportskiObjekat g : so)
+			{
+				temp.add(g);
+			}
+			temp.add(s);
+			objectMapper.writeValue(new File(contextPath + "/sportskiObjekti.json"), temp);
+			
+			loadSportskiObjekti(contextPath);
+
+		}
+		catch (Exception ex) {
+			
+			try {
+			
+			//System.out.println("usao u catch exception KorisnikDAO.dodaj");
+			ObjectMapper objectMapper = new ObjectMapper();
+
+			objectMapper.configure(DeserializationFeature.ACCEPT_SINGLE_VALUE_AS_ARRAY, true);
+			objectMapper.configure(DeserializationFeature.ACCEPT_EMPTY_STRING_AS_NULL_OBJECT, true);
+			ArrayList<SportskiObjekat> temp = new ArrayList<>();
+			
+			temp.add(s);
+			//trenutniKorisnik = k;
+			objectMapper.writeValue(new File(contextPath + "/sportskiObjekti.json"), temp);
+			
+			//System.out.println(ex);
+			//ex.printStackTrace();
+			
+			}catch (IOException e) {
+				
+			} finally {
+				
+			}
+		} finally {
+			
+		}
 	}
 	
 	public Collection<SportskiObjekat> pretraziSportskeObjekte(SportskiObjekat sportskiObjekat, String contextPath){

@@ -8,8 +8,9 @@ function addSportskiObjekatTr(sportskiObjekat) {
 	let tdLogo = $('<td>' + sportskiObjekat.logo + '</td>');
 	let tdProsecnaOcena = $('<td>' + sportskiObjekat.prosecnaOcena + '</td>');
 	let tdRadnoVreme = $('<td>' + sportskiObjekat.radnoVreme + '</td>');
+	let tdMenadzer = $('<td>' + sportskiObjekat.menadzer + '</td>');
 	
-	tr.append(tdNaziv).append(tdTipObjekta).append(tdSadrzaj).append(tdStatus).append(tdMapa).append(tdLogo).append(tdProsecnaOcena).append(tdRadnoVreme);
+	tr.append(tdNaziv).append(tdTipObjekta).append(tdSadrzaj).append(tdStatus).append(tdMapa).append(tdLogo).append(tdProsecnaOcena).append(tdRadnoVreme).append(tdMenadzer);
 	//tr.click(clickClosure(sportskiObjekat));
 	$('#tabelaSportskihObjekata tbody').append(tr);
 }

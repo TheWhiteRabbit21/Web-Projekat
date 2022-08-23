@@ -102,14 +102,12 @@ public class KorisnikDAO {
 			objectMapper.configure(DeserializationFeature.ACCEPT_SINGLE_VALUE_AS_ARRAY, true);
 			objectMapper.configure(DeserializationFeature.ACCEPT_EMPTY_STRING_AS_NULL_OBJECT, true);
 			
-			Korisnik[] car = objectMapper.readValue(file, Korisnik[].class);
+			Korisnik[] ko = objectMapper.readValue(file, Korisnik[].class);
 
-			for(Korisnik k : car)
+			for(Korisnik k : ko)
 			{
 				korisnici.put(k.getUsername(),k);
 			}
-    		
-			
     		
 		} catch (FileNotFoundException fnfe) {
 			try {
@@ -122,8 +120,6 @@ public class KorisnikDAO {
 				
 			} catch (IOException e) {
 				e.printStackTrace();
-				
-				
 			}finally {
 				if (fileWriter != null) {
 					try {

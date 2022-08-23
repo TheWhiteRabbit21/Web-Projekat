@@ -1,26 +1,35 @@
 package beans;
 
-public class SportskiObjekat {
+import java.io.Serializable;
+
+@SuppressWarnings("serial")
+public class SportskiObjekat implements Serializable{
 
 	private String naziv;
 	private String tipObjekta;
 	private String sadrzaj;	//grupni/personalni treninzi, sauna itd.
 	private String status;	//radi/ne radi
-	private String mapa;	//hardcode/lokacija
-	private String logo;	//hardcode
+	private String mapa;	
+	private String logo;	
 	private double prosecnaOcena;
 	private String radnoVreme;
+	private String menadzer;
+	
+	public SportskiObjekat() {
+		super();
+	}
 	
 	public SportskiObjekat(String naziv, String tipObjekta, String sadrzaj, String status, String mapa,
-			String logo, double prosOcena, String radnoVreme) {
+			String logo, double prosecnaOcena, String radnoVreme, String menadzer) {
 		this.naziv = naziv;
 		this.tipObjekta = tipObjekta;
 		this.sadrzaj = sadrzaj;
 		this.status = status;
 		this.mapa = mapa;
 		this.logo = logo;
-		this.prosecnaOcena = prosOcena;
+		this.prosecnaOcena = prosecnaOcena;
 		this.radnoVreme = radnoVreme;
+		this.menadzer = menadzer;
 	}
 	
 	public SportskiObjekat(String naziv) {
@@ -87,6 +96,12 @@ public class SportskiObjekat {
 	}
 	public void setLogo(String logo) {
 		this.logo = logo;
+	}
+	public String getMenadzer() {
+		return menadzer;
+	}
+	public void setMenadzer(String menadzer) {
+		this.menadzer = menadzer;
 	}
 	
 }

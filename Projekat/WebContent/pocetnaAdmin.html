@@ -51,8 +51,8 @@
 	<p> Polja oznacena sa * se <b><em>moraju</em></b> popuniti. </p>
 	<a href="index.html">Pocetna stranica</a>
 	
-	<p id="error"></p>
-	<p id="success"></p>
+	<p id="errorKorisnik"></p>
+	<p id="successKorisnik"></p>
 
 	</form>
 	
@@ -85,21 +85,50 @@
 	
 	<!-- ------------------------------------------------------------------------------------ -->
 	
+	<div>
+	
+	<h3>Dodavanje novog sportskog objekta:</h3><br/>
+	
+	<form id="dodajSportskiObjekatForm">
+	<table>
+	
+		<tr><td>Naziv:* </td>
+			<td><input class="obaveznoPolje" type="text" id="naziv"></td></tr>
+		<tr><td>Tip objekta:* </td>
+			<td><input class="obaveznoPolje" type="text" id="tipObjekta"></td></tr>
+		<tr><td>Sadrzaj:* </td>
+			<td><input type="text" id="sadrzaj"></td></tr>
+		<tr><td>Status:* </td>
+			<td><input type="text" id="status"></td></tr>
+		<tr><td>Mapa: </td>
+			<td><input class="obaveznoPolje" type="text" id="mapa"></td></tr>
+		<tr><td>Logo: </td>
+			<td><input class="obaveznoPolje" type="text" id="logo"></td></tr>
+		<tr><td>Prosecna ocena: </td>
+			<td><input type="text" id="prosecnaOcena"></td></tr>
+		<tr><td>Radno vreme: </td>
+			<td><input type="text" id="radnoVreme"></td></tr>
+		<tr><td>Menadzer koji upravlja: </td>
+			<td><select id="menadzer">
+    			<option value="1"></option>
+    			<option value="menadzer1">Menadzer 1</option>
+    			<option value="menadzer2">Menadzer 2</option>
+			</select> </td>	
+		</tr>
+		<tr><td><button type="submit">Dodaj Sportski Objekat</button></td></tr>
+	</table>
+	
+	<p> Polja oznacena sa * se <b><em>moraju</em></b> popuniti. </p>
+	
+	<p id="errorDodajSO"></p>
+	<p id="successDodajSO"></p>
+
+	</form>
+		
+	</div>
 	
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+	<!-- ------------------------------------------------------------------------------------ -->
 	
 	
 </body>
