@@ -31,7 +31,7 @@ public class KorisniciService {
 		}
 	
 	
-	 @GET
+	@GET
 	@Path("/korisnici")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Collection<Korisnik> getKorisnike() {
@@ -39,8 +39,13 @@ public class KorisniciService {
 		return dao.findAll();
 	}
 	
-	
-	
+	@GET
+	@Path("/menadzeri")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Collection<Korisnik> getMenadzere() {
+		KorisnikDAO dao = (KorisnikDAO) ctx.getAttribute("korisnikDAO");
+		return dao.findAllMenadzere();
+	}
 	
 	
 	

@@ -110,13 +110,39 @@ $(document).ready(() => {
 	})
 		
 	//--------------------------------------------------------------------------------------//
+	
+	var menadzeriBezSO = false
+	
+	function addMenadzerOption(menadzer, counter){
 		
+		let option = $('<option value="' + counter + '">' + menadzer.username +'</option>');
+		$('#menadzer').append(option);
+	
+	}
+	
+	$.get({
+		url: 'rest/menadzeri',
+		success: function(menadzeri){
+			//ovde dodati prvi red za value=1
+			$('#menadzer').append('<option value="1"></option>');
+			let counter = 2;
+			for(let menadzer of menadzeri){
+				if(menadzer.sportskiObjekat == null){
+					counter++;
+					addMenadzerOption(menadzer, counter);
+					menadzeriBezSO = true;
+				}
+			}
+			if(!menadzeriBezSO){
+				document.getElementById("menadzer").style.display = "none";
+			}
+			else{document.getElementById("dodajMenadzera").style.display = "none";}
+		}
+	})
 		
+	
 		
-		
-		
-		
-		$('#dodajSportskiObjekatForm').submit((event) => {
+	$('#dodajSportskiObjekatForm').submit((event) => {
 		
 		event.preventDefault();
 		let naziv = $('#naziv').val();
@@ -127,55 +153,93 @@ $(document).ready(() => {
 		let logo = $('#logo').val();
 		let prosecnaOcena = $('#prosecnaOcena').val();
 		let radnoVreme = $('#radnoVreme').val();
+		
 		let menadzer = document.getElementById("menadzer").value;
+		let menadzerVal = $('#menadzer').val();
 		
-		//console.log(JSON.stringify({username, password, ime, prezime, pol, datumRodjenja, uloga, deleted}))
+		let menadzerUsername = $('#usernameMenadzer').val();
+		let menadzerPassword	= $('#passwordMenadzer').val();
+		let menadzerIme	= $('#imeMenadzer').val();
+		let menadzerPrezime = $('#prezimeMenadzer').val();
+		let menadzerDatum	= $('#datumMenadzer').val();
+		let menadzerPol	= $('#polMenadzer').val();
+		
+		
 		//window.alert(username);
+		//window.alert("salje post zahtev");
 		
-		
-			//window.alert("salje post zahtev");
-			
 		console.log(JSON.stringify({naziv, tipObjekta, sadrzaj, 
-			status, mapa, logo, prosecnaOcena, radnoVreme, menadzer}))
+			status, mapa, logo, prosecnaOcena, radnoVreme, menadzerVal}))
 			
+		console.log(JSON.stringify({menadzerUsername, menadzerPassword, menadzerIme, 
+		menadzerPrezime, menadzerDatum, menadzerPol}))
+			
+		
+		if(menadzer != '1')
+		{
 		$.post({
 				url: 'rest/dodajSportskiObjekat',
 				data: JSON.stringify({naziv, tipObjekta, sadrzaj, 
-					status, mapa, logo, prosecnaOcena, radnoVreme, menadzer}),
+					status, mapa, logo, prosecnaOcena, radnoVreme, menadzerVal}),
 				contentType: 'application/json',
-
 				success: function() {
-					
 					$('#successDodajSO').text("Uspesno dodat novi sportski Objekat!");
 					$("#successDodajSO").show().delay(5000).fadeOut();
 				},
 				statusCode: {
-
 					400: function() {
 						$('#errorDodajSO').text("Greska pri unosu, ime vec postoji!");
 						$("#errorDodajSO").show().delay(5000).fadeOut();
 					},
 				},	
 			})
-				
+		}
+		else{
+			let menadzerUloga = "MENADZER";
+			$.post({
+				url: 'rest/register/menadzer',
+				data: JSON.stringify({"username" : menadzerUsername, "password" : menadzerPassword, "ime" : menadzerIme, 
+				"prezime" : menadzerPrezime, "datumRodjenja" : menadzerDatum, "pol" : menadzerPol, "uloga" : menadzerUloga, "sportskiObjekat" : naziv}),
+				contentType: 'application/json',
+				success: function() {					
+					$('#successDodajMenadzera').text("Uspesno dodat novi menadzer!");
+					$("#successDodajMenadzera").show().delay(5000).fadeOut();
+				},
+				statusCode: {
+					400: function() {
+						$('#errorDodajMenadzera').text("Greska pri unosu, ime vec postoji!");
+						$("#errorDodajMenadzera").show().delay(5000).fadeOut();
+					},
+				},	
+			})
+			
+			$.post({
+				url: 'rest/dodajSportskiObjekat',
+				data: JSON.stringify({naziv, tipObjekta, sadrzaj, 
+					status, mapa, logo, prosecnaOcena, radnoVreme, menadzerUsername}),
+				contentType: 'application/json',
+				success: function() {					
+					$('#successDodajSO').text("Uspesno dodat novi sportski Objekat!");
+					$("#successDodajSO").show().delay(5000).fadeOut();
+				},
+				statusCode: {
+					400: function() {
+						$('#errorDodajSO').text("Greska pri unosu, ime vec postoji!");
+						$("#errorDodajSO").show().delay(5000).fadeOut();
+					},
+				},	
+			})
+		}
 			
 		
 		
 		
+		
+			
+		
 	})
 		
 		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-	
 		
 	//--------------------------------------------------------------------------------------//
 		

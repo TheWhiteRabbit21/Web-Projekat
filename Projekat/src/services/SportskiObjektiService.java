@@ -63,7 +63,7 @@ public class SportskiObjektiService {
 		dao.dodaj(sportskiObjekat, contextPath);
 		
 		return Response.status(200).build();
-	}
+	}	
 	
 	@GET
 	@Path("/pretraga/{pretragaString}")

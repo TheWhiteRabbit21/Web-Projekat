@@ -14,6 +14,8 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import beans.Korisnik;
+import beans.Kupac;
+import beans.Menadzer;
 import dao.KorisnikDAO;
 
 @Path("/register")
@@ -34,15 +36,15 @@ public class RegistracijaService {
 	}
 
 	@POST
-	@Path("")
+	@Path("/kupac")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response register(Korisnik korisnik, @Context HttpServletRequest request){
+	public Response register(Kupac kupac, @Context HttpServletRequest request){
 
 		//System.out.println(korisnik);
 
 		KorisnikDAO korisnikDao = (KorisnikDAO) ctx.getAttribute("korisnikDAO");
-		boolean loggedUser = korisnikDao.find(korisnik.getUsername());
+		boolean loggedUser = korisnikDao.find(kupac.getUsername());
 		
 		System.out.println(loggedUser + " //register klasa, ako true -> postoji vec sa tim imenom korisnik");
 
@@ -51,18 +53,64 @@ public class RegistracijaService {
 			return Response.status(400).build();
 		}
 
-		boolean ime=isValidExpression(korisnik.getIme());
-		boolean prezime=isValidExpression(korisnik.getPrezime());
+		boolean ime=isValidExpression(kupac.getIme());
+		boolean prezime=isValidExpression(kupac.getPrezime());
 
 		if(!ime) return Response.status(401).build();
 		if(!prezime) return Response.status(402).build();
 
 		String contextPath = ctx.getRealPath("");
-		korisnikDao.dodaj(korisnik, contextPath);
+		korisnikDao.dodaj(kupac, contextPath);
 		
 		return Response.status(200).build();
 	}
 
+	
+	
+	@POST
+	@Path("/menadzer")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response register(Menadzer menadzer, @Context HttpServletRequest request){
+
+		//System.out.println(korisnik);
+
+		KorisnikDAO korisnikDao = (KorisnikDAO) ctx.getAttribute("korisnikDAO");
+		boolean loggedUser = korisnikDao.find(menadzer.getUsername());
+		
+		System.out.println(loggedUser + " //register klasa, ako true -> postoji vec sa tim imenom korisnik");
+
+		if (loggedUser == true) {
+			//return Response.status(400).entity("Korisnicko ime vec postoji!").build();
+			return Response.status(400).build();
+		}
+
+		boolean ime=isValidExpression(menadzer.getIme());
+		boolean prezime=isValidExpression(menadzer.getPrezime());
+
+		if(!ime) return Response.status(401).build();
+		if(!prezime) return Response.status(402).build();
+
+		String contextPath = ctx.getRealPath("");
+		//korisnikDao.dodaj(menadzer, contextPath);
+		korisnikDao.dodajMenadzera(menadzer, contextPath);
+		
+		return Response.status(200).build();
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	private boolean isValidExpression(String word) {
 		String regex = "^[\\p{L} ]*$";
 		return Pattern.matches(regex, word);

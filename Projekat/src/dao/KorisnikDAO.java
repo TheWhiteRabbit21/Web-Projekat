@@ -9,12 +9,14 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.StringTokenizer;
 
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import beans.Korisnik;
+import beans.Menadzer;
 import enums.Pol;
 import enums.Uloga;
 
@@ -51,6 +53,27 @@ public class KorisnikDAO {
 		return korisnici.values();
 	}
 	
+	public Collection<Korisnik> findAllMenadzere(){
+		
+//    	for(Map.Entry<String, Korisnik> entry : korisnici.entrySet())
+//			System.out.println("Key = " + entry.getKey() +
+//					", Username = " + entry.getValue().getUsername());
+//		
+//		System.out.println("--------------------------------");
+//
+//		System.out.println("prosledjen username find funkciji: " + username);
+		
+		Collection<Korisnik> temp = new ArrayList<Korisnik>();
+		
+		for(Map.Entry<String, Korisnik> entry : korisnici.entrySet()) {
+			if(Uloga.MENADZER.equals(entry.getValue().getUloga())){
+				temp.add(entry.getValue());
+			}
+		}
+		
+		return temp;
+	}
+		
 	public Korisnik find(String username, String password) {
 		
 		loadUsers(ctx);
@@ -145,12 +168,14 @@ public class KorisnikDAO {
 
     }
 
+    //TODO napraviti da se dodaje posebno kupac posebno menadzer posebno trener, svaka klasa ima svoje liste korisnika, a lista klase korisnik je lista stringova koja sadrzi samo username-ove svih korisnika
+    
 	public void dodaj(Korisnik k, String contextPath){
 
 		try
 		{
 			//System.out.println("usao u KorisnikDAO.dodaj");
-			System.out.println(contextPath);
+			//System.out.println(contextPath);
 			File file = new File(contextPath + "/users.json");
 			ObjectMapper objectMapper = new ObjectMapper();
 
@@ -202,6 +227,65 @@ public class KorisnikDAO {
 		} finally {
 			
 		}
+	}
+	
+	public void dodajMenadzera(Menadzer m, String contextPath) {
+		
+		try
+		{
+			//System.out.println("usao u KorisnikDAO.dodaj");
+			//System.out.println(contextPath);
+			File file = new File(contextPath + "/menadzeri.json");
+			ObjectMapper objectMapper = new ObjectMapper();
+
+			objectMapper.configure(DeserializationFeature.ACCEPT_SINGLE_VALUE_AS_ARRAY, true);
+			objectMapper.configure(DeserializationFeature.ACCEPT_EMPTY_STRING_AS_NULL_OBJECT, true);
+			ArrayList<Menadzer> temp = new ArrayList<>();
+			//trenutniKorisnik = k;
+
+			Menadzer[] me = objectMapper.readValue(file, Menadzer[].class);
+			//System.out.println("register User: "+ car);
+			
+			for(Menadzer g : me)
+			{
+				temp.add(g);
+			}
+			temp.add(m);
+			objectMapper.writeValue(new File(contextPath + "/menadzeri.json"), temp);
+			
+			loadUsers(contextPath);
+			
+			//Korisnik r = korisnici.put(k.getUsername(), k);
+			
+			//System.out.println(korisnici);
+
+		}
+		catch (Exception ex) {
+			
+			try {
+			
+			//System.out.println("usao u catch exception KorisnikDAO.dodajMenadzera");
+			ObjectMapper objectMapper = new ObjectMapper();
+
+			objectMapper.configure(DeserializationFeature.ACCEPT_SINGLE_VALUE_AS_ARRAY, true);
+			objectMapper.configure(DeserializationFeature.ACCEPT_EMPTY_STRING_AS_NULL_OBJECT, true);
+			ArrayList<Menadzer> temp = new ArrayList<>();
+			
+			temp.add(m);
+			objectMapper.writeValue(new File(contextPath + "/menadzeri.json"), temp);
+			
+			//System.out.println(ex);
+			//ex.printStackTrace();
+			
+			}catch (IOException e) {
+				
+			} finally {
+				
+			}
+		} finally {
+			
+		}
+		
 	}
 	
 	public String getTrenutniKorisnikUsername() {
@@ -311,12 +395,6 @@ public class KorisnikDAO {
 		}
 		
 	}
-	
-	
-	
-	
-	
-	
 	
 	
 	

@@ -108,15 +108,50 @@
 			<td><input type="text" id="prosecnaOcena"></td></tr>
 		<tr><td>Radno vreme: </td>
 			<td><input type="text" id="radnoVreme"></td></tr>
+			
+			
+			
 		<tr><td>Menadzer koji upravlja: </td>
 			<td><select id="menadzer">
-    			<option value="1"></option>
+    			
+    			<!--  <option value="1"></option>
     			<option value="menadzer1">Menadzer 1</option>
-    			<option value="menadzer2">Menadzer 2</option>
+    			<option value="menadzer2">Menadzer 2</option> -->
+			
+			</select></td>	
+		</tr>
+	</table>
+	
+	
+	<div id="dodajMenadzera">
+	
+	<table>
+	
+		<tr><td>Korisnicko ime:* </td>
+			<td><input class="obaveznoPolje" type="text" id="usernameMenadzer"></td></tr>
+		<tr><td>Lozinka:* </td>
+			<td><input class="obaveznoPolje" type="password" id="passwordMenadzer"></td></tr>
+		<tr><td>Ime:* </td>
+			<td><input class="obaveznoPolje" type="text" id="imeMenadzer"></td></tr>
+		<tr><td>Prezime:* </td>
+			<td><input class="obaveznoPolje" type="text" id="prezimeMenadzer"></td></tr>
+		<tr><td>Datum rodjenja: </td>
+			<td><input type="text" id="datumMenadzer"></td></tr>
+		<tr><td>Pol: </td>
+			<td><select id="polMenadzer">
+    			<option value="1"></option>
+    			<option value="MUSKO">Musko</option>
+    			<option value="ZENSKO">Zensko</option>
 			</select> </td>	
 		</tr>
-		<tr><td><button type="submit">Dodaj Sportski Objekat</button></td></tr>
+		<tr><td>Uloga: </td>
+			<td>Menadzer</td>	
+		</tr>
 	</table>
+	
+	</div>
+	
+	<button type="submit">Dodaj Sportski Objekat</button>
 	
 	<p> Polja oznacena sa * se <b><em>moraju</em></b> popuniti. </p>
 	

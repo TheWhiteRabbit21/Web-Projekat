@@ -36,6 +36,7 @@ public class SportskiObjekatDAO {
 	}
 	
 	public Collection<SportskiObjekat> findAll(){
+		loadSportskiObjekti(ctx);
 		return sportskiObjekti.values();
 	}
 	

@@ -3,13 +3,13 @@ package beans;
 @SuppressWarnings("serial")
 public class Menadzer extends Korisnik{
 
-	private SportskiObjekat sportskiObjekat;
+	private String sportskiObjekat;
 	
-	public SportskiObjekat getSportskiObjekat() {
+	public String getSportskiObjekat() {
 		return sportskiObjekat;
 	}
 
-	public void setSportskiObjekat(SportskiObjekat sportskiObjekat) {
+	public void setSportskiObjekat(String sportskiObjekat) {
 		this.sportskiObjekat = sportskiObjekat;
 	}
 	

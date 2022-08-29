@@ -46,7 +46,7 @@ $(document).ready(() => {
 			
 			
 			$.post({
-					url: 'rest/register',
+					url: 'rest/register/kupac',
 					data: JSON.stringify({"username" : usernameVal, "password" : passwordVal, "ime" : imeVal, "prezime" : prezimeVal, pol, "datumRodjenja" : datumRodjenjaVal, uloga, deleted}),
 					contentType: 'application/json',
 
