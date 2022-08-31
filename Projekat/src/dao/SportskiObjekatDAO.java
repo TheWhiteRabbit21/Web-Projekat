@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.StringTokenizer;
 
 import com.fasterxml.jackson.databind.DeserializationFeature;
@@ -154,8 +155,7 @@ public class SportskiObjekatDAO {
 		}
 		
 	}
-	
-	
+		
 	public void dodaj(SportskiObjekat s, String contextPath){
 
 		try
@@ -271,8 +271,6 @@ public class SportskiObjekatDAO {
 
 	}
 	
-	
-	
 	public Collection<SportskiObjekat> pretraziSportskeObjektePoNazivu(SportskiObjekat sportskiObjekat, String contextPath){
 
 		HashMap<String, SportskiObjekat> vrati = new HashMap<String, SportskiObjekat>();
@@ -302,7 +300,21 @@ public class SportskiObjekatDAO {
 
 	}
 	
-	
+	public SportskiObjekat prikaziSportskiObjekatMenadzer(String menadzer, String contextPath) {
+		
+		//KorisnikDAO dao = (KorisnikDAO) ctx.getAttribute("korisnikDAO");
+		
+		for(Map.Entry<String, SportskiObjekat> entry : sportskiObjekti.entrySet()) 
+		{
+			if(entry.getValue().getMenadzer().equals(menadzer)) {
+				return entry.getValue();
+			}
+		}
+		
+		return null;
+		
+		
+	}
 	
 	
 	

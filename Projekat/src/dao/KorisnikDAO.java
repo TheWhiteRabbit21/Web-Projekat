@@ -32,7 +32,7 @@ public class KorisnikDAO {
     private HashMap<String, Menadzer> menadzeri = new HashMap<>();
     
     private Korisnik trenutniKorisnik = new Korisnik();
-    
+
 	public KorisnikDAO() {
 		
 	}
@@ -135,6 +135,10 @@ public class KorisnikDAO {
     	
     	
     }
+    
+    public void setTrenutniKorisnik(Korisnik trenutniKorisnik) {
+		this.trenutniKorisnik = trenutniKorisnik;
+	}
     
     private void loadUsers(String contextPath) {
 		

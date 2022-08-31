@@ -51,7 +51,10 @@ public class LoginService {
 			//return Response.status(400).entity("Invalid username and/or password").build();
 			return null;
 		}
+		
+		korisnikDao.setTrenutniKorisnik(loggedUser);
 		request.getSession().setAttribute("korisnik", loggedUser);
+		
 		return loggedUser;
 		//return Response.status(200).build();
 	}

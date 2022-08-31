@@ -96,6 +96,40 @@ public class SportskiObjektiService {
 		return so;
 
 	}
+	
+	@GET
+	@Path("/prikaziSportskiObjekat/Menadzer")
+	@Produces(MediaType.APPLICATION_JSON)
+	public SportskiObjekat prikaziSportskiObjekatMenadzer(){
+
+		try{
+		SportskiObjekatDAO dao = (SportskiObjekatDAO) ctx.getAttribute("sportskiObjekatDAO");
+		KorisnikDAO daoK = (KorisnikDAO) ctx.getAttribute("korisnikDAO");
+		
+		String k = daoK.getTrenutniKorisnikUsername();
+			
+		//Korisnik ko = (Korisnik) ctx.getAttribute("korisnik");
+		
+		//System.out.println(sportskiObjekat);
+		String contextPath = ctx.getRealPath("");
+		SportskiObjekat so = dao.prikaziSportskiObjekatMenadzer(k, contextPath);
+
+		return so;
+		}
+		catch(Exception e){
+			System.out.println(e);
+			return null;
+		}
+		
+
+	}
+	
+	
+	
+	
+	
+	
+	
 
 	@GET
 	@Path("/pretraga/findTipObjekta/{pretragaString}")
@@ -153,6 +187,14 @@ public class SportskiObjektiService {
 		return so;
 
 	}
+	
+	
+	
+	
+	
+	
+	
+	
 	
 
 }
