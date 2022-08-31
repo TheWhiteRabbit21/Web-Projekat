@@ -53,7 +53,7 @@ public class SportskiObjekatDAO {
 	
 	private void loadSportskiObjekti(String contextPath) {
 		
-		String filePath = contextPath + "sportskiObjekti.json";
+		String filePath = contextPath + "/sportskiObjekti.json";
     	FileWriter fileWriter = null;
     	BufferedReader in = null;
     	File file = null;
@@ -117,7 +117,7 @@ public class SportskiObjekatDAO {
 			File file = new File(contextPath + "/sportskiObjekti.txt");
 			
 			//Ovo ispisuje putanju u konzolu
-			System.out.println(file.getCanonicalPath());
+			//System.out.println(file.getCanonicalPath());
 			
 			in = new BufferedReader(new FileReader(file));
 			String line, naziv = "", tipObjekta = "", sadrzaj = "", status = "", mapa = "";
@@ -161,7 +161,7 @@ public class SportskiObjekatDAO {
 		try
 		{
 			//System.out.println("usao u KorisnikDAO.dodaj");
-			System.out.println(contextPath);
+			//System.out.println(contextPath);
 			File file = new File(contextPath + "/sportskiObjekti.json");
 			ObjectMapper objectMapper = new ObjectMapper();
 
@@ -195,7 +195,6 @@ public class SportskiObjekatDAO {
 			ArrayList<SportskiObjekat> temp = new ArrayList<>();
 			
 			temp.add(s);
-			//trenutniKorisnik = k;
 			objectMapper.writeValue(new File(contextPath + "/sportskiObjekti.json"), temp);
 			
 			//System.out.println(ex);

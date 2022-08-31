@@ -34,6 +34,19 @@ public class Korisnik implements Serializable{
 		this.deleted = deleted;
 	}
 
+	public Korisnik(Korisnik k) {
+		super();
+		this.username = k.getUsername();
+		this.password = k.getPassword();
+		this.ime = k.getIme();
+		this.prezime = k.getPrezime();
+		this.pol = k.getPol();
+		this.datumRodjenja = k.getDatumRodjenja();
+		this.uloga = k.getUloga();
+		this.deleted = k.isDeleted();
+	}
+	
+	
 	public String getUsername() {
 		return username;
 	}

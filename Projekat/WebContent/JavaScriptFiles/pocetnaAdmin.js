@@ -72,7 +72,7 @@ $(document).ready(() => {
 			
 			
 			$.post({
-					url: 'rest/register',
+					url: 'rest/register/korisnik',
 					data: JSON.stringify({"username" : usernameVal, "password" : passwordVal, "ime" : imeVal, "prezime" : prezimeVal, pol, "datumRodjenja" : datumRodjenjaVal, uloga, deleted}),
 					contentType: 'application/json',
 
@@ -127,7 +127,7 @@ $(document).ready(() => {
 			$('#menadzer').append('<option value="1"></option>');
 			let counter = 2;
 			for(let menadzer of menadzeri){
-				if(menadzer.sportskiObjekat == null){
+				if(menadzer.sportskiObjekat == ''){
 					counter++;
 					addMenadzerOption(menadzer, counter);
 					menadzeriBezSO = true;
@@ -154,8 +154,10 @@ $(document).ready(() => {
 		let prosecnaOcena = $('#prosecnaOcena').val();
 		let radnoVreme = $('#radnoVreme').val();
 		
-		let menadzer = document.getElementById("menadzer").value;
-		let menadzerVal = $('#menadzer').val();
+		let menadzerNum = document.getElementById("menadzer").value;
+		
+		let menadzerProba = document.getElementById('menadzer');
+		let menadzer = menadzerProba.options[menadzerProba.selectedIndex].text;
 		
 		let menadzerUsername = $('#usernameMenadzer').val();
 		let menadzerPassword	= $('#passwordMenadzer').val();
@@ -165,22 +167,21 @@ $(document).ready(() => {
 		let menadzerPol	= $('#polMenadzer').val();
 		
 		
-		//window.alert(username);
-		//window.alert("salje post zahtev");
+		//window.alert(menadzer);
 		
 		console.log(JSON.stringify({naziv, tipObjekta, sadrzaj, 
-			status, mapa, logo, prosecnaOcena, radnoVreme, menadzerVal}))
+			status, mapa, logo, prosecnaOcena, radnoVreme, menadzer}))
 			
 		console.log(JSON.stringify({menadzerUsername, menadzerPassword, menadzerIme, 
 		menadzerPrezime, menadzerDatum, menadzerPol}))
 			
 		
-		if(menadzer != '1')
+		if(menadzerNum != '1')
 		{
 		$.post({
 				url: 'rest/dodajSportskiObjekat',
 				data: JSON.stringify({naziv, tipObjekta, sadrzaj, 
-					status, mapa, logo, prosecnaOcena, radnoVreme, menadzerVal}),
+					status, mapa, logo, prosecnaOcena, radnoVreme, menadzer}),
 				contentType: 'application/json',
 				success: function() {
 					$('#successDodajSO').text("Uspesno dodat novi sportski Objekat!");
@@ -216,7 +217,7 @@ $(document).ready(() => {
 			$.post({
 				url: 'rest/dodajSportskiObjekat',
 				data: JSON.stringify({naziv, tipObjekta, sadrzaj, 
-					status, mapa, logo, prosecnaOcena, radnoVreme, menadzerUsername}),
+					status, mapa, logo, prosecnaOcena, radnoVreme, "menadzer" : menadzerUsername}),
 				contentType: 'application/json',
 				success: function() {					
 					$('#successDodajSO').text("Uspesno dodat novi sportski Objekat!");

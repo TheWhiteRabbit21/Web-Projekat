@@ -16,6 +16,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import beans.SportskiObjekat;
+import dao.KorisnikDAO;
 import dao.SportskiObjekatDAO;
 
 @Path("/")
@@ -50,6 +51,7 @@ public class SportskiObjektiService {
 	public Response dodajSportskiObjekat(SportskiObjekat sportskiObjekat, @Context HttpServletRequest request) {
 		
 		SportskiObjekatDAO dao = (SportskiObjekatDAO) ctx.getAttribute("sportskiObjekatDAO");
+		KorisnikDAO kDao = (KorisnikDAO) ctx.getAttribute("korisnikDAO");
 		boolean postojiSportskiObjekat = dao.find(sportskiObjekat.getNaziv());
 		
 		System.out.println(postojiSportskiObjekat + " //dodaj klasa, ako true -> postoji vec sa tim imenom sportski objekat");
@@ -61,6 +63,7 @@ public class SportskiObjektiService {
 		
 		String contextPath = ctx.getRealPath("");
 		dao.dodaj(sportskiObjekat, contextPath);
+		kDao.dodeliSportskiObjekatMenadzeru(sportskiObjekat, contextPath);
 		
 		return Response.status(200).build();
 	}	

@@ -17,6 +17,7 @@ import beans.Korisnik;
 import beans.Kupac;
 import beans.Menadzer;
 import dao.KorisnikDAO;
+import enums.Uloga;
 
 @Path("/register")
 public class RegistracijaService {
@@ -35,6 +36,52 @@ public class RegistracijaService {
 		}
 	}
 
+    
+    
+    
+    
+    @POST
+	@Path("/korisnik")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response register(Korisnik korisnik, @Context HttpServletRequest request){
+
+		//System.out.println(korisnik);
+
+		KorisnikDAO korisnikDao = (KorisnikDAO) ctx.getAttribute("korisnikDAO");
+		boolean loggedUser = korisnikDao.find(korisnik.getUsername());
+		
+		System.out.println(loggedUser + " //register klasa, ako true -> postoji vec sa tim imenom korisnik");
+
+		if (loggedUser == true) {
+			//return Response.status(400).entity("Korisnicko ime vec postoji!").build();
+			return Response.status(400).build();
+		}
+
+		boolean ime=isValidExpression(korisnik.getIme());
+		boolean prezime=isValidExpression(korisnik.getPrezime());
+
+		if(!ime) return Response.status(401).build();
+		if(!prezime) return Response.status(402).build();
+
+		String contextPath = ctx.getRealPath("");
+		
+		if(korisnik.getUloga() == Uloga.MENADZER)
+		{
+			korisnikDao.dodajMenadzera(korisnik, contextPath);
+		}
+		if(korisnik.getUloga() == Uloga.TRENER)
+		{
+			//korisnikDao.dodajTrenera(korisnik, contextPath);
+		}
+		
+		return Response.status(200).build();
+	}
+    
+    
+    
+    
+    
 	@POST
 	@Path("/kupac")
 	@Consumes(MediaType.APPLICATION_JSON)
