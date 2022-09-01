@@ -1,4 +1,48 @@
-function addSportskiObjekatTr(sportskiObjekat) {
+var sportskiObjekti = new Vue({
+	el:'#tabelaSportskihObjekata',
+	data: {
+		sportskiObjekti: null,
+		selectedSportskiObjekat: {}
+	},
+	mounted () {
+        axios
+          .get('rest/sportskiObjekti')
+          .then(response => (this.sportskiObjekti = response.data))
+    },
+	methods: {
+		selectSportskiObjekat : function(sportskiObjekat){
+			this.selectedSportskiObjekat = sportskiObjekat;
+			
+			
+			$.post({
+				url: 'rest/sportskiObjekatPage',
+				data: JSON.stringify({"naziv" : this.selectedSportskiObjekat.naziv, 
+				"tipObjekta" : this.selectedSportskiObjekat.tipObjekta, "sadrzaj" : this.selectedSportskiObjekat.sadrzaj,
+				 "status" : this.selectedSportskiObjekat.status, "mapa" : this.selectedSportskiObjekat.mapa, 
+				 "logo" : this.selectedSportskiObjekat.logo, "prosecnaOcena" : this.selectedSportskiObjekat.prosecnaOcena,
+				 "radnoVreme" : this.selectedSportskiObjekat.radnoVreme}),
+				contentType: 'application/json',
+				
+				success: function() {
+				
+				window.location="sportskiObjekatPage.html";
+				
+				}
+			});
+		}
+	}
+	
+	
+	
+	
+	
+	
+	
+});
+
+
+
+/*function addSportskiObjekatTr(sportskiObjekat) {
 	let tr = $('<tr></tr>');
 	let tdNaziv = $('<td>' + sportskiObjekat.naziv + '</td>');
 	let tdTipObjekta = $('<td>' + sportskiObjekat.tipObjekta + '</td>');
@@ -11,11 +55,15 @@ function addSportskiObjekatTr(sportskiObjekat) {
 	let tdMenadzer = $('<td>' + sportskiObjekat.menadzer + '</td>');
 	
 	tr.append(tdNaziv).append(tdTipObjekta).append(tdSadrzaj).append(tdStatus).append(tdMapa).append(tdLogo).append(tdProsecnaOcena).append(tdRadnoVreme).append(tdMenadzer);
-	//tr.click(clickClosure(sportskiObjekat));
 	$('#tabelaSportskihObjekata tbody').append(tr);
+	//tr.click(clickClosure(sportskiObjekat));
 }
 
 $(document).ready(function() {
+	
+	
+	
+	
 	$.get({
 		url: 'rest/sportskiObjekti',
         success: function(sportskiObjekti) {
@@ -24,4 +72,10 @@ $(document).ready(function() {
 			}
 		}
 	});
-});
+	
+	
+	
+	
+});*/
+
+

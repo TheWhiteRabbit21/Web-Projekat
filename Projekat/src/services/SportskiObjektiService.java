@@ -97,6 +97,36 @@ public class SportskiObjektiService {
 
 	}
 	
+	
+	
+	@GET
+	@Path("/prikaziSportskiObjekat")
+	@Produces(MediaType.APPLICATION_JSON)
+	public SportskiObjekat prikaziSportskiObjekat(){
+
+		try
+		{
+		SportskiObjekatDAO dao = (SportskiObjekatDAO) ctx.getAttribute("sportskiObjekatDAO");
+
+		//System.out.println(sportskiObjekat);
+		
+		String contextPath = ctx.getRealPath("");
+		
+		SportskiObjekat so = dao.getSportskiObjekatZaPrikazati(contextPath);
+
+		return so;
+		}
+		catch(Exception e){
+			System.out.println(e);
+			return null;
+		}
+		
+
+	}
+	
+	
+	
+	
 	@GET
 	@Path("/prikaziSportskiObjekat/Menadzer")
 	@Produces(MediaType.APPLICATION_JSON)
@@ -123,13 +153,6 @@ public class SportskiObjektiService {
 		
 
 	}
-	
-	
-	
-	
-	
-	
-	
 
 	@GET
 	@Path("/pretraga/findTipObjekta/{pretragaString}")
@@ -189,7 +212,18 @@ public class SportskiObjektiService {
 	}
 	
 	
-	
+	@POST
+	@Path("/sportskiObjekatPage")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response prikaziSportskiObjekat(SportskiObjekat sportskiObjekat, @Context HttpServletRequest request) {
+		
+		SportskiObjekatDAO dao = (SportskiObjekatDAO) ctx.getAttribute("sportskiObjekatDAO");
+		String contextPath = ctx.getRealPath("");
+		dao.setSportskiObjekatZaPrikazati(sportskiObjekat, contextPath);
+		
+		return Response.status(200).build();
+	}	
 	
 	
 	

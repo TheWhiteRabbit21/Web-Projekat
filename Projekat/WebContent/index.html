@@ -5,7 +5,6 @@
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
 <link rel="stylesheet" type="text/css" href="CSSFiles/styles.css">
 <script type="text/javascript" src="JavaScriptFiles/jquery-3.3.1.min.js"></script>
-<script type="text/javascript" src="JavaScriptFiles/index.js"></script>
 <title>Pocetna stranica</title>
 
 </head>
@@ -34,7 +33,18 @@
 				</tr>
 			</thead>
 			<tbody>
-			
+				<tr v-for="so in sportskiObjekti" v-on:click="selectSportskiObjekat(so)" 
+				v-bind:class="{selected:selectedSportskiObjekat.naziv===so.naziv}"> 
+					<td>{{so.naziv}}</td>
+					<td>{{so.tipObjekta}}</td>
+					<td>{{so.sadrzaj}}</td>
+					<td>{{so.status}}</td>
+					<td>{{so.mapa}}</td>
+					<td>{{so.logo}}</td>
+					<td>{{so.prosecnaOcena}}</td>
+					<td>{{so.radnoVreme}}</td>
+					<td>{{so.menadzer}}</td>
+				</tr>
 			</tbody>
 			
 		</table>
@@ -42,6 +52,10 @@
 	
 	
 	
+	<script type="text/javascript" src="JavaScriptFiles/vue.js"></script>
+	<script type="text/javascript" src="JavaScriptFiles/axios.js"></script>
+	<script type="text/javascript" src="JavaScriptFiles/moment.min.js"></script>
+	<script type="text/javascript" src="JavaScriptFiles/index.js"></script>
 	
 </body>
 </html>

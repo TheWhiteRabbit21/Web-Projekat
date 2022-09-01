@@ -5,6 +5,8 @@ tr {
 	cursor: pointer;
 }
 
+tr:hover td {background:aliceblue;}
+
 th {
 	padding: 5px;
 }

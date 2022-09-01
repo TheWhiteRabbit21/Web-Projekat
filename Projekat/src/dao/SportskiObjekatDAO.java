@@ -22,6 +22,7 @@ public class SportskiObjekatDAO {
 	private String ctx;
 	
 	private HashMap<String, SportskiObjekat> sportskiObjekti = new HashMap<String, SportskiObjekat>();
+	private SportskiObjekat sportskiObjekatZaPrikazati = new SportskiObjekat();
 	
 	public SportskiObjekatDAO() {
 		
@@ -314,6 +315,19 @@ public class SportskiObjekatDAO {
 		return null;
 		
 		
+	}
+
+	public void setSportskiObjekatZaPrikazati(SportskiObjekat sportskiObjekat, String contextPath) {
+
+		sportskiObjekatZaPrikazati = sportskiObjekat;
+		
+		
+		
+	}
+
+	public SportskiObjekat getSportskiObjekatZaPrikazati(String contextPath) {
+
+		return sportskiObjekatZaPrikazati;
 	}
 	
 	
