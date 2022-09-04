@@ -17,7 +17,7 @@ var sportskiObjekti = new Vue({
 			$.post({
 				url: 'rest/sportskiObjekatPage',
 				data: JSON.stringify({"naziv" : this.selectedSportskiObjekat.naziv, 
-				"tipObjekta" : this.selectedSportskiObjekat.tipObjekta, "sadrzaj" : this.selectedSportskiObjekat.sadrzaj,
+				"tipObjekta" : this.selectedSportskiObjekat.tipObjekta,
 				 "status" : this.selectedSportskiObjekat.status, "mapa" : this.selectedSportskiObjekat.mapa, 
 				 "logo" : this.selectedSportskiObjekat.logo, "prosecnaOcena" : this.selectedSportskiObjekat.prosecnaOcena,
 				 "radnoVreme" : this.selectedSportskiObjekat.radnoVreme}),

@@ -1,13 +1,14 @@
 package beans;
 
 import java.io.Serializable;
+import java.util.Collection;
 
 @SuppressWarnings("serial")
 public class SportskiObjekat implements Serializable{
 
 	private String naziv;
 	private String tipObjekta;
-	private String sadrzaj;	//grupni/personalni treninzi, sauna itd.
+	private Collection<String> sadrzaj;	//grupni/personalni treninzi, sauna itd.
 	private String status;	//radi/ne radi
 	private String mapa;	
 	private String logo;	
@@ -19,8 +20,8 @@ public class SportskiObjekat implements Serializable{
 		super();
 	}
 	
-	public SportskiObjekat(String naziv, String tipObjekta, String sadrzaj, String status, String mapa,
-			String logo, double prosecnaOcena, String radnoVreme, String menadzer) {
+	public SportskiObjekat(String naziv, String tipObjekta, Collection<String> sadrzaj, 
+			String status, String mapa,	String logo, double prosecnaOcena, String radnoVreme, String menadzer) {
 		this.naziv = naziv;
 		this.tipObjekta = tipObjekta;
 		this.sadrzaj = sadrzaj;
@@ -61,10 +62,10 @@ public class SportskiObjekat implements Serializable{
 	public void setTipObjekta(String tipObjekta) {
 		this.tipObjekta = tipObjekta;
 	}
-	public String getSadrzaj() {
+	public Collection<String> getSadrzaj() {
 		return sadrzaj;
 	}
-	public void setSadrzaj(String sadrzaj) {
+	public void setSadrzaj(Collection<String> sadrzaj) {
 		this.sadrzaj = sadrzaj;
 	}
 	public String getStatus() {

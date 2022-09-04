@@ -147,8 +147,9 @@ $(document).ready(() => {
 		event.preventDefault();
 		let naziv = $('#naziv').val();
 		let tipObjekta = $('#tipObjekta').val();
-		let sadrzaj = $('#sadrzaj').val();
-		let status = $('#status').val();
+		//let sadrzaj = $('#sadrzaj').val();
+		//let sadrzaj = "";
+		let status = "radi";
 		let mapa = $('#mapa').val();
 		let logo = $('#logo').val();
 		let prosecnaOcena = $('#prosecnaOcena').val();
@@ -160,7 +161,7 @@ $(document).ready(() => {
 		let menadzer = menadzerProba.options[menadzerProba.selectedIndex].text;
 		
 		let menadzerUsername = $('#usernameMenadzer').val();
-		let menadzerPassword	= $('#passwordMenadzer').val();
+		let menadzerPassword = $('#passwordMenadzer').val();
 		let menadzerIme	= $('#imeMenadzer').val();
 		let menadzerPrezime = $('#prezimeMenadzer').val();
 		let menadzerDatum	= $('#datumMenadzer').val();
@@ -169,7 +170,7 @@ $(document).ready(() => {
 		
 		//window.alert(menadzer);
 		
-		console.log(JSON.stringify({naziv, tipObjekta, sadrzaj, 
+		console.log(JSON.stringify({naziv, tipObjekta, /*sadrzaj, */
 			status, mapa, logo, prosecnaOcena, radnoVreme, menadzer}))
 			
 		console.log(JSON.stringify({menadzerUsername, menadzerPassword, menadzerIme, 
@@ -180,7 +181,7 @@ $(document).ready(() => {
 		{
 		$.post({
 				url: 'rest/dodajSportskiObjekat',
-				data: JSON.stringify({naziv, tipObjekta, sadrzaj, 
+				data: JSON.stringify({naziv, tipObjekta, /*sadrzaj, */
 					status, mapa, logo, prosecnaOcena, radnoVreme, menadzer}),
 				contentType: 'application/json',
 				success: function() {

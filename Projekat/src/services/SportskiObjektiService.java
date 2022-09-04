@@ -1,5 +1,6 @@
 package services;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 import javax.annotation.PostConstruct;
@@ -16,6 +17,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import beans.SportskiObjekat;
+import beans.Trening;
 import dao.KorisnikDAO;
 import dao.SportskiObjekatDAO;
 
@@ -61,12 +63,44 @@ public class SportskiObjektiService {
 			return Response.status(400).build();
 		}
 		
+		if(sportskiObjekat.getSadrzaj() == null) {
+			sportskiObjekat.setSadrzaj(new ArrayList<String>());
+		}
+		
 		String contextPath = ctx.getRealPath("");
 		dao.dodaj(sportskiObjekat, contextPath);
 		kDao.dodeliSportskiObjekatMenadzeru(sportskiObjekat, contextPath);
 		
 		return Response.status(200).build();
 	}	
+	
+	
+	@POST
+	@Path("/dodajSadrzaj")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response dodajSadrzaj(Trening trening, @Context HttpServletRequest request) {
+		
+		SportskiObjekatDAO dao = (SportskiObjekatDAO) ctx.getAttribute("sportskiObjekatDAO");
+		//KorisnikDAO kDao = (KorisnikDAO) ctx.getAttribute("korisnikDAO");
+		boolean postojiSadrzaj = dao.find(trening.getNaziv());
+		
+		System.out.println(postojiSadrzaj + " //dodaj klasa, ako true -> postoji vec sa tim imenom sadrzaj");
+
+		if (postojiSadrzaj == true) {
+			//return Response.status(400).entity("Korisnicko ime vec postoji!").build();
+			return Response.status(400).build();
+		}
+		
+		String contextPath = ctx.getRealPath("");
+		dao.dodajSadrzaj(trening, contextPath);
+		//kDao.dodeliSportskiObjekatMenadzeru(sportskiObjekat, contextPath);
+		
+		return Response.status(200).build();
+	}	
+	
+	
+	
 	
 	@GET
 	@Path("/pretraga/{pretragaString}")
@@ -115,6 +149,32 @@ public class SportskiObjektiService {
 		SportskiObjekat so = dao.getSportskiObjekatZaPrikazati(contextPath);
 
 		return so;
+		}
+		catch(Exception e){
+			System.out.println(e);
+			return null;
+		}
+		
+
+	}
+	
+	
+	
+	@GET
+	@Path("/sadrzajSportskogObjekta")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Collection<Trening> getSadrzajSportskogObjekta(){
+		
+		try{
+			SportskiObjekatDAO dao = (SportskiObjekatDAO) ctx.getAttribute("sportskiObjekatDAO");
+
+			//System.out.println(sportskiObjekat);
+		
+			String contextPath = ctx.getRealPath("");
+		
+			Collection<Trening> so = dao.getSadrzajSportskogObjekta(contextPath);
+
+			return so;
 		}
 		catch(Exception e){
 			System.out.println(e);
@@ -220,6 +280,11 @@ public class SportskiObjektiService {
 		
 		SportskiObjekatDAO dao = (SportskiObjekatDAO) ctx.getAttribute("sportskiObjekatDAO");
 		String contextPath = ctx.getRealPath("");
+		
+		if(sportskiObjekat.getSadrzaj() == null) {
+			sportskiObjekat.setSadrzaj(new ArrayList<String>());
+		}
+		
 		dao.setSportskiObjekatZaPrikazati(sportskiObjekat, contextPath);
 		
 		return Response.status(200).build();
