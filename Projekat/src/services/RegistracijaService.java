@@ -16,6 +16,7 @@ import javax.ws.rs.core.Response;
 import beans.Korisnik;
 import beans.Kupac;
 import beans.Menadzer;
+import beans.Trener;
 import dao.KorisnikDAO;
 import enums.Uloga;
 
@@ -35,10 +36,6 @@ public class RegistracijaService {
 			ctx.setAttribute("korisnikDAO", new KorisnikDAO(contextPath));
 		}
 	}
-
-    
-    
-    
     
     @POST
 	@Path("/korisnik")
@@ -66,13 +63,13 @@ public class RegistracijaService {
 
 		String contextPath = ctx.getRealPath("");
 		
-		if(korisnik.getUloga() == Uloga.MENADZER)
+		if(korisnik.getUloga().equals(Uloga.MENADZER))
 		{
 			korisnikDao.dodajMenadzera(korisnik, contextPath);
 		}
-		if(korisnik.getUloga() == Uloga.TRENER)
+		if(korisnik.getUloga().equals(Uloga.TRENER))
 		{
-			//korisnikDao.dodajTrenera(korisnik, contextPath);
+			korisnikDao.dodajTrenera(korisnik, contextPath);
 		}
 		
 		return Response.status(200).build();
@@ -118,7 +115,7 @@ public class RegistracijaService {
 	@Path("/menadzer")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response register(Menadzer menadzer, @Context HttpServletRequest request){
+	public Response registerMenadzer(Menadzer menadzer, @Context HttpServletRequest request){
 
 		//System.out.println(korisnik);
 
@@ -145,15 +142,36 @@ public class RegistracijaService {
 		return Response.status(200).build();
 	}
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+	@POST
+	@Path("/trener")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response registerTrener(Trener trener, @Context HttpServletRequest request){
+
+		//System.out.println(korisnik);
+
+		KorisnikDAO korisnikDao = (KorisnikDAO) ctx.getAttribute("korisnikDAO");
+		boolean loggedUser = korisnikDao.find(trener.getUsername());
+		
+		System.out.println(loggedUser + " //register klasa, ako true -> postoji vec sa tim imenom korisnik");
+
+		if (loggedUser == true) {
+			//return Response.status(400).entity("Korisnicko ime vec postoji!").build();
+			return Response.status(400).build();
+		}
+
+		boolean ime=isValidExpression(trener.getIme());
+		boolean prezime=isValidExpression(trener.getPrezime());
+
+		if(!ime) return Response.status(401).build();
+		if(!prezime) return Response.status(402).build();
+
+		String contextPath = ctx.getRealPath("");
+		//korisnikDao.dodaj(menadzer, contextPath);
+		korisnikDao.dodajTrenera(trener, contextPath);
+		
+		return Response.status(200).build();
+	}
 	
 	
 	

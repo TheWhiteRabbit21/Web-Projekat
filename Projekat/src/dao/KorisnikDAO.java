@@ -18,6 +18,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import beans.Korisnik;
 import beans.Menadzer;
 import beans.SportskiObjekat;
+import beans.Trener;
 import enums.Pol;
 import enums.Uloga;
 
@@ -30,6 +31,8 @@ public class KorisnikDAO {
     private HashMap<String, Korisnik> korisnici = new HashMap<>();
     
     private HashMap<String, Menadzer> menadzeri = new HashMap<>();
+    private HashMap<String, Trener> treneri = new HashMap<>();
+    
     
     private Korisnik trenutniKorisnik = new Korisnik();
 
@@ -58,15 +61,7 @@ public class KorisnikDAO {
 	}
 	
 	public Collection<Menadzer> findAllMenadzere(){
-		
-//    	for(Map.Entry<String, Korisnik> entry : korisnici.entrySet())
-//			System.out.println("Key = " + entry.getKey() +
-//					", Username = " + entry.getValue().getUsername());
-//		
-//		System.out.println("--------------------------------");
-//
-//		System.out.println("prosledjen username find funkciji: " + username);
-		
+
 		Collection<Menadzer> temp = new ArrayList<Menadzer>();
 		
 		for(Map.Entry<String, Menadzer> entry : menadzeri.entrySet()) 
@@ -76,7 +71,19 @@ public class KorisnikDAO {
 		
 		return temp;
 	}
-		
+	
+	public Collection<Trener> findAllTrenere() {
+    	
+    	Collection<Trener> temp = new ArrayList<Trener>();
+    	
+    	for(Map.Entry<String, Trener> entry : treneri.entrySet())
+    	{
+    		temp.add(entry.getValue());
+    	}    	
+    	
+    	return temp;
+    }
+	
 	public Korisnik find(String username, String password) {
 		
 		loadUsers(ctx);
@@ -92,7 +99,6 @@ public class KorisnikDAO {
 	}
 
     public boolean find(String username) {
-    	
     	
 //    	for(Map.Entry<String, Korisnik> entry : korisnici.entrySet())
 //			System.out.println("Key = " + entry.getKey() +
@@ -113,15 +119,7 @@ public class KorisnikDAO {
 	}
 
     public Menadzer findMenadzer(String username) {
-    	
-//    	for(Map.Entry<String, Korisnik> entry : korisnici.entrySet())
-//			System.out.println("Key = " + entry.getKey() +
-//					", Username = " + entry.getValue().getUsername());
-//		
-//		System.out.println("--------------------------------");
-//
-//		System.out.println("prosledjen username find funkciji: " + username);
-    	
+    		
     	for(Map.Entry<String, Menadzer> entry : menadzeri.entrySet())
     	{
     		if(entry.getKey() == username)
@@ -131,9 +129,7 @@ public class KorisnikDAO {
     	}    	
     	
     	return null;
-    	
-    	
-    	
+    		
     }
     
     public void setTrenutniKorisnik(Korisnik trenutniKorisnik) {
@@ -161,7 +157,7 @@ public class KorisnikDAO {
 
 			for(Korisnik k : ko)
 			{
-				korisnici.put(k.getUsername(),k);
+				korisnici.put(k.getUsername(), k);
 			}
 			
 		} catch (FileNotFoundException fnfe) {
@@ -198,7 +194,7 @@ public class KorisnikDAO {
     	    	
     	loadAdministrators(contextPath);
     	loadMenadzers(contextPath);
-    	
+    	loadTrenere(contextPath);
 
     }
 
@@ -225,7 +221,7 @@ public class KorisnikDAO {
 
 			for(Menadzer m : me)
 			{
-				menadzeri.put(m.getUsername(),m);
+				menadzeri.put(m.getUsername(), m);
 			}
 			
 		} catch (FileNotFoundException fnfe) {
@@ -264,6 +260,65 @@ public class KorisnikDAO {
     	
     }
    
+    public void loadTrenere(String contextPath) {
+    	
+    	String filePath = contextPath + "treneri.json";
+    	FileWriter fileWriter = null;
+    	BufferedReader in = null;
+    	File file = null;
+    	
+    	treneri.clear();
+    	
+    	try {
+			file = new File(filePath);
+    		in = new BufferedReader(new FileReader(file));
+    		
+    		ObjectMapper objectMapper = new ObjectMapper();
+			objectMapper.configure(DeserializationFeature.ACCEPT_SINGLE_VALUE_AS_ARRAY, true);
+			objectMapper.configure(DeserializationFeature.ACCEPT_EMPTY_STRING_AS_NULL_OBJECT, true);
+			
+			Trener[] te = objectMapper.readValue(file, Trener[].class);
+
+			for(Trener t : te)
+			{
+				treneri.put(t.getUsername(), t);
+			}
+			
+		} catch (FileNotFoundException fnfe) {
+			try {
+				if(file.createNewFile()) {
+					System.out.println("File created: " + file.getName());
+				}
+				else {
+					System.out.println("File not created");
+				}
+				
+			} catch (IOException e) {
+				e.printStackTrace();
+			}finally {
+				if (fileWriter != null) {
+					try {
+						fileWriter.close();
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				}
+			}
+		}	catch (Exception ex) {
+			ex.printStackTrace();
+		} finally {
+			if (in != null) {
+				try {
+					in.close();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		}
+    	
+    }
+    
+    
 	public void dodaj(Korisnik k, String contextPath){
 
 		try
@@ -392,12 +447,6 @@ public class KorisnikDAO {
 			
 		}
 		
-		
-		
-		
-		
-		
-		
 	}
 	
 	public void dodajMenadzera(Menadzer m, String contextPath) {
@@ -425,7 +474,8 @@ public class KorisnikDAO {
 			
 			menadzeri.put(m.getUsername(), m);
 			
-			Korisnik tempK = new Korisnik(m.getUsername(), m.getPassword(), m.getIme(), m.getPrezime(), m.getPol(), m.getDatumRodjenja(), Uloga.MENADZER, false);
+			Korisnik tempK = new Korisnik(m.getUsername(), m.getPassword(), m.getIme(), m.getPrezime(), 
+					m.getPol(), m.getDatumRodjenja(), Uloga.MENADZER, false);
 			dodaj(tempK, contextPath);
 			
 			//loadUsers(contextPath);
@@ -449,7 +499,80 @@ public class KorisnikDAO {
 			
 			menadzeri.put(m.getUsername(), m);
 			
-			Korisnik tempK = new Korisnik(m.getUsername(), m.getPassword(), m.getIme(), m.getPrezime(), m.getPol(), m.getDatumRodjenja(), Uloga.MENADZER, false);
+			Korisnik tempK = new Korisnik(m.getUsername(), m.getPassword(), m.getIme(), m.getPrezime(), 
+					m.getPol(), m.getDatumRodjenja(), Uloga.MENADZER, false);
+			dodaj(tempK, contextPath);
+			//System.out.println(ex);
+			//ex.printStackTrace();
+			
+			}catch (IOException e) {
+				
+			} finally {
+				
+			}
+		} finally {
+			
+		}
+		
+	}
+	
+	public void dodajTrenera(Korisnik km, String contextPath) {
+		
+		try
+		{
+			
+			File file = new File(contextPath + "/treneri.json");
+			ObjectMapper objectMapper = new ObjectMapper();
+
+			objectMapper.configure(DeserializationFeature.ACCEPT_SINGLE_VALUE_AS_ARRAY, true);
+			objectMapper.configure(DeserializationFeature.ACCEPT_EMPTY_STRING_AS_NULL_OBJECT, true);
+			ArrayList<Trener> temp = new ArrayList<>();
+			//trenutniKorisnik = k;
+
+			Trener[] te = objectMapper.readValue(file, Trener[].class);
+			//System.out.println("register User: "+ car);
+			
+			for(Trener g : te)
+			{
+				temp.add(g);
+			}
+			
+			Trener t = new Trener(km);
+			
+			temp.add(t);
+			objectMapper.writeValue(new File(contextPath + "/treneri.json"), temp);
+			
+			treneri.put(t.getUsername(), t);
+			
+			Korisnik tempK = new Korisnik(t.getUsername(), t.getPassword(), t.getIme(), t.getPrezime(), 
+					t.getPol(), t.getDatumRodjenja(), Uloga.TRENER, false);
+			dodaj(tempK, contextPath);
+			
+			//loadUsers(contextPath);
+			//Korisnik r = korisnici.put(k.getUsername(), k);
+			//System.out.println(korisnici);
+
+		}
+		catch (Exception ex) {
+			
+			try {
+			
+			//System.out.println("usao u catch exception KorisnikDAO.dodajMenadzera");
+			ObjectMapper objectMapper = new ObjectMapper();
+
+			objectMapper.configure(DeserializationFeature.ACCEPT_SINGLE_VALUE_AS_ARRAY, true);
+			objectMapper.configure(DeserializationFeature.ACCEPT_EMPTY_STRING_AS_NULL_OBJECT, true);
+			ArrayList<Trener> temp = new ArrayList<>();
+			
+			Trener t = new Trener(km);
+			
+			temp.add(t);
+			objectMapper.writeValue(new File(contextPath + "/treneri.json"), temp);
+			
+			treneri.put(t.getUsername(), t);
+			
+			Korisnik tempK = new Korisnik(t.getUsername(), t.getPassword(), t.getIme(), t.getPrezime(), 
+					t.getPol(), t.getDatumRodjenja(), Uloga.TRENER, false);
 			dodaj(tempK, contextPath);
 			//System.out.println(ex);
 			//ex.printStackTrace();

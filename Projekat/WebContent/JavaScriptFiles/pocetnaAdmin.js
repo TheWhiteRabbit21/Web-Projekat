@@ -125,7 +125,7 @@ $(document).ready(() => {
 		success: function(menadzeri){
 			//ovde dodati prvi red za value=1
 			$('#menadzer').append('<option value="1"></option>');
-			let counter = 2;
+			let counter = 1;
 			for(let menadzer of menadzeri){
 				if(menadzer.sportskiObjekat == ''){
 					counter++;

@@ -12,6 +12,7 @@ import javax.ws.rs.core.MediaType;
 
 import beans.Korisnik;
 import beans.Menadzer;
+import beans.Trener;
 import dao.KorisnikDAO;
 
 @Path("/")
@@ -48,7 +49,13 @@ public class KorisniciService {
 		return dao.findAllMenadzere();
 	}
 	
-	
+	@GET
+	@Path("/treneri")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Collection<Trener> getTrenere() {
+		KorisnikDAO dao = (KorisnikDAO) ctx.getAttribute("korisnikDAO");
+		return dao.findAllTrenere();
+	}
 	
 	
 	

@@ -43,10 +43,41 @@
 	
 	<!-- ------------------------------------------------------------------------------------ -->
 	
+	<div>
 	
+	<h3>Dodavanje novog sadrzaja:</h3><br/>
 	
+	<form id="dodajSadrzajForm">
+	<table>
 	
+		<tr><td>Naziv:* </td>
+			<td><input class="obaveznoPolje" type="text" id="naziv"></td></tr>
+		<tr><td>Tip:* </td>
+			<td><input class="obaveznoPolje" type="text" id="tip"></td></tr>
+		<tr><td>Sportski objekat: </td>
+			<td><label id="sportskiObjekatNaziv"></label></tr>
+		<tr><td>Slika:* </td>
+			<td><input class="obaveznoPolje" type="text" id="slika"></td></tr>
+		<tr><td>Trajanje: </td>
+			<td><input type="text" id="trajanje"></td></tr>
+		<tr><td>Opis: </td>
+			<td><input type="text" id="opis"></td></tr>
+		<tr><td>Trener koji drzi trening: </td>
+			<td><select id="trener">
+    			
+			</select></td>	
+		
+		<tr><td><button type="submit">Dodaj Novi Sadrzaj</button></td></tr>
+	</table>
 	
+	<p> Polja oznacena sa * se <b><em>moraju</em></b> popuniti. </p>
+
+	<p id="errorSadrzaj"></p>
+	<p id="successSadrzaj"></p>
+
+	</form>
+	
+	</div>
 	
 	
 	

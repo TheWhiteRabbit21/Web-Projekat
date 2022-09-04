@@ -13,11 +13,64 @@ function addSportskiObjekatTr(sportskiObjekat) {
 	$('#tabelaSportskogObjekta tbody').append(tr);
 }
 
+function addTreneri(trener, counter){		
+	let option = $('<option value="' + counter + '">' + trener.username +'</option>');
+	$('#trener').append(option);
+}
+
 $(document).ready(function() {
+	
 	$.get({
 		url: 'rest/prikaziSportskiObjekat/Menadzer',
         success: function(sportskiObjekat) {
 			addSportskiObjekatTr(sportskiObjekat);
+			$('#sportskiObjekatNaziv').append(sportskiObjekat.naziv);
 		}
 	});
+	
+	$.get({
+		url: 'rest/treneri',
+        success: function(treneri) {
+			$('#trener').append('<option value="1"></option>');
+			let counter = 1;
+			for(let trener of treneri){
+				addTreneri(trener, counter);
+			}
+		}
+	});
+	
+	
+	$('#dodajSadrzajForm').submit((event) => {
+		
+		event.preventDefault();
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 });
