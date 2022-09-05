@@ -36,6 +36,7 @@ public class SportskiObjekatDAO {
 	
 	public SportskiObjekatDAO(String contextPath) {
 		loadSportskiObjekti(contextPath);
+		loadSadrzaj(contextPath);
 		ctx = contextPath;
 	}
 	
@@ -276,28 +277,25 @@ public class SportskiObjekatDAO {
 		
 		try
 		{
-			//System.out.println("usao u KorisnikDAO.dodaj");
-			//System.out.println(contextPath);
 			File file = new File(contextPath + "/sadrzaj.json");
 			ObjectMapper objectMapper = new ObjectMapper();
 
 			objectMapper.configure(DeserializationFeature.ACCEPT_SINGLE_VALUE_AS_ARRAY, true);
 			objectMapper.configure(DeserializationFeature.ACCEPT_EMPTY_STRING_AS_NULL_OBJECT, true);
 			ArrayList<Trening> temp = new ArrayList<>();
-			//trenutniKorisnik = k;
 
 			Trening[] tr = objectMapper.readValue(file, Trening[].class);
-			//System.out.println("register User: "+ car);
 			
 			for(Trening g : tr)
 			{
 				temp.add(g);
 			}
+			
 			temp.add(trening);
 			objectMapper.writeValue(new File(contextPath + "/sadrzaj.json"), temp);
 			
 			loadSadrzaj(contextPath);
-
+			upisiSadrzajUSportskiObjekat(trening, contextPath);
 		}
 		catch (Exception ex) {
 			
@@ -317,6 +315,7 @@ public class SportskiObjekatDAO {
 			//ex.printStackTrace();
 			
 			loadSadrzaj(contextPath);
+			upisiSadrzajUSportskiObjekat(trening, contextPath);
 			
 			}catch (IOException e) {
 				
@@ -444,12 +443,57 @@ public class SportskiObjekatDAO {
 		return sportskiObjekatZaPrikazati;
 	}
 
-	
 	public Collection<Trening> getSadrzajSportskogObjekta(String contextPath) {
 		return sadrzaj.values();
 	}
 
-	
+	public void upisiSadrzajUSportskiObjekat(Trening trening, String contextPath) {
+		
+		Collection<String> tempSadrzaj = new ArrayList<String>();
+		tempSadrzaj.add(trening.getNaziv());
+		
+		for(Map.Entry<String, SportskiObjekat> entry : sportskiObjekti.entrySet())
+    	{
+    		if(entry.getKey().equals(trening.getSportskiObjekat()))
+    		{
+    			if(entry.getValue().getSadrzaj().isEmpty())
+    			{
+    				entry.getValue().setSadrzaj(tempSadrzaj);
+    			}
+    			else{
+    				entry.getValue().getSadrzaj().add(trening.getNaziv());
+    			}
+    				
+    		}
+    	}
+		
+		upisiSportskeObjekteUFajl(contextPath);
+	}
+
+	public void upisiSportskeObjekteUFajl(String contextPath) {
+		
+		try
+		{
+		ObjectMapper objectMapper = new ObjectMapper();
+
+		objectMapper.configure(DeserializationFeature.ACCEPT_SINGLE_VALUE_AS_ARRAY, true);
+		objectMapper.configure(DeserializationFeature.ACCEPT_EMPTY_STRING_AS_NULL_OBJECT, true);
+		
+		objectMapper.writeValue(new File(contextPath + "/sportskiObjekti.json"), sportskiObjekti);
+		}
+		
+		catch (Exception ex) {
+			System.out.println(ex);
+			ex.printStackTrace();
+			
+		} finally {
+			
+		}
+		
+		
+		
+		
+	}
 	
 	
 	

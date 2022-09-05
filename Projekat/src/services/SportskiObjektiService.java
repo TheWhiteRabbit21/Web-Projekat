@@ -82,7 +82,6 @@ public class SportskiObjektiService {
 	public Response dodajSadrzaj(Trening trening, @Context HttpServletRequest request) {
 		
 		SportskiObjekatDAO dao = (SportskiObjekatDAO) ctx.getAttribute("sportskiObjekatDAO");
-		//KorisnikDAO kDao = (KorisnikDAO) ctx.getAttribute("korisnikDAO");
 		boolean postojiSadrzaj = dao.find(trening.getNaziv());
 		
 		System.out.println(postojiSadrzaj + " //dodaj klasa, ako true -> postoji vec sa tim imenom sadrzaj");
@@ -94,7 +93,6 @@ public class SportskiObjektiService {
 		
 		String contextPath = ctx.getRealPath("");
 		dao.dodajSadrzaj(trening, contextPath);
-		//kDao.dodeliSportskiObjekatMenadzeru(sportskiObjekat, contextPath);
 		
 		return Response.status(200).build();
 	}	

@@ -32,18 +32,21 @@ function addTreneri(trener, counter){
 
 $(document).ready(function() {
 	
+	var sportskiObjekat = "";
+	
 	$.get({
 		url: 'rest/prikaziSportskiObjekat/Menadzer',
-        success: function(sportskiObjekat) {
-			addSportskiObjekatTr(sportskiObjekat);
-			$('#sportskiObjekatNaziv').append(sportskiObjekat.naziv);
+        success: function(so) {
+			addSportskiObjekatTr(so);
+			$('#sportskiObjekatNaziv').append(so.naziv);
+			sportskiObjekat = so.naziv;
 		}
 	});
 	
 	$.get({
 		url: 'rest/treneri',
         success: function(treneri) {
-			$('#trener').append('<option value="1"></option>');
+			$('#trener').append('<option value="1">-</option>');
 			let counter = 1;
 			for(let trener of treneri){
 				addTreneri(trener, counter);
@@ -66,32 +69,31 @@ $(document).ready(function() {
 		event.preventDefault();
 		let naziv = $('#naziv').val();
 		let tip = $('#tip').val();
-		let sportskiObjekat = $('#sportskiObjekatNaziv').val();
+		//let sportskiObjekatNaziv = $('#sportskiObjekatNaziv').val();
 		let slika = $('#slika').val();
 		let trajanje = $('#trajanje').val();
 		let opis = $('#opis').val();
 		
-		let trenerNum = document.getElementById('trener').value;
+		//let trenerNum = document.getElementById('trener').value;
 		let trenerProba = document.getElementById('trener');
 		let trener = trenerProba.options[trenerProba.selectedIndex].text;
 		
-		console.log(JSON.stringify({naziv, tip, sportskiObjekatNaziv, 
-			slika, trajanje, opis, trener}))
+		//console.log(JSON.stringify({naziv, tip, sportskiObjekatNaziv, slika, trajanje, opis, trener}))
 		
-		if(trenerNum == '1'){trener = "-";}
+		//if(trenerNum == '1'){trener = "-";}
 		
 		$.post({
 				url: 'rest/dodajSadrzaj',
 				data: JSON.stringify({naziv, tip, sportskiObjekat, trajanje, trener, opis, slika}),
 				contentType: 'application/json',
 				success: function() {					
-					$('#successDodajSO').text("Uspesno dodat novi sadrzaj sportskom objektu!");
-					$("#successDodajSO").show().delay(5000).fadeOut();
+					$('#successSadrzaj').text("Uspesno dodat novi sadrzaj sportskom objektu!");
+					$("#successSadrzaj").show().delay(5000).fadeOut();
 				},
 				statusCode: {
 					400: function() {
-						$('#errorDodajSO').text("Greska pri unosu, ime vec postoji!");
-						$("#errorDodajSO").show().delay(5000).fadeOut();
+						$('#errorSadrzaj').text("Greska pri unosu, ime vec postoji!");
+						$("#errorSadrzaj").show().delay(5000).fadeOut();
 					},
 				},	
 			})

@@ -318,7 +318,6 @@ public class KorisnikDAO {
     	
     }
     
-    
 	public void dodaj(Korisnik k, String contextPath){
 
 		try
