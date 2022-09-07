@@ -100,7 +100,8 @@ public class SportskiObjekatDAO {
 				}
 			}
 		}	catch (Exception ex) {
-			ex.printStackTrace();
+			//ex.printStackTrace();
+			System.out.println("Fajl sportskiObjekti.json je prazan.");
 		} finally {
 			if (in != null) {
 				try {
@@ -204,7 +205,8 @@ public class SportskiObjekatDAO {
 				}
 			}
 		}	catch (Exception ex) {
-			ex.printStackTrace();
+			//ex.printStackTrace();
+			System.out.println("Fajl sadrzaj.json je prazan.");
 		} finally {
 			if (in != null) {
 				try {
@@ -493,6 +495,22 @@ public class SportskiObjekatDAO {
 		
 		
 		
+	}
+
+	public Collection<Trening> getTreneroveTreninge(String trener) {
+		
+		Collection<Trening> treninzi = new ArrayList<Trening>();
+		
+		
+		for(Map.Entry<String, Trening> entry : sadrzaj.entrySet())
+    	{
+    		if(entry.getValue().getTrener().equals(trener))
+    		{
+    			treninzi.add(entry.getValue());
+    		}
+    	}
+		
+		return treninzi;
 	}
 	
 	

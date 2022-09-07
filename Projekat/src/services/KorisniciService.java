@@ -57,7 +57,13 @@ public class KorisniciService {
 		return dao.findAllTrenere();
 	}
 	
-	
+	@GET
+	@Path("/getTrenutniKorisnik")
+	//@Produces(MediaType.APPLICATION_JSON)
+	public String getTrenutniKorisnik() {
+		KorisnikDAO dao = (KorisnikDAO) ctx.getAttribute("korisnikDAO");
+		return dao.getTrenutniKorisnik();
+	}
 	
 	
 	

@@ -35,7 +35,7 @@ public class KorisnikDAO {
     
     
     private Korisnik trenutniKorisnik = new Korisnik();
-
+    
 	public KorisnikDAO() {
 		
 	}
@@ -181,7 +181,8 @@ public class KorisnikDAO {
 				}
 			}
 		}	catch (Exception ex) {
-			ex.printStackTrace();
+			//ex.printStackTrace();
+			System.out.println("Fajl users.json je prazan.");
 		} finally {
 			if (in != null) {
 				try {
@@ -245,7 +246,8 @@ public class KorisnikDAO {
 				}
 			}
 		}	catch (Exception ex) {
-			ex.printStackTrace();
+			//ex.printStackTrace();
+			System.out.println("Fajl menadzeri.json je prazan.");
 		} finally {
 			if (in != null) {
 				try {
@@ -305,7 +307,8 @@ public class KorisnikDAO {
 				}
 			}
 		}	catch (Exception ex) {
-			ex.printStackTrace();
+			//ex.printStackTrace();
+			System.out.println("Fajl treneri.json je prazan.");
 		} finally {
 			if (in != null) {
 				try {
@@ -587,8 +590,8 @@ public class KorisnikDAO {
 		
 	}
 	
-	public String getTrenutniKorisnikUsername() {
-		System.out.println("Trenutni korisnik je: " + trenutniKorisnik.getUsername());
+	public String getTrenutniKorisnik() {
+		//System.out.println("Trenutni korisnik je: " + trenutniKorisnik.getUsername());
 		return trenutniKorisnik.getUsername();
 	}
 
@@ -734,6 +737,8 @@ public class KorisnikDAO {
 		upisiUFajlMenadzere(me, contextPath);
 		
 	}
+
+	
 	
 	
 	

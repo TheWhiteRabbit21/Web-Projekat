@@ -98,6 +98,23 @@ public class SportskiObjektiService {
 	}	
 	
 	
+	@GET
+	@Path("/prikaziTreninge/{trener}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Collection<Trening> getTreningeTrenera(@PathParam("trener") String trener){
+
+		SportskiObjekatDAO dao = (SportskiObjekatDAO) ctx.getAttribute("sportskiObjekatDAO");
+
+		if(trener.contains("%20")){
+			trener.replace("%20", " ");
+		}
+		
+		Collection<Trening> treninzi = new ArrayList<Trening>();
+				
+		treninzi = dao.getTreneroveTreninge(trener);
+		return treninzi;
+
+	}
 	
 	
 	@GET
@@ -121,7 +138,7 @@ public class SportskiObjektiService {
 			System.out.println(e);
 		}
 
-		System.out.println(sportskiObjekat);
+		//System.out.println(sportskiObjekat);
 		String contextPath = ctx.getRealPath("");
 		Collection<SportskiObjekat> so = dao.pretraziSportskeObjekte(sportskiObjekat, contextPath);
 
@@ -194,7 +211,7 @@ public class SportskiObjektiService {
 		SportskiObjekatDAO dao = (SportskiObjekatDAO) ctx.getAttribute("sportskiObjekatDAO");
 		KorisnikDAO daoK = (KorisnikDAO) ctx.getAttribute("korisnikDAO");
 		
-		String k = daoK.getTrenutniKorisnikUsername();
+		String k = daoK.getTrenutniKorisnik();
 			
 		//Korisnik ko = (Korisnik) ctx.getAttribute("korisnik");
 		

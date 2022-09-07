@@ -20,14 +20,60 @@ function addTrening(trening) {
 	
 }
 
-$(document).ready(function() {
+function prikaziTreninge(k){
 	
-	var trener;
+	let trener = k;
+	let url = 'rest/prikaziTreninge/' + trener;
+	
+	$.get({
+		url: url,
+		contentType: 'application/json',
+        success: function(treninzi) {
+			for (let trening of treninzi) 
+			{
+                addTrening(trening);
+            }
+		}
+	});
+}
+
+
+
+$(document).ready(function() {
 
 	$.get({
-		url: 'rest/getTrenerUsername',
-        success: function(t) {
-			trener = t;
+		url: 'rest/getTrenutniKorisnik',
+        success: function(k) {
+			prikaziTreninge(k);
+		}
+	});
+
+	
+	
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*$(document).ready(function() {
+
+	var trener = "";
+
+	$.get({
+		url: 'rest/getTrenutniKorisnik',
+        success: function(k) {
+			trener = k;
 		}
 	});
 
@@ -35,6 +81,7 @@ $(document).ready(function() {
 	
 	$.get({
 		url: url,
+		contentType: 'application/json',
         success: function(treninzi) {
 			for (let trening of treninzi) 
 			{
@@ -43,13 +90,4 @@ $(document).ready(function() {
 		}
 	});
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	});
+});*/
