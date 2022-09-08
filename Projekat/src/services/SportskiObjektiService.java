@@ -99,7 +99,26 @@ public class SportskiObjektiService {
 	
 	
 	@GET
-	@Path("/prikaziTreninge/{trener}")
+	@Path("/prikaziTreningeSportskogObjekta/{sportskiObjekat}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Collection<Trening> getTreningeSportskogObjekta(@PathParam("sportskiObjekat") String sportskiObjekat){
+
+		SportskiObjekatDAO dao = (SportskiObjekatDAO) ctx.getAttribute("sportskiObjekatDAO");
+
+		if(sportskiObjekat.contains("%20")){
+			sportskiObjekat.replace("%20", " ");
+		}
+		
+		Collection<Trening> treninzi = new ArrayList<Trening>();
+				
+		String contextPath = ctx.getRealPath("");
+		treninzi = dao.getSadrzajSportskogObjekta(sportskiObjekat, contextPath);
+		return treninzi;
+
+	}
+	
+	@GET
+	@Path("/prikaziTreningeTrenera/{trener}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Collection<Trening> getTreningeTrenera(@PathParam("trener") String trener){
 
@@ -176,9 +195,9 @@ public class SportskiObjektiService {
 	
 	
 	@GET
-	@Path("/sadrzajSportskogObjekta")
+	@Path("/sadrzajSportskihObjekata")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Collection<Trening> getSadrzajSportskogObjekta(){
+	public Collection<Trening> getSadrzajSportskihObjekata(){
 		
 		try{
 			SportskiObjekatDAO dao = (SportskiObjekatDAO) ctx.getAttribute("sportskiObjekatDAO");
@@ -187,7 +206,7 @@ public class SportskiObjektiService {
 		
 			String contextPath = ctx.getRealPath("");
 		
-			Collection<Trening> so = dao.getSadrzajSportskogObjekta(contextPath);
+			Collection<Trening> so = dao.getSadrzajSportskihObjekata(contextPath);
 
 			return so;
 		}

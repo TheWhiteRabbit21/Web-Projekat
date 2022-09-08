@@ -40,6 +40,16 @@ $(document).ready(function() {
 			addSportskiObjekatTr(so);
 			$('#sportskiObjekatNaziv').append(so.naziv);
 			sportskiObjekat = so.naziv;
+			
+			$.get({
+			url: 'rest/prikaziTreningeSportskogObjekta/' + so.naziv,
+        	success: function(sadrzaji) {
+			for(let sadrzaj of sadrzaji){
+				addSadrzajiTr(sadrzaj);
+			}
+		}
+	});
+			
 		}
 	});
 	
@@ -50,15 +60,6 @@ $(document).ready(function() {
 			let counter = 1;
 			for(let trener of treneri){
 				addTreneri(trener, counter);
-			}
-		}
-	});
-	
-	$.get({
-		url: 'rest/sadrzajSportskogObjekta',
-        success: function(sadrzaji) {
-			for(let sadrzaj of sadrzaji){
-				addSadrzajiTr(sadrzaj);
 			}
 		}
 	});

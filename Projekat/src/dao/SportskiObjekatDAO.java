@@ -445,8 +445,25 @@ public class SportskiObjekatDAO {
 		return sportskiObjekatZaPrikazati;
 	}
 
-	public Collection<Trening> getSadrzajSportskogObjekta(String contextPath) {
+	public Collection<Trening> getSadrzajSportskihObjekata(String contextPath) {
 		return sadrzaj.values();
+	}
+	
+	public Collection<Trening> getSadrzajSportskogObjekta(String sportskiObjekat, String contextPath) {
+
+		Collection<Trening> tempSadrzaj = new ArrayList<Trening>();
+		
+		for(Map.Entry<String, Trening> entry : sadrzaj.entrySet())
+    	{
+    		
+    			if(entry.getValue().getSportskiObjekat().equals(sportskiObjekat))
+    			{
+    				tempSadrzaj.add(entry.getValue());
+    			}	
+    	}
+		
+		return tempSadrzaj;
+		
 	}
 
 	public void upisiSadrzajUSportskiObjekat(Trening trening, String contextPath) {
@@ -481,7 +498,11 @@ public class SportskiObjekatDAO {
 		objectMapper.configure(DeserializationFeature.ACCEPT_SINGLE_VALUE_AS_ARRAY, true);
 		objectMapper.configure(DeserializationFeature.ACCEPT_EMPTY_STRING_AS_NULL_OBJECT, true);
 		
-		objectMapper.writeValue(new File(contextPath + "/sportskiObjekti.json"), sportskiObjekti);
+		Collection<SportskiObjekat> tempSportskiObjekti = new ArrayList<SportskiObjekat>();
+		
+		tempSportskiObjekti = sportskiObjekti.values();
+		
+		objectMapper.writeValue(new File(contextPath + "/sportskiObjekti.json"), tempSportskiObjekti);
 		}
 		
 		catch (Exception ex) {
@@ -491,16 +512,12 @@ public class SportskiObjekatDAO {
 		} finally {
 			
 		}
-		
-		
-		
-		
+	
 	}
 
 	public Collection<Trening> getTreneroveTreninge(String trener) {
 		
 		Collection<Trening> treninzi = new ArrayList<Trening>();
-		
 		
 		for(Map.Entry<String, Trening> entry : sadrzaj.entrySet())
     	{
@@ -512,9 +529,6 @@ public class SportskiObjekatDAO {
 		
 		return treninzi;
 	}
-	
-	
-	
 	
 	
 }

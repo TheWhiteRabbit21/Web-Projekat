@@ -217,7 +217,7 @@ $(document).ready(() => {
 			
 			$.post({
 				url: 'rest/dodajSportskiObjekat',
-				data: JSON.stringify({naziv, tipObjekta, sadrzaj, 
+				data: JSON.stringify({naziv, tipObjekta, /*sadrzaj, */
 					status, mapa, logo, prosecnaOcena, radnoVreme, "menadzer" : menadzerUsername}),
 				contentType: 'application/json',
 				success: function() {					
@@ -232,12 +232,6 @@ $(document).ready(() => {
 				},	
 			})
 		}
-			
-		
-		
-		
-		
-			
 		
 	})
 		

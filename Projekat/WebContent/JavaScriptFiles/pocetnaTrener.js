@@ -23,7 +23,7 @@ function addTrening(trening) {
 function prikaziTreninge(k){
 	
 	let trener = k;
-	let url = 'rest/prikaziTreninge/' + trener;
+	let url = 'rest/prikaziTreningeTrenera/' + trener;
 	
 	$.get({
 		url: url,
