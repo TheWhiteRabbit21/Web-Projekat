@@ -104,7 +104,7 @@ public class RegistracijaService {
 		if(!prezime) return Response.status(402).build();
 
 		String contextPath = ctx.getRealPath("");
-		korisnikDao.dodaj(kupac, contextPath);
+		korisnikDao.dodajKupca(kupac, contextPath);
 		
 		return Response.status(200).build();
 	}
@@ -136,7 +136,6 @@ public class RegistracijaService {
 		if(!prezime) return Response.status(402).build();
 
 		String contextPath = ctx.getRealPath("");
-		//korisnikDao.dodaj(menadzer, contextPath);
 		korisnikDao.dodajMenadzera(menadzer, contextPath);
 		
 		return Response.status(200).build();
@@ -167,13 +166,10 @@ public class RegistracijaService {
 		if(!prezime) return Response.status(402).build();
 
 		String contextPath = ctx.getRealPath("");
-		//korisnikDao.dodaj(menadzer, contextPath);
 		korisnikDao.dodajTrenera(trener, contextPath);
 		
 		return Response.status(200).build();
 	}
-	
-	
 	
 	
 	private boolean isValidExpression(String word) {
@@ -192,9 +188,6 @@ public class RegistracijaService {
 		KorisnikDAO korisnikDao = (KorisnikDAO) ctx.getAttribute("korisnikDAO");
 
 		String contextPath = ctx.getRealPath("");
-		
-		//korisnikDao.obrisi(korisnik, contextPath);
-		//korisnikDao.dodaj(korisnik, contextPath);
 		
 		korisnikDao.izmeni(korisnik, contextPath);
 		

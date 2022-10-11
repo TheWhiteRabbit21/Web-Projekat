@@ -16,6 +16,7 @@ import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import beans.Korisnik;
+import beans.Kupac;
 import beans.Menadzer;
 import beans.SportskiObjekat;
 import beans.Trener;
@@ -30,6 +31,7 @@ public class KorisnikDAO {
 	
     private HashMap<String, Korisnik> korisnici = new HashMap<>();
     
+    private HashMap<String, Kupac> kupci = new HashMap<>();
     private HashMap<String, Menadzer> menadzeri = new HashMap<>();
     private HashMap<String, Trener> treneri = new HashMap<>();
     
@@ -83,6 +85,18 @@ public class KorisnikDAO {
     	
     	return temp;
     }
+	
+	public Collection<Kupac> findAllKupce(){
+
+		Collection<Kupac> temp = new ArrayList<Kupac>();
+		
+		for(Map.Entry<String, Kupac> entry : kupci.entrySet()) 
+		{
+				temp.add(entry.getValue());
+		}
+		
+		return temp;
+	}
 	
 	public Korisnik find(String username, String password) {
 		
@@ -194,11 +208,73 @@ public class KorisnikDAO {
 		}
     	    	
     	loadAdministrators(contextPath);
+    	loadKupce(contextPath);
     	loadMenadzers(contextPath);
     	loadTrenere(contextPath);
 
     }
 
+    public void loadKupce(String contextPath) {
+    	
+    	String filePath = contextPath + "kupci.json";
+    	FileWriter fileWriter = null;
+    	BufferedReader in = null;
+    	File file = null;
+    	
+    	kupci.clear();
+    	
+    	try {
+			file = new File(filePath);
+    		in = new BufferedReader(new FileReader(file));
+    		
+    		ObjectMapper objectMapper = new ObjectMapper();
+			objectMapper.configure(DeserializationFeature.ACCEPT_SINGLE_VALUE_AS_ARRAY, true);
+			objectMapper.configure(DeserializationFeature.ACCEPT_EMPTY_STRING_AS_NULL_OBJECT, true);
+			
+			Kupac[] ku = objectMapper.readValue(file, Kupac[].class);
+
+			for(Kupac k : ku)
+			{
+				kupci.put(k.getUsername(), k);
+			}
+			
+		} catch (FileNotFoundException fnfe) {
+			try {
+				if(file.createNewFile()) {
+					System.out.println("File created: " + file.getName());
+				}
+				else {
+					System.out.println("File not created");
+				}
+				
+			} catch (IOException e) {
+				e.printStackTrace();
+			}finally {
+				if (fileWriter != null) {
+					try {
+						fileWriter.close();
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				}
+			}
+		}	catch (Exception ex) {
+			//ex.printStackTrace();
+			System.out.println("Fajl kupci.json je prazan.");
+		} finally {
+			if (in != null) {
+				try {
+					in.close();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		}
+    	
+    	
+    	
+    }
+    
     public void loadMenadzers(String contextPath) {
     	
     	
@@ -325,8 +401,6 @@ public class KorisnikDAO {
 
 		try
 		{
-			//System.out.println("usao u KorisnikDAO.dodaj");
-			//System.out.println(contextPath);
 			File file = new File(contextPath + "/users.json");
 			ObjectMapper objectMapper = new ObjectMapper();
 
@@ -336,20 +410,16 @@ public class KorisnikDAO {
 			trenutniKorisnik = k;
 
 			Korisnik[] car = objectMapper.readValue(file, Korisnik[].class);
-			//System.out.println("register User: "+ car);
 			
 			for(Korisnik g : car)
 			{
 				temp.add(g);
 			}
+			
 			temp.add(k);
 			objectMapper.writeValue(new File(contextPath + "/users.json"), temp);
 			
 			loadUsers(contextPath);
-			
-			//Korisnik r = korisnici.put(k.getUsername(), k);
-			
-			//System.out.println(korisnici);
 
 		}
 		catch (Exception ex) {
@@ -379,6 +449,75 @@ public class KorisnikDAO {
 		} finally {
 			
 		}
+	}
+	
+	public void dodajKupca(Korisnik km, String contextPath) {
+		
+		try
+		{
+			
+			File file = new File(contextPath + "/kupci.json");
+			ObjectMapper objectMapper = new ObjectMapper();
+
+			objectMapper.configure(DeserializationFeature.ACCEPT_SINGLE_VALUE_AS_ARRAY, true);
+			objectMapper.configure(DeserializationFeature.ACCEPT_EMPTY_STRING_AS_NULL_OBJECT, true);
+			ArrayList<Kupac> temp = new ArrayList<>();
+			//trenutniKorisnik = k;
+
+			Kupac[] ku = objectMapper.readValue(file, Kupac[].class);
+			//System.out.println("register User: "+ car);
+			
+			for(Kupac g : ku)
+			{
+				temp.add(g);
+			}
+			
+			Kupac k = new Kupac(km);
+			
+			temp.add(k);
+			objectMapper.writeValue(new File(contextPath + "/kupci.json"), temp);
+			
+			kupci.put(k.getUsername(), k);
+			
+			Korisnik tempK = new Korisnik(k.getUsername(), k.getPassword(), k.getIme(), k.getPrezime(), k.getPol(), k.getDatumRodjenja(), Uloga.KUPAC, false);
+			dodaj(tempK, contextPath);
+
+		}
+		catch (Exception ex) {
+			
+			try {
+			
+			//System.out.println("usao u catch exception KorisnikDAO.dodajMenadzera");
+			ObjectMapper objectMapper = new ObjectMapper();
+
+			objectMapper.configure(DeserializationFeature.ACCEPT_SINGLE_VALUE_AS_ARRAY, true);
+			objectMapper.configure(DeserializationFeature.ACCEPT_EMPTY_STRING_AS_NULL_OBJECT, true);
+			ArrayList<Kupac> temp = new ArrayList<>();
+			
+			Kupac k = new Kupac(km);
+			
+			temp.add(k);
+			objectMapper.writeValue(new File(contextPath + "/kupci.json"), temp);
+			
+			kupci.put(k.getUsername(), k);
+			
+			Korisnik tempK = new Korisnik(k.getUsername(), k.getPassword(), k.getIme(), k.getPrezime(), k.getPol(), k.getDatumRodjenja(), Uloga.KUPAC, false);
+			dodaj(tempK, contextPath);
+			//System.out.println(ex);
+			//ex.printStackTrace();
+			
+			}catch (IOException e) {
+				
+			} finally {
+				
+			}
+		} finally {
+			
+		}
+		
+		
+		
+		
 	}
 	
 	public void dodajMenadzera(Korisnik km, String contextPath) {
