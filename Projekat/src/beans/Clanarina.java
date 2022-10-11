@@ -11,13 +11,20 @@ public class Clanarina implements Serializable{
 	private String tip;
 	private String datumPlacanja;
 	private String datumIVremeVazenja;
-	private double cena;
+	private String cena;
 	private String kupac;
 	private Status status;
-	private int brojTermina;
+	private String brojTermina;
+	private int brojTerminaInt;
 	private boolean beskonacnoTermina;
 	
-	
+	public Clanarina(String tip, String brojTermina, String cena) {
+		super();
+		this.tip = tip;
+		this.brojTermina = brojTermina;
+		this.cena = cena;
+		
+	}
 	public int getId() {
 		return id;
 	}
@@ -42,10 +49,10 @@ public class Clanarina implements Serializable{
 	public void setDatumIVremeVazenja(String datumIVremeVazenja) {
 		this.datumIVremeVazenja = datumIVremeVazenja;
 	}
-	public double getCena() {
+	public String getCena() {
 		return cena;
 	}
-	public void setCena(double cena) {
+	public void setCena(String cena) {
 		this.cena = cena;
 	}
 	public String getKupac() {
@@ -60,11 +67,17 @@ public class Clanarina implements Serializable{
 	public void setStatus(Status status) {
 		this.status = status;
 	}
-	public int getBrojTermina() {
+	public String getBrojTermina() {
 		return brojTermina;
 	}
-	public void setBrojTermina(int brojTermina) {
+	public void setBrojTermina(String brojTermina) {
 		this.brojTermina = brojTermina;
+	}
+	public int getBrojTerminaInt() {
+		return brojTerminaInt;
+	}
+	public void setBrojTerminaInt(int brojTerminaInt) {
+		this.brojTerminaInt = brojTerminaInt;
 	}
 	public boolean isBeskonacnoTermina() {
 		return beskonacnoTermina;

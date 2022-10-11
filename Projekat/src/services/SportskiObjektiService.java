@@ -16,6 +16,7 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import beans.Clanarina;
 import beans.SportskiObjekat;
 import beans.Trening;
 import dao.KorisnikDAO;
@@ -45,6 +46,16 @@ public class SportskiObjektiService {
 		SportskiObjekatDAO dao = (SportskiObjekatDAO) ctx.getAttribute("sportskiObjekatDAO");
 		return dao.findAll();
 	}
+	
+	@GET
+	@Path("/clanarine")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Collection<Clanarina> getClanarine() {
+		SportskiObjekatDAO dao = (SportskiObjekatDAO) ctx.getAttribute("sportskiObjekatDAO");
+		String contextPath = ctx.getRealPath("");
+		return dao.findAllClanarineTxt(contextPath);
+	}
+	
 	
 	@POST
 	@Path("/dodajSportskiObjekat")

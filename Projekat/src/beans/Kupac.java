@@ -7,11 +7,10 @@ import java.util.Collection;
 public class Kupac extends Korisnik {
 
 	
-	
-	private double clanarina;
-	private Collection<String> sportskiObjekti;
+	private Collection<String> poseceniSportskiObjekti;
 	private double brojSakupljenihBodova;
-	//private TipKupca tipKupca;
+	private int idClanarine;
+	private TipKupca tipKupca;
 	
 	public Kupac() {
 		super();
@@ -19,27 +18,17 @@ public class Kupac extends Korisnik {
 	
 	public Kupac(Korisnik km) {
 		super(km);
-		this.clanarina = 0;
+		this.poseceniSportskiObjekti = new ArrayList<String>();
 		this.brojSakupljenihBodova = 0;
-		this.sportskiObjekti = new ArrayList<String>();
+		this.idClanarine = 0;
 	}
 
-
-
-	public double getClanarina() {
-		return clanarina;
+	public Collection<String> getPoseceniSportskiObjekti() {
+		return poseceniSportskiObjekti;
 	}
 
-	public void setClanarina(double clanarina) {
-		this.clanarina = clanarina;
-	}
-
-	public Collection<String> getSportskiObjekti() {
-		return sportskiObjekti;
-	}
-
-	public void setSportskiObjekti(Collection<String> sportskiObjekti) {
-		this.sportskiObjekti = sportskiObjekti;
+	public void setPoseceniSportskiObjekti(Collection<String> poseceniSportskiObjekti) {
+		this.poseceniSportskiObjekti = poseceniSportskiObjekti;
 	}
 
 	public double getBrojSakupljenihBodova() {
@@ -50,7 +39,22 @@ public class Kupac extends Korisnik {
 		this.brojSakupljenihBodova = brojSakupljenihBodova;
 	}
 	
-	
+	public int getIdClanarine() {
+		return idClanarine;
+	}
+
+	public void setIdClanarine(int idClanarine) {
+		this.idClanarine = idClanarine;
+	}
+
+	public TipKupca getTipKupca() {
+		return tipKupca;
+	}
+
+	public void setTipKupca(TipKupca tipKupca) {
+		this.tipKupca = tipKupca;
+	}
+
 	
 	
 	
