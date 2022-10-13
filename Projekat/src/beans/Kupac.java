@@ -21,6 +21,7 @@ public class Kupac extends Korisnik {
 		this.poseceniSportskiObjekti = new ArrayList<String>();
 		this.brojSakupljenihBodova = 0;
 		this.idClanarine = 0;
+		this.tipKupca = new TipKupca();
 	}
 
 	public Collection<String> getPoseceniSportskiObjekti() {

@@ -26,6 +26,7 @@ public class SportskiObjekatDAO {
 	private HashMap<String, SportskiObjekat> sportskiObjekti = new HashMap<String, SportskiObjekat>();
 	private HashMap<String, Trening> sadrzaj = new HashMap<String, Trening>();
 	private SportskiObjekat sportskiObjekatZaPrikazati = new SportskiObjekat();
+	private Clanarina clanarinaZaPrikazati = new Clanarina();
 	
 	public SportskiObjekatDAO() {
 		
@@ -442,8 +443,16 @@ public class SportskiObjekatDAO {
 		sportskiObjekatZaPrikazati = sportskiObjekat;
 	}
 
+	public void setClanarinuZaPrikazati(Clanarina clanarina, String contextPath) {
+		clanarinaZaPrikazati = clanarina;
+	}
+	
 	public SportskiObjekat getSportskiObjekatZaPrikazati(String contextPath) {
 		return sportskiObjekatZaPrikazati;
+	}
+	
+	public Clanarina getClanarinuZaPrikazati(String contextPath) {
+		return clanarinaZaPrikazati;
 	}
 
 	public Collection<Trening> getSadrzajSportskihObjekata(String contextPath) {
@@ -572,6 +581,6 @@ public class SportskiObjekatDAO {
 		return tempClanarine;
 		
 	}
-	
+
 	
 }

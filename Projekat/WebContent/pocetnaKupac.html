@@ -5,7 +5,6 @@
 	<meta http-equiv="Content-Type" content="text/html;charset=utf-8">
 	<link rel="stylesheet" type="text/css" href="CSSFiles/styles.css">
 	<script type="text/javascript" src="JavaScriptFiles/jquery-3.3.1.min.js"></script>
-	<script type="text/javascript" src="JavaScriptFiles/pocetnaKupac.js"></script>
 	<title>Kupac main page</title>
 	
 </head>
@@ -15,11 +14,11 @@
 	
 	<a href="profilKorisnika.html">Profil korisnika</a>
 
-	<!-- ------------------------------------------------------------------------------------ -->
+	<!-- ------------------------------------------------------------------------------------ 
 	
-	<div>
+	<div style="margin-top:30px">
 	
-	<table border="1" id="tabelaClanarina">
+	<table border="1" id="tabelaClanarina2">
 		<caption> Ponudjene clanarine: </caption>
 			<thead>
 				<tr bgcolor="lightgrey">
@@ -39,6 +38,48 @@
 	
 	
 	</div>
+	
+	<!-- ------------------------------------------------------------------------------------ -->
+	
+	<div style="margin-top:30px">
+	
+		<table border="1" id="tabelaClanarina">
+		<caption> Postojece clanarine: </caption>
+			<thead>
+				<tr bgcolor="lightgrey">
+					<th>Tip clanarine</th>
+					<th>Broj termina mesecno</th>
+					<th>Cena</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr v-for="cl in clanarine" v-on:click="selectClanarinu(cl)" 
+				v-bind:class="{selected:selectedClanarina.tip===cl.tip}"> 
+					<td>{{cl.tip}}</td>
+					<td>{{cl.brojTermina}}</td>
+					<td>{{cl.cena}}</td>
+				</tr>
+			</tbody>
+			
+		</table>
+	</div>
+	
+	
+	
+	<script type="text/javascript" src="JavaScriptFiles/vue.js"></script>
+	<script type="text/javascript" src="JavaScriptFiles/axios.js"></script>
+	<script type="text/javascript" src="JavaScriptFiles/moment.min.js"></script>
+	<script type="text/javascript" src="JavaScriptFiles/pocetnaKupac.js"></script>
+	
+	
+	<!-- ------------------------------------------------------------------------------------ -->
+	
+	
+	
+	
+	
+	
+	
 	
 	
 	<!-- ------------------------------------------------------------------------------------ -->

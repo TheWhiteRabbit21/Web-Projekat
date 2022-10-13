@@ -33,11 +33,6 @@ var sportskiObjekti = new Vue({
 	}
 	
 	
-	
-	
-	
-	
-	
 });
 
 

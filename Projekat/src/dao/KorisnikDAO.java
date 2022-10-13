@@ -7,7 +7,9 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collection;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.StringTokenizer;
@@ -15,12 +17,14 @@ import java.util.StringTokenizer;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import beans.Clanarina;
 import beans.Korisnik;
 import beans.Kupac;
 import beans.Menadzer;
 import beans.SportskiObjekat;
 import beans.Trener;
 import enums.Pol;
+import enums.Status;
 import enums.Uloga;
 
 
@@ -35,6 +39,9 @@ public class KorisnikDAO {
     private HashMap<String, Menadzer> menadzeri = new HashMap<>();
     private HashMap<String, Trener> treneri = new HashMap<>();
     
+    private int clanarinaId;
+    
+    private Clanarina trenutnaClanarina = new Clanarina();
     
     private Korisnik trenutniKorisnik = new Korisnik();
     
@@ -49,6 +56,7 @@ public class KorisnikDAO {
 	public KorisnikDAO(String contextPath) {
 		loadUsers(contextPath);
 		ctx = contextPath;
+		clanarinaId = 1;
 	}
 
     /**
@@ -860,6 +868,27 @@ public class KorisnikDAO {
 		
 	}
 	
+	private void upisiUFajlKupce(ArrayList<Kupac> ku, String contextPath) {
+		
+		try
+		{
+		ObjectMapper objectMapper = new ObjectMapper();
+
+		objectMapper.configure(DeserializationFeature.ACCEPT_SINGLE_VALUE_AS_ARRAY, true);
+		objectMapper.configure(DeserializationFeature.ACCEPT_EMPTY_STRING_AS_NULL_OBJECT, true);
+		
+		objectMapper.writeValue(new File(contextPath + "/kupci.json"), ku);
+		}
+		
+		catch (Exception ex) {
+			System.out.println(ex);
+			ex.printStackTrace();
+			
+		} finally {
+			
+		}
+	}
+	
 	public void dodeliSportskiObjekatMenadzeru(SportskiObjekat sportskiObjekat, String contextPath) {
 
 		ArrayList<Menadzer> me = new ArrayList<>();
@@ -877,8 +906,34 @@ public class KorisnikDAO {
 		
 	}
 
+	public void platiClanarinu(Clanarina clanarina, String contextPath) {
+
+		ArrayList<Kupac> tempKupci = new ArrayList<Kupac>(); 
+		
+		for(Map.Entry<String, Kupac> entry : kupci.entrySet())
+    	{
+    		if(entry.getKey().equals(trenutniKorisnik.getUsername()))
+    		{
+    			
+    			int tempId = clanarinaId++;
+    			entry.getValue().setIdClanarine(tempId);
+    			
+    			Calendar datumPlacanja = Calendar.getInstance();
+    			datumPlacanja.setTime(new Date());
+    			Calendar datumIsteka = datumPlacanja;
+    			datumIsteka.add(Calendar.DATE, 30);
+    			
+    			trenutnaClanarina = new Clanarina(tempId, clanarina.getTip(), 
+    					datumPlacanja, datumIsteka, clanarina.getCena(), 
+    					entry.getValue().getUsername(), Status.AKTIVNA, clanarina.getBrojTermina());
+    			
+    		}
+    		tempKupci.add(entry.getValue());
+    	}
+		
+		upisiUFajlKupce(tempKupci, contextPath);
+	}
+
 	
-	
-	
-	
+
 }

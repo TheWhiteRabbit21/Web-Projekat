@@ -109,6 +109,26 @@ public class SportskiObjektiService {
 	}	
 	
 	
+	
+	@POST
+	@Path("/platiClanarinu")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response platiClanarinu(Clanarina clanarina, @Context HttpServletRequest request) {
+		
+		KorisnikDAO dao = (KorisnikDAO) ctx.getAttribute("korisnikDAO");
+		
+		String contextPath = ctx.getRealPath("");
+		
+		dao.platiClanarinu(clanarina, contextPath);
+		
+		return Response.status(200).build();
+	}	
+	
+	
+	
+	
+	
 	@GET
 	@Path("/prikaziTreningeSportskogObjekta/{sportskiObjekat}")
 	@Produces(MediaType.APPLICATION_JSON)
@@ -203,6 +223,30 @@ public class SportskiObjektiService {
 
 	}
 	
+	@GET
+	@Path("/prikaziClanarinu")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Clanarina prikaziClanarinu(){
+
+		try
+		{
+		SportskiObjekatDAO dao = (SportskiObjekatDAO) ctx.getAttribute("sportskiObjekatDAO");
+
+		//System.out.println(sportskiObjekat);
+		
+		String contextPath = ctx.getRealPath("");
+		
+		Clanarina cl = dao.getClanarinuZaPrikazati(contextPath);
+
+		return cl;
+		}
+		catch(Exception e){
+			System.out.println(e);
+			return null;
+		}
+		
+
+	}
 	
 	
 	@GET
@@ -335,7 +379,19 @@ public class SportskiObjektiService {
 		return Response.status(200).build();
 	}	
 	
-	
+	@POST
+	@Path("/clanarinaPage")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response prikaziClanarinu(Clanarina clanarina, @Context HttpServletRequest request) {
+		
+		SportskiObjekatDAO dao = (SportskiObjekatDAO) ctx.getAttribute("sportskiObjekatDAO");
+		String contextPath = ctx.getRealPath("");
+				
+		dao.setClanarinuZaPrikazati(clanarina, contextPath);
+		
+		return Response.status(200).build();
+	}	
 	
 	
 	
