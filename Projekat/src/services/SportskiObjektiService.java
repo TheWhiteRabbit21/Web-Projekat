@@ -56,7 +56,6 @@ public class SportskiObjektiService {
 		return dao.findAllClanarineTxt(contextPath);
 	}
 	
-	
 	@POST
 	@Path("/dodajSportskiObjekat")
 	@Consumes(MediaType.APPLICATION_JSON)
@@ -85,7 +84,6 @@ public class SportskiObjektiService {
 		return Response.status(200).build();
 	}	
 	
-	
 	@POST
 	@Path("/dodajSadrzaj")
 	@Consumes(MediaType.APPLICATION_JSON)
@@ -108,8 +106,6 @@ public class SportskiObjektiService {
 		return Response.status(200).build();
 	}	
 	
-	
-	
 	@POST
 	@Path("/platiClanarinu")
 	@Consumes(MediaType.APPLICATION_JSON)
@@ -124,10 +120,6 @@ public class SportskiObjektiService {
 		
 		return Response.status(200).build();
 	}	
-	
-	
-	
-	
 	
 	@GET
 	@Path("/prikaziTreningeSportskogObjekta/{sportskiObjekat}")
@@ -145,7 +137,6 @@ public class SportskiObjektiService {
 		String contextPath = ctx.getRealPath("");
 		treninzi = dao.getSadrzajSportskogObjekta(sportskiObjekat, contextPath);
 		return treninzi;
-
 	}
 	
 	@GET
@@ -163,9 +154,7 @@ public class SportskiObjektiService {
 				
 		treninzi = dao.getTreneroveTreninge(trener);
 		return treninzi;
-
 	}
-	
 	
 	@GET
 	@Path("/pretraga/{pretragaString}")
@@ -193,10 +182,7 @@ public class SportskiObjektiService {
 		Collection<SportskiObjekat> so = dao.pretraziSportskeObjekte(sportskiObjekat, contextPath);
 
 		return so;
-
 	}
-	
-	
 	
 	@GET
 	@Path("/prikaziSportskiObjekat")
@@ -219,8 +205,6 @@ public class SportskiObjektiService {
 			System.out.println(e);
 			return null;
 		}
-		
-
 	}
 	
 	@GET
@@ -244,8 +228,6 @@ public class SportskiObjektiService {
 			System.out.println(e);
 			return null;
 		}
-		
-
 	}
 	
 	
@@ -269,12 +251,7 @@ public class SportskiObjektiService {
 			System.out.println(e);
 			return null;
 		}
-		
-
 	}
-	
-	
-	
 	
 	@GET
 	@Path("/prikaziSportskiObjekat/Menadzer")
@@ -299,8 +276,6 @@ public class SportskiObjektiService {
 			System.out.println(e);
 			return null;
 		}
-		
-
 	}
 
 	@GET
@@ -329,7 +304,6 @@ public class SportskiObjektiService {
 		Collection<SportskiObjekat> so = dao.pretraziSportskeObjektePoTipuObjekta(sportskiObjekat, contextPath);
 
 		return so;
-
 	}
 	
 	@GET
@@ -357,9 +331,7 @@ public class SportskiObjektiService {
 		Collection<SportskiObjekat> so = dao.pretraziSportskeObjektePoNazivu(sportskiObjekat, contextPath);
 
 		return so;
-
 	}
-	
 	
 	@POST
 	@Path("/sportskiObjekatPage")
