@@ -74,11 +74,7 @@ public class RegistracijaService {
 		
 		return Response.status(200).build();
 	}
-    
-    
-    
-    
-    
+        
 	@POST
 	@Path("/kupac")
 	@Consumes(MediaType.APPLICATION_JSON)
@@ -108,8 +104,6 @@ public class RegistracijaService {
 		
 		return Response.status(200).build();
 	}
-
-	
 	
 	@POST
 	@Path("/menadzer")
@@ -171,7 +165,6 @@ public class RegistracijaService {
 		return Response.status(200).build();
 	}
 	
-	
 	private boolean isValidExpression(String word) {
 		String regex = "^[\\p{L} ]*$";
 		return Pattern.matches(regex, word);
@@ -190,7 +183,6 @@ public class RegistracijaService {
 		String contextPath = ctx.getRealPath("");
 		
 		korisnikDao.izmeni(korisnik, contextPath);
-		
 		
 	}
 	

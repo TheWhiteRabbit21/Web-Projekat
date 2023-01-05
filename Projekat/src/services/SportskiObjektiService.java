@@ -348,7 +348,21 @@ public class SportskiObjektiService {
 		dao.setSportskiObjekatZaPrikazati(sportskiObjekat, contextPath);
 		
 		return Response.status(200).build();
-	}	
+	}
+	
+	@POST
+	@Path("/sadrzajPageEdit")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response prikaziSadrzajEdit(Trening trening, @Context HttpServletRequest request) {
+		
+		SportskiObjekatDAO dao = (SportskiObjekatDAO) ctx.getAttribute("sportskiObjekatDAO");
+		String contextPath = ctx.getRealPath("");
+		
+		dao.setSadrzajZaPrikazati(trening, contextPath);
+		
+		return Response.status(200).build();
+	}
 	
 	@POST
 	@Path("/clanarinaPage")
@@ -364,8 +378,29 @@ public class SportskiObjektiService {
 		return Response.status(200).build();
 	}	
 	
+	@GET
+	@Path("/getSadrzajZaPrikazati")
+	//@Produces(MediaType.APPLICATION_JSON)
+	public Trening getSadrzajZaPrikazati() {
+		SportskiObjekatDAO dao = (SportskiObjekatDAO) ctx.getAttribute("sportskiObjekatDAO");
+		String contextPath = ctx.getRealPath("");
+		return dao.getSadrzajZaPrikazati(contextPath);
+	}
 	
-	
-	
+	@POST
+	@Path("/updateSadrzaj")
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
+	public void saveSadrzaj(Trening trening) {
+		
+		System.out.println("Saving sadrzaj: " + trening);
+		
+		SportskiObjekatDAO dao = (SportskiObjekatDAO) ctx.getAttribute("sportskiObjekatDAO");
+		String contextPath = ctx.getRealPath("");
+		
+		dao.izmeniTrening(trening, contextPath);
+		
+		
+	}
 
 }

@@ -1,10 +1,51 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="ISO-8859-1">
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8">
 <title>Sadrzaj Page</title>
 </head>
 <body>
-	<h1>Ovo je sadrzaj page.</h1>
+
+	<h1>Ovo je sadrzaj page: </h1>
+	
+	<div id="sadrzajInformacije">
+	
+	<label>Naziv treninga: </label>
+	<label>{{sadrzaj.naziv}}</label><br/>
+	
+	<label>Tip treninga: </label>
+	<input type="text" v-model="sadrzaj.tip" v-bind:disabled="mode=='BROWSE'" /> <br/>
+	
+	<label>Opis treninga: </label>
+	<input type="text" v-model="sadrzaj.opis" v-bind:disabled="mode=='BROWSE'" /> <br/>
+	
+	
+	<label>Trajanje treninga: </label>
+	<input type="text" v-model="sadrzaj.trajanje" v-bind:disabled="mode=='BROWSE'" /> <br/>
+	
+	
+	<label>Slika treninga: </label>
+	<input type="text" v-model="sadrzaj.slika" v-bind:disabled="mode=='BROWSE'" /> <br/>
+	
+	
+	<label>Cena treninga: </label>
+	<input type="text" v-model="sadrzaj.cena" v-bind:disabled="mode=='BROWSE'" /> <br/>
+	
+	
+	<button v-on:click="updateSadrzaj(sadrzaj)" v-bind:disabled="mode=='BROWSE'">Save</button>
+	<button v-on:click="cancelEditing" v-bind:disabled="mode=='BROWSE'">Cancel</button> <br />
+	
+	
+	<button v-on:click="editSadrzaj" v-bind:disabled="mode=='EDIT'">Edit</button><br />
+	
+	
+	</div>
+	
+	<script src="JavaScriptFiles/vue.js"></script>
+	<script src="JavaScriptFiles/axios.js"></script>
+	<script src="JavaScriptFiles/moment.min.js"></script>
+	<script src="JavaScriptFiles/sadrzajPage.js"></script>
+	
+	
 </body>
 </html>

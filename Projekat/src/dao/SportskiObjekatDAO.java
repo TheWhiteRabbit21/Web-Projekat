@@ -26,6 +26,7 @@ public class SportskiObjekatDAO {
 	private HashMap<String, SportskiObjekat> sportskiObjekti = new HashMap<String, SportskiObjekat>();
 	private HashMap<String, Trening> sadrzaj = new HashMap<String, Trening>();
 	private SportskiObjekat sportskiObjekatZaPrikazati = new SportskiObjekat();
+	private Trening treningZaPrikazati = new Trening();
 	private Clanarina clanarinaZaPrikazati = new Clanarina();
 	
 	public SportskiObjekatDAO() {
@@ -442,7 +443,15 @@ public class SportskiObjekatDAO {
 	public void setSportskiObjekatZaPrikazati(SportskiObjekat sportskiObjekat, String contextPath) {
 		sportskiObjekatZaPrikazati = sportskiObjekat;
 	}
+	
+	public void setSadrzajZaPrikazati(Trening trening, String contextPath) {
+		treningZaPrikazati = trening;
+	}
 
+	public Trening getSadrzajZaPrikazati(String contextPath) {
+		return treningZaPrikazati;
+	}
+	
 	public void setClanarinuZaPrikazati(Clanarina clanarina, String contextPath) {
 		clanarinaZaPrikazati = clanarina;
 	}
@@ -582,5 +591,48 @@ public class SportskiObjekatDAO {
 		
 	}
 
+	public void izmeniTrening(Trening t, String contextPath) {
+		
+		ArrayList<Trening> temp = new ArrayList<>();
+		
+		for(HashMap.Entry<String, Trening> entry : sadrzaj.entrySet()) 
+    	{
+			//System.out.println("Key = " + entry.getKey() + ", Username = " + entry.getValue().getUsername());
+    	
+			if(t.getNaziv().equalsIgnoreCase(entry.getValue().getNaziv())) {
+				entry.getValue().setCena(t.getCena());
+				entry.getValue().setOpis(t.getOpis());
+				entry.getValue().setSlika(t.getSlika());
+				entry.getValue().setTrajanje(t.getTrajanje());
+				entry.getValue().setTip(t.getTip());
+				
+			}
+			temp.add(entry.getValue());
+    	}
+    	
+		upisiSportskeObjekteUFajl(contextPath);
+		upisiSadrzajUFajl(temp, contextPath);
+		
+	}
+	
+	public void upisiSadrzajUFajl(ArrayList<Trening> t, String contextPath) {
+		try
+		{
+		ObjectMapper objectMapper = new ObjectMapper();
+
+		objectMapper.configure(DeserializationFeature.ACCEPT_SINGLE_VALUE_AS_ARRAY, true);
+		objectMapper.configure(DeserializationFeature.ACCEPT_EMPTY_STRING_AS_NULL_OBJECT, true);
+		
+		objectMapper.writeValue(new File(contextPath + "/sadrzaj.json"), t);
+		}
+		
+		catch (Exception ex) {
+			System.out.println(ex);
+			ex.printStackTrace();
+			
+		} finally {
+			
+		}
+	}
 	
 }
