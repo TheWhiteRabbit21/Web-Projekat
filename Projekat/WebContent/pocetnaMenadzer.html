@@ -15,7 +15,6 @@
 	
 	<!-- ------------------------------------------------------------------------------------ -->
 	
-	
 	<div style="margin-top:30px">
 	
 		<table border="1" id="tabelaSportskogObjekta">
@@ -38,11 +37,7 @@
 		</table>
 	</div>
 	
-	
-	
 	<!-- ------------------------------------------------------------------------------------ -->
-	
-	
 	
 	<div style="margin-top:30px">
 	
@@ -56,16 +51,24 @@
 					<th>Trener</th>
 					<th>Opis</th>
 					<th>Slika</th>	
+					<th>Cena</th>
 				</tr>
 			</thead>
 			<tbody>
-			
+				<tr v-for="s in sadrzaji" v-on:click="selectSadrzaj(s)" 
+				v-bind:class="{selected:selectedSadrzaj.naziv===s.naziv}"> 
+					<td>{{s.naziv}}</td>
+					<td>{{s.tip}}</td>
+					<td>{{s.trajanje}}</td>
+					<td>{{s.trener}}</td>
+					<td>{{s.opis}}</td>
+					<td>{{s.slika}}</td>
+					<td>{{s.cena}}</td>
+				</tr>
 			</tbody>
 			
 		</table>
 	</div>
-	
-	
 	
 	<!-- ------------------------------------------------------------------------------------ -->
 	
@@ -88,6 +91,8 @@
 			<td><input type="text" id="trajanje"></td></tr>
 		<tr><td>Opis: </td>
 			<td><input type="text" id="opis"></td></tr>
+		<tr><td>Cena: </td>
+			<td><input type="text" id="cena"></td></tr>
 		<tr><td>Trener koji drzi trening: </td>
 			<td><select id="trener">
     			
@@ -110,26 +115,22 @@
 	<!-- ------------------------------------------------------------------------------------ -->
 	
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+	<div style="margin-top:30px">
+	<table border="1" id="tabelaKorisnikaPosetiliSO">
+		<caption> Korisnici koji su posetili ovaj sportski objekat: </caption>
+			<thead>
+				<tr bgcolor="lightgrey">
+					<th>Ime</th>
+					<th>Prezime</th>
+					<th>Pol</th>
+					<th>Datum Rodjenja</th>
+				</tr>
+			</thead>
+			<tbody>
+			
+			</tbody>
+		</table>
+	</div>
 	
 	
 	<!-- ------------------------------------------------------------------------------------ -->
@@ -137,6 +138,10 @@
 	<div style="margin-top:30px">
 		<a href="index.html">Pocetna stranica</a>	
 	</div>
+	
+	<script type="text/javascript" src="JavaScriptFiles/vue.js"></script>
+	<script type="text/javascript" src="JavaScriptFiles/axios.js"></script>
+	<script type="text/javascript" src="JavaScriptFiles/moment.min.js"></script>
 	
 </body>
 </html>

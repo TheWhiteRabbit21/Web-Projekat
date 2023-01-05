@@ -230,7 +230,6 @@ public class SportskiObjektiService {
 		}
 	}
 	
-	
 	@GET
 	@Path("/sadrzajSportskihObjekata")
 	@Produces(MediaType.APPLICATION_JSON)

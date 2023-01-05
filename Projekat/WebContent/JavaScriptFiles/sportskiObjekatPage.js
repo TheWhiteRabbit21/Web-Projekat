@@ -20,7 +20,8 @@ function addTrening(trening) {
 	let tdTrajanje = $('<td>' + trening.trajanje + '</td>');
 	let tdOpis = $('<td>' + trening.opis + '</td>');
 	let tdSlika = $('<td>' + trening.slika + '</td>');
-	tr.append(tdNaziv).append(tdTipTreninga).append(tdTrajanje).append(tdOpis).append(tdSlika);
+	let tdCena = $('<td>' + trening.cena + '</td>');
+	tr.append(tdNaziv).append(tdTipTreninga).append(tdTrajanje).append(tdOpis).append(tdSlika).append(tdCena);
 	$('#tabelaSadrzaja tbody').append(tr);
 }
 
