@@ -12,7 +12,16 @@ public class Trening implements Serializable {
 	private String trener;
 	private String opis;
 	private String slika;
+	private int cena;
 	
+	
+	
+	public int getCena() {
+		return cena;
+	}
+	public void setCena(int cena) {
+		this.cena = cena;
+	}
 	public String getNaziv() {
 		return naziv;
 	}
