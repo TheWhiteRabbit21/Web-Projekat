@@ -7,7 +7,6 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
@@ -24,7 +23,6 @@ import beans.Menadzer;
 import beans.SportskiObjekat;
 import beans.Trener;
 import enums.Pol;
-import enums.Status;
 import enums.Uloga;
 
 
@@ -918,14 +916,17 @@ public class KorisnikDAO {
     			int tempId = clanarinaId++;
     			entry.getValue().setIdClanarine(tempId);
     			
-    			Calendar datumPlacanja = Calendar.getInstance();
+    			/*Date datumPlacanja = Calendar.getInstance();
     			datumPlacanja.setTime(new Date());
-    			Calendar datumIsteka = datumPlacanja;
+    			Date datumIsteka = datumPlacanja;
     			datumIsteka.add(Calendar.DATE, 30);
+    			*/
+    			Date datumPlacanja = new Date();
+    			Date datumIsteka = new Date();
     			
     			trenutnaClanarina = new Clanarina(tempId, clanarina.getTip(), 
     					datumPlacanja, datumIsteka, clanarina.getCena(), 
-    					entry.getValue().getUsername(), Status.AKTIVNA, clanarina.getBrojTermina());
+    					entry.getValue().getUsername(), true, clanarina.getBrojTermina());
     			
     		}
     		tempKupci.add(entry.getValue());

@@ -1,20 +1,18 @@
 package beans;
 
 import java.io.Serializable;
-import java.util.Calendar;
-
-import enums.Status;
+import java.util.Date;
 
 @SuppressWarnings("serial")
 public class Clanarina implements Serializable{
 
 	private int id;
 	private String tip;
-	private Calendar datumPlacanja;
-	private Calendar datumIVremeIsteka;
+	private Date datumPlacanja;
+	private Date datumIVremeIsteka;
 	private String cena;
 	private String kupac;
-	private Status status;
+	private Boolean status;
 	private String brojTermina;
 	private int brojTerminaInt;
 	private boolean beskonacnoTermina;
@@ -26,13 +24,14 @@ public class Clanarina implements Serializable{
 		this.cena = cena;
 		
 	}
+	
 	public Clanarina() {
 		super();
 	}
 	
 	
-	public Clanarina(int tempId, String tip, Calendar datumPlacanja, Calendar datumIsteka, 
-			String cena, String username, Status status, String brojTermina) {
+	public Clanarina(int tempId, String tip, Date datumPlacanja, Date datumIsteka, 
+			String cena, String username, Boolean status, String brojTermina) {
 		super();
 		this.id = tempId;
 		this.tip = tip;
@@ -63,16 +62,16 @@ public class Clanarina implements Serializable{
 	public void setTip(String tip) {
 		this.tip = tip;
 	}
-	public Calendar getDatumPlacanja() {
+	public Date getDatumPlacanja() {
 		return datumPlacanja;
 	}
-	public void setDatumPlacanja(Calendar datumPlacanja) {
+	public void setDatumPlacanja(Date datumPlacanja) {
 		this.datumPlacanja = datumPlacanja;
 	}
-	public Calendar getDatumIVremeIsteka() {
+	public Date getDatumIVremeIsteka() {
 		return datumIVremeIsteka;
 	}
-	public void setDatumIVremeIsteka(Calendar datumIVremeIsteka) {
+	public void setDatumIVremeIsteka(Date datumIVremeIsteka) {
 		this.datumIVremeIsteka = datumIVremeIsteka;
 	}
 	public String getCena() {
@@ -87,10 +86,10 @@ public class Clanarina implements Serializable{
 	public void setKupac(String kupac) {
 		this.kupac = kupac;
 	}
-	public Status getStatus() {
+	public Boolean getStatus() {
 		return status;
 	}
-	public void setStatus(Status status) {
+	public void setStatus(Boolean status) {
 		this.status = status;
 	}
 	public String getBrojTermina() {
