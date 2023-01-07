@@ -1077,37 +1077,187 @@ public class KorisnikDAO {
 			upisiUFajlClanarinaId(0, contextPath);
 		}
 		
+		//nakon ovoga trenutni korisnik ima clanarinu na false i nove bodove
+		proveriIZavrsiTrenutnuClanarinuTrenutnogKupca(contextPath);
+		
 		ArrayList<Kupac> tempKupci = new ArrayList<Kupac>();
+
 		
 		for(Map.Entry<String, Kupac> entry : kupci.entrySet())
     	{
-    		if(entry.getKey().equals(trenutniKorisnik.getUsername()))
-    		{
-    			
-    			//Ovde uraditi dobru logiku kreiranja clanarina
-    			
-    			int tempClanarinaId = loadClanarinaIdJSON(contextPath);
-    			tempClanarinaId++;
-    			upisiUFajlClanarinaId(tempClanarinaId, contextPath);
-    			
-    			Date datumPlacanja = new Date();
+			if(entry.getKey().equals(trenutniKorisnik.getUsername()))
+	    	{
+				
+				Date datumPlacanja = new Date();
     			Date datumIsteka = new Date();
-    			
+				
     			datumIsteka.setMonth(datumPlacanja.getMonth()+1);
     			
-    			entry.getValue().setIdClanarine(tempClanarinaId);
+				//ako kupac nema trenutno nikakvu clanarinu
+    			if(entry.getValue().getIdClanarine() == 0) {
     			
+	    			int tempClanarinaId = loadClanarinaIdJSON(contextPath);
+	    			tempClanarinaId++;
+	    			upisiUFajlClanarinaId(tempClanarinaId, contextPath);
+	    			
+	    			entry.getValue().setIdClanarine(tempClanarinaId);
+	    			
+	    			trenutnaClanarina = new Clanarina(tempClanarinaId, clanarina.getTip(), 
+	    					datumPlacanja, datumIsteka, clanarina.getCena(), 
+	    					entry.getValue().getUsername(), true, clanarina.getBrojTermina());
+	    			
+	    			clanarine.put(tempClanarinaId, trenutnaClanarina);
+	    			
+	    			upisiUFajlClanarine(contextPath);
+				
+    			}	//kupac ima neaktivnu clanarinu
+    			else {
+    				trenutnaClanarina = new Clanarina(entry.getValue().getIdClanarine(), clanarina.getTip(), 
+	    					datumPlacanja, datumIsteka, clanarina.getCena(), 
+	    					entry.getValue().getUsername(), true, clanarina.getBrojTermina());
+    				clanarine.put(entry.getValue().getIdClanarine(), trenutnaClanarina);
+	    			
+	    			upisiUFajlClanarine(contextPath);
+    			}
     			
-    			
-    			trenutnaClanarina = new Clanarina(tempClanarinaId, clanarina.getTip(), 
-    					datumPlacanja, datumIsteka, clanarina.getCena(), 
-    					entry.getValue().getUsername(), true, clanarina.getBrojTermina());
-    			
-    			clanarine.put(tempClanarinaId, trenutnaClanarina);
-    			
-    			upisiUFajlClanarine(contextPath);
-    		}
+	    	}
+			tempKupci.add(entry.getValue());
+				
+    	}
+		
+		upisiUFajlKupce(tempKupci, contextPath);
+		
+	}
+		
+		
+		
+		
+//    		if(entry.getKey().equals(trenutniKorisnik.getUsername()))
+//    		{
+    			//ako kupac nema trenutno aktivnu clanarinu
+//    			if(entry.getValue().getIdClanarine() == 0) {
+//    			
+//    			int tempClanarinaId = loadClanarinaIdJSON(contextPath);
+//    			tempClanarinaId++;
+//    			upisiUFajlClanarinaId(tempClanarinaId, contextPath);
+//    			
+//    			Date datumPlacanja = new Date();
+//    			Date datumIsteka = new Date();
+//    			
+//    			datumIsteka.setMonth(datumPlacanja.getMonth()+1);
+//    			
+//    			entry.getValue().setIdClanarine(tempClanarinaId);
+//    			
+//    			trenutnaClanarina = new Clanarina(tempClanarinaId, clanarina.getTip(), 
+//    					datumPlacanja, datumIsteka, clanarina.getCena(), 
+//    					entry.getValue().getUsername(), true, clanarina.getBrojTermina());
+//    			
+//    			clanarine.put(tempClanarinaId, trenutnaClanarina);
+//    			
+//    			upisiUFajlClanarine(contextPath);
+//    		}
+//    		else 
+//    		{	
+//    			//ako kupac ima clanarinu vec
+//    			for(Map.Entry<Integer, Clanarina> entry2 : clanarine.entrySet())
+//    	    	{
+//    				if(entry2.getKey() == entry.getValue().getIdClanarine()) {
+//    					
+//    					Double tempBrojBodova = entry.getValue().getBrojSakupljenihBodova();
+//    					
+//    					if(entry2.getValue().getTip().equalsIgnoreCase("Osnovna")) {
+//    						if(entry2.getValue().getBrojTerminaInt() == 0) {
+//    							tempBrojBodova += 6;
+//    						}
+//    						else {
+//    							tempBrojBodova += 5/entry2.getValue().getBrojTerminaInt();
+//    						}
+//    					}
+//    					else if(entry2.getValue().getTip().equalsIgnoreCase("Srednja")) {
+//    						tempBrojBodova += 10/entry2.getValue().getBrojTerminaInt();
+//    					}
+//    					else if(entry2.getValue().getTip().equalsIgnoreCase("Najbolja")) {
+//    						tempBrojBodova += 10/entry2.getValue().getBrojTerminaInt();
+//    					}
+//    					
+//    					
+//    					
+//    					
+//    					
+//    					entry2.getValue().setBrojTerminaInt(clanarina.getBrojTerminaInt());
+//    					entry2.getValue().setBrojTermina(clanarina.getBrojTermina());
+//    					entry2.getValue().setCena(clanarina.getCena());
+//    					entry2.getValue().setTip(clanarina.getTip());
+//    					Date datumPlacanja = new Date();
+//    	    			Date datumIsteka = new Date();
+//    	    			
+//    	    			datumIsteka.setMonth(datumPlacanja.getMonth()+1);
+//    	    			
+//    	    			entry2.getValue().setDatumPlacanja(datumPlacanja);
+//    	    			entry2.getValue().setDatumIVremeIsteka(datumIsteka);
+//    	    			entry2.getValue().setStatus(true);
+//    	    			
+//    	    			trenutnaClanarina = entry2.getValue();
+//    				}
+//    				
+//    	    	}
+//    			upisiUFajlClanarine(contextPath);
+//    		}
+//    			
+//    		}
 
+	
+
+	private void proveriIZavrsiTrenutnuClanarinuTrenutnogKupca(String contextPath) {
+		
+		ArrayList<Kupac> tempKupci = new ArrayList<Kupac>();
+		
+		//nadji kupca koji je uplatio clanarinu
+		for(Map.Entry<String, Kupac> entry : kupci.entrySet())
+    	{	//kupac koji je platio clanarinu
+    		if(entry.getKey().equals(trenutniKorisnik.getUsername()))
+    		{	//ako nije jos uplatio ni jednu clanarinu
+    			if(entry.getValue().getIdClanarine() == 0) {
+    				System.out.println("Kupac trenutno nema clanarinu!");
+    			} //ako ima uplacenu neku clanarinu proveravamo da li je aktivna
+    			else {	//prolazimo kroz clanarine
+    				for(Map.Entry<Integer, Clanarina> entry2 : clanarine.entrySet())
+        	    	{	//nasao clanarinu korisnika koji uplacuje novu
+    					if(entry2.getKey() == entry.getValue().getIdClanarine()) {
+    						//clanarina nije aktivna pa ne dodajemo nikakve nove bodove
+    						if(!entry2.getValue().getStatus()) {
+    							System.out.println("Kupac trenutno nema aktivnu clanarinu!");
+    						} //clanarina jeste aktivna pa treba da dodamo bodove pre nego sto novu clanarinu aktiviramo
+    						else {
+    							Double tempBrojBodova = entry.getValue().getBrojSakupljenihBodova();
+    							
+    							if(entry2.getValue().getTip().equalsIgnoreCase("Osnovna")) {
+    	    						if(entry2.getValue().getBrojTerminaInt() == 0) {
+    	    							tempBrojBodova += 6.0;
+    	    						}
+    	    						else {
+    	    							tempBrojBodova += 5.0/entry2.getValue().getBrojTerminaInt();
+    	    						}
+    	    					}
+    	    					else if(entry2.getValue().getTip().equalsIgnoreCase("Srednja")) {
+    	    						if(entry2.getValue().getBrojTerminaInt() == 0) {
+    	    							tempBrojBodova += 12.0;
+    	    						}
+    	    						else {
+    	    							tempBrojBodova += 10.0/entry2.getValue().getBrojTerminaInt();
+    	    						}
+    	    					}
+    	    					else if(entry2.getValue().getTip().equalsIgnoreCase("Najbolja")) {
+    	    						tempBrojBodova += 15.0;
+    	    					}
+    							entry.getValue().setBrojSakupljenihBodova(tempBrojBodova);
+    							entry2.getValue().setStatus(false);
+    							upisiUFajlClanarine(contextPath);
+    						}
+    					}
+        	    	}
+    			}
+    		}
     		tempKupci.add(entry.getValue());
     	}
 		
@@ -1116,5 +1266,10 @@ public class KorisnikDAO {
 	}
 
 	
-
+	
+	
+	
+	
+	
+	
 }

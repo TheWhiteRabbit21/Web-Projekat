@@ -3,6 +3,8 @@ package beans;
 import java.util.ArrayList;
 import java.util.Collection;
 
+import enums.Tip;
+
 @SuppressWarnings("serial")
 public class Kupac extends Korisnik {
 
@@ -21,7 +23,7 @@ public class Kupac extends Korisnik {
 		this.poseceniSportskiObjekti = new ArrayList<String>();
 		this.brojSakupljenihBodova = 0;
 		this.idClanarine = 0;
-		this.tipKupca = new TipKupca();
+		this.tipKupca = new TipKupca(Tip.BRONZANI, 0.0);
 	}
 
 	public Collection<String> getPoseceniSportskiObjekti() {

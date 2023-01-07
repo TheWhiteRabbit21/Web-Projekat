@@ -9,7 +9,15 @@ public class TipKupca implements Serializable{
 
 	private Tip tip;
 	private double procenatPopust;
-	private int trazeniBrojBodovaZaSledeciStatus;
+	
+	public TipKupca() {
+		super();
+	}
+	
+	public TipKupca(Tip tip, double popust) {
+		this.tip = tip;
+		this.procenatPopust = popust;
+	}
 	
 	public Tip getTip() {
 		return tip;
@@ -23,17 +31,5 @@ public class TipKupca implements Serializable{
 	public void setProcenatPopust(double procenatPopust) {
 		this.procenatPopust = procenatPopust;
 	}
-	public int getTrazeniBrojBodovaZaSledeciStatus() {
-		return trazeniBrojBodovaZaSledeciStatus;
-	}
-	public void setTrazeniBrojBodovaZaSledeciStatus(int trazeniBrojBodovaZaSledeciStatus) {
-		this.trazeniBrojBodovaZaSledeciStatus = trazeniBrojBodovaZaSledeciStatus;
-	}
-	
-	
-	
-	
-	
-	
 	
 }
