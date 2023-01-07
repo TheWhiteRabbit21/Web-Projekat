@@ -15,7 +15,6 @@ public class Clanarina implements Serializable{
 	private Boolean status;
 	private String brojTermina;
 	private int brojTerminaInt;
-	private boolean beskonacnoTermina;
 	
 	public Clanarina(String tip, String brojTermina, String cena) {
 		super();
@@ -104,12 +103,7 @@ public class Clanarina implements Serializable{
 	public void setBrojTerminaInt(int brojTerminaInt) {
 		this.brojTerminaInt = brojTerminaInt;
 	}
-	public boolean isBeskonacnoTermina() {
-		return beskonacnoTermina;
-	}
-	public void setBeskonacnoTermina(boolean beskonacnoTermina) {
-		this.beskonacnoTermina = beskonacnoTermina;
-	}
+	
 	
 	
 	
