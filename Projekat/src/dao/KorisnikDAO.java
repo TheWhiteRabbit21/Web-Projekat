@@ -36,6 +36,7 @@ public class KorisnikDAO {
     private HashMap<String, Kupac> kupci = new HashMap<>();
     private HashMap<String, Menadzer> menadzeri = new HashMap<>();
     private HashMap<String, Trener> treneri = new HashMap<>();
+    private HashMap<String, Clanarina> trenutneClanarine = new HashMap<>();
     
     private int clanarinaId;
     
@@ -906,12 +907,44 @@ public class KorisnikDAO {
 
 	public void platiClanarinu(Clanarina clanarina, String contextPath) {
 
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
 		ArrayList<Kupac> tempKupci = new ArrayList<Kupac>(); 
 		
 		for(Map.Entry<String, Kupac> entry : kupci.entrySet())
     	{
     		if(entry.getKey().equals(trenutniKorisnik.getUsername()))
     		{
+    			
+    			//Ovde uraditi dobru logiku kreiranja clanarina
     			
     			int tempId = clanarinaId++;
     			entry.getValue().setIdClanarine(tempId);
@@ -933,6 +966,8 @@ public class KorisnikDAO {
     	}
 		
 		upisiUFajlKupce(tempKupci, contextPath);
+		//upisi i clanarine cele i clanarinaID poslednja da se upise u poseban fajl?
+		
 	}
 
 	
