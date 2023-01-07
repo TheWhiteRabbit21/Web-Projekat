@@ -36,12 +36,9 @@ public class KorisnikDAO {
     private HashMap<String, Kupac> kupci = new HashMap<>();
     private HashMap<String, Menadzer> menadzeri = new HashMap<>();
     private HashMap<String, Trener> treneri = new HashMap<>();
-    private HashMap<String, Clanarina> trenutneClanarine = new HashMap<>();
-    
-    private int clanarinaId;
+    private HashMap<Integer, Clanarina> clanarine = new HashMap<>();
     
     private Clanarina trenutnaClanarina = new Clanarina();
-    
     private Korisnik trenutniKorisnik = new Korisnik();
     
 	public KorisnikDAO() {
@@ -54,8 +51,10 @@ public class KorisnikDAO {
 
 	public KorisnikDAO(String contextPath) {
 		loadUsers(contextPath);
+		loadClanarine(contextPath);
+		loadClanarinaIdJSON(contextPath);
 		ctx = contextPath;
-		clanarinaId = 1;
+		
 	}
 
     /**
@@ -401,6 +400,120 @@ public class KorisnikDAO {
 				}
 			}
 		}
+    	
+    }
+    
+    public void loadClanarine(String contextPath) {
+    	
+    	String filePath = contextPath + "clanarine.json";
+    	FileWriter fileWriter = null;
+    	BufferedReader in = null;
+    	File file = null;
+    	
+    	clanarine.clear();
+    	
+    	try {
+			file = new File(filePath);
+    		in = new BufferedReader(new FileReader(file));
+    		
+    		ObjectMapper objectMapper = new ObjectMapper();
+			objectMapper.configure(DeserializationFeature.ACCEPT_SINGLE_VALUE_AS_ARRAY, true);
+			objectMapper.configure(DeserializationFeature.ACCEPT_EMPTY_STRING_AS_NULL_OBJECT, true);
+			
+			Clanarina[] cl = objectMapper.readValue(file, Clanarina[].class);
+
+			for(Clanarina c : cl)
+			{
+				clanarine.put(c.getId(), c);
+			}
+			
+		} catch (FileNotFoundException fnfe) {
+			try {
+				if(file.createNewFile()) {
+					System.out.println("File created: " + file.getName());
+				}
+				else {
+					System.out.println("File not created");
+				}
+				
+			} catch (IOException e) {
+				e.printStackTrace();
+			}finally {
+				if (fileWriter != null) {
+					try {
+						fileWriter.close();
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				}
+			}
+		}	catch (Exception ex) {
+			//ex.printStackTrace();
+			System.out.println("Fajl clanarine.json je prazan.");
+		} finally {
+			if (in != null) {
+				try {
+					in.close();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		}
+    	
+    }
+    
+    public Integer loadClanarinaIdJSON(String contextPath) {
+    	
+    	String filePath = contextPath + "clanarinaId.json";
+    	FileWriter fileWriter = null;
+    	BufferedReader in = null;
+    	File file = null;
+    	
+    	try {
+			file = new File(filePath);
+    		in = new BufferedReader(new FileReader(file));
+    		
+    		ObjectMapper objectMapper = new ObjectMapper();
+			objectMapper.configure(DeserializationFeature.ACCEPT_SINGLE_VALUE_AS_ARRAY, true);
+			objectMapper.configure(DeserializationFeature.ACCEPT_EMPTY_STRING_AS_NULL_OBJECT, true);
+			
+			Integer clId = objectMapper.readValue(file, Integer.class);
+			
+			return clId;
+			
+		} catch (FileNotFoundException fnfe) {
+			try {
+				if(file.createNewFile()) {
+					System.out.println("File created: " + file.getName());
+				}
+				else {
+					System.out.println("File not created");
+				}
+				
+			} catch (IOException e) {
+				e.printStackTrace();
+			}finally {
+				if (fileWriter != null) {
+					try {
+						fileWriter.close();
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				}
+			}
+		}	catch (Exception ex) {
+			//ex.printStackTrace();
+			System.out.println("Fajl clanarinaId.json je prazan.");
+		} finally {
+			if (in != null) {
+				try {
+					in.close();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		return -2;//ako je clanarinaId -2 ne bi trebalo da se koristi
     	
     }
     
@@ -888,6 +1001,56 @@ public class KorisnikDAO {
 		}
 	}
 	
+	private void upisiUFajlClanarine(String contextPath) {
+		
+		ArrayList<Clanarina> cl = new ArrayList<Clanarina>();
+		
+		for(Map.Entry<Integer, Clanarina> entry : clanarine.entrySet())
+    	{
+    		cl.add(entry.getValue());
+    	}
+		
+		try
+		{
+			ObjectMapper objectMapper = new ObjectMapper();
+
+			objectMapper.configure(DeserializationFeature.ACCEPT_SINGLE_VALUE_AS_ARRAY, true);
+			objectMapper.configure(DeserializationFeature.ACCEPT_EMPTY_STRING_AS_NULL_OBJECT, true);
+		
+			objectMapper.writeValue(new File(contextPath + "/clanarine.json"), cl);
+		}
+		
+		catch (Exception ex) {
+			System.out.println(ex);
+			ex.printStackTrace();
+			
+		} finally {
+			
+		}
+		
+	}
+	
+	private void upisiUFajlClanarinaId(Integer id, String contextPath) {
+		
+		try
+		{
+		ObjectMapper objectMapper = new ObjectMapper();
+
+		objectMapper.configure(DeserializationFeature.ACCEPT_SINGLE_VALUE_AS_ARRAY, true);
+		objectMapper.configure(DeserializationFeature.ACCEPT_EMPTY_STRING_AS_NULL_OBJECT, true);
+		
+		objectMapper.writeValue(new File(contextPath + "/clanarinaId.json"), id);
+		}
+		
+		catch (Exception ex) {
+			System.out.println(ex);
+			ex.printStackTrace();
+			
+		} finally {
+			
+		}
+	}
+	
 	public void dodeliSportskiObjekatMenadzeru(SportskiObjekat sportskiObjekat, String contextPath) {
 
 		ArrayList<Menadzer> me = new ArrayList<>();
@@ -905,39 +1068,16 @@ public class KorisnikDAO {
 		
 	}
 
+	@SuppressWarnings("deprecation")
 	public void platiClanarinu(Clanarina clanarina, String contextPath) {
-
 		
+		loadClanarine(contextPath);
 		
+		if(loadClanarinaIdJSON(contextPath) == -2) {
+			upisiUFajlClanarinaId(0, contextPath);
+		}
 		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		ArrayList<Kupac> tempKupci = new ArrayList<Kupac>(); 
+		ArrayList<Kupac> tempKupci = new ArrayList<Kupac>();
 		
 		for(Map.Entry<String, Kupac> entry : kupci.entrySet())
     	{
@@ -946,27 +1086,32 @@ public class KorisnikDAO {
     			
     			//Ovde uraditi dobru logiku kreiranja clanarina
     			
-    			int tempId = clanarinaId++;
-    			entry.getValue().setIdClanarine(tempId);
+    			int tempClanarinaId = loadClanarinaIdJSON(contextPath);
+    			tempClanarinaId++;
+    			upisiUFajlClanarinaId(tempClanarinaId, contextPath);
     			
-    			/*Date datumPlacanja = Calendar.getInstance();
-    			datumPlacanja.setTime(new Date());
-    			Date datumIsteka = datumPlacanja;
-    			datumIsteka.add(Calendar.DATE, 30);
-    			*/
     			Date datumPlacanja = new Date();
     			Date datumIsteka = new Date();
     			
-    			trenutnaClanarina = new Clanarina(tempId, clanarina.getTip(), 
+    			datumIsteka.setMonth(datumPlacanja.getMonth()+1);
+    			
+    			entry.getValue().setIdClanarine(tempClanarinaId);
+    			
+    			
+    			
+    			trenutnaClanarina = new Clanarina(tempClanarinaId, clanarina.getTip(), 
     					datumPlacanja, datumIsteka, clanarina.getCena(), 
     					entry.getValue().getUsername(), true, clanarina.getBrojTermina());
     			
+    			clanarine.put(tempClanarinaId, trenutnaClanarina);
+    			
+    			upisiUFajlClanarine(contextPath);
     		}
+
     		tempKupci.add(entry.getValue());
     	}
 		
 		upisiUFajlKupce(tempKupci, contextPath);
-		//upisi i clanarine cele i clanarinaID poslednja da se upise u poseban fajl?
 		
 	}
 
