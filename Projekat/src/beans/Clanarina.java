@@ -10,13 +10,13 @@ public class Clanarina implements Serializable{
 	private String tip;
 	private Date datumPlacanja;
 	private Date datumIVremeIsteka;
-	private String cena;
+	private int cena;
 	private String kupac;
 	private Boolean status;
 	private String brojTermina;
 	private int brojTerminaInt;
 	
-	public Clanarina(String tip, String brojTermina, String cena) {
+	public Clanarina(String tip, String brojTermina, int cena) {
 		super();
 		this.tip = tip;
 		this.brojTermina = brojTermina;
@@ -30,7 +30,7 @@ public class Clanarina implements Serializable{
 	
 	
 	public Clanarina(int tempId, String tip, Date datumPlacanja, Date datumIsteka, 
-			String cena, String username, Boolean status, String brojTermina) {
+			int cena, String username, Boolean status, String brojTermina) {
 		super();
 		this.id = tempId;
 		this.tip = tip;
@@ -73,10 +73,10 @@ public class Clanarina implements Serializable{
 	public void setDatumIVremeIsteka(Date datumIVremeIsteka) {
 		this.datumIVremeIsteka = datumIVremeIsteka;
 	}
-	public String getCena() {
+	public int getCena() {
 		return cena;
 	}
-	public void setCena(String cena) {
+	public void setCena(int cena) {
 		this.cena = cena;
 	}
 	public String getKupac() {

@@ -47,15 +47,6 @@ public class SportskiObjektiService {
 		return dao.findAll();
 	}
 	
-	@GET
-	@Path("/clanarine")
-	@Produces(MediaType.APPLICATION_JSON)
-	public Collection<Clanarina> getClanarine() {
-		SportskiObjekatDAO dao = (SportskiObjekatDAO) ctx.getAttribute("sportskiObjekatDAO");
-		String contextPath = ctx.getRealPath("");
-		return dao.findAllClanarineTxt(contextPath);
-	}
-	
 	@POST
 	@Path("/dodajSportskiObjekat")
 	@Consumes(MediaType.APPLICATION_JSON)

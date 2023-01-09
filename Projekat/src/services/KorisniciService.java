@@ -10,6 +10,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 
+import beans.Clanarina;
 import beans.Korisnik;
 import beans.Menadzer;
 import beans.Trener;
@@ -65,8 +66,14 @@ public class KorisniciService {
 		return dao.getTrenutniKorisnik();
 	}
 	
-	
-	
+	@GET
+	@Path("/clanarine")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Collection<Clanarina> getClanarine() {
+		KorisnikDAO dao = (KorisnikDAO) ctx.getAttribute("korisnikDAO");
+		String contextPath = ctx.getRealPath("");
+		return dao.findAllClanarineTxt(contextPath);
+	}
 	
 	
 	
