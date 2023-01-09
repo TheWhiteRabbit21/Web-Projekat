@@ -549,48 +549,6 @@ public class SportskiObjekatDAO {
 		return treninzi;
 	}
 
-	public Collection<Clanarina> findAllClanarineTxt(String contextPath) {
-
-		Collection<Clanarina> tempClanarine = new ArrayList<Clanarina>();
-		
-		BufferedReader in = null;
-		try {
-			File file = new File(contextPath + "/clanarine.txt");
-			
-			//Ovo ispisuje putanju u konzolu
-			//System.out.println(file.getCanonicalPath());
-			
-			in = new BufferedReader(new FileReader(file));
-			String line, tip = "", brojTermina = "", cena = "";
-			StringTokenizer st;
-			while ((line = in.readLine()) != null) {
-				line = line.trim();
-				if (line.equals("") || line.indexOf('#') == 0)
-					continue;
-				st = new StringTokenizer(line, ";");
-				while (st.hasMoreTokens()) {
-					tip = st.nextToken().trim();
-					brojTermina = st.nextToken().trim();
-					cena = st.nextToken().trim();
-				}
-				Clanarina tempClanarina = new Clanarina(tip, brojTermina, cena);
-				tempClanarine.add(tempClanarina);
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
-			if ( in != null ) {
-				try {
-					in.close();
-				}
-				catch (Exception e) { }
-			}
-		}
-		
-		return tempClanarine;
-		
-	}
-
 	public void izmeniTrening(Trening t, String contextPath) {
 		
 		ArrayList<Trening> temp = new ArrayList<>();

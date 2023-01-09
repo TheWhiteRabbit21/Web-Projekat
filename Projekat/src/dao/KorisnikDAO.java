@@ -23,6 +23,7 @@ import beans.Menadzer;
 import beans.SportskiObjekat;
 import beans.Trener;
 import enums.Pol;
+import enums.Tip;
 import enums.Uloga;
 
 
@@ -1129,85 +1130,6 @@ public class KorisnikDAO {
 		
 	}
 		
-		
-		
-		
-//    		if(entry.getKey().equals(trenutniKorisnik.getUsername()))
-//    		{
-    			//ako kupac nema trenutno aktivnu clanarinu
-//    			if(entry.getValue().getIdClanarine() == 0) {
-//    			
-//    			int tempClanarinaId = loadClanarinaIdJSON(contextPath);
-//    			tempClanarinaId++;
-//    			upisiUFajlClanarinaId(tempClanarinaId, contextPath);
-//    			
-//    			Date datumPlacanja = new Date();
-//    			Date datumIsteka = new Date();
-//    			
-//    			datumIsteka.setMonth(datumPlacanja.getMonth()+1);
-//    			
-//    			entry.getValue().setIdClanarine(tempClanarinaId);
-//    			
-//    			trenutnaClanarina = new Clanarina(tempClanarinaId, clanarina.getTip(), 
-//    					datumPlacanja, datumIsteka, clanarina.getCena(), 
-//    					entry.getValue().getUsername(), true, clanarina.getBrojTermina());
-//    			
-//    			clanarine.put(tempClanarinaId, trenutnaClanarina);
-//    			
-//    			upisiUFajlClanarine(contextPath);
-//    		}
-//    		else 
-//    		{	
-//    			//ako kupac ima clanarinu vec
-//    			for(Map.Entry<Integer, Clanarina> entry2 : clanarine.entrySet())
-//    	    	{
-//    				if(entry2.getKey() == entry.getValue().getIdClanarine()) {
-//    					
-//    					Double tempBrojBodova = entry.getValue().getBrojSakupljenihBodova();
-//    					
-//    					if(entry2.getValue().getTip().equalsIgnoreCase("Osnovna")) {
-//    						if(entry2.getValue().getBrojTerminaInt() == 0) {
-//    							tempBrojBodova += 6;
-//    						}
-//    						else {
-//    							tempBrojBodova += 5/entry2.getValue().getBrojTerminaInt();
-//    						}
-//    					}
-//    					else if(entry2.getValue().getTip().equalsIgnoreCase("Srednja")) {
-//    						tempBrojBodova += 10/entry2.getValue().getBrojTerminaInt();
-//    					}
-//    					else if(entry2.getValue().getTip().equalsIgnoreCase("Najbolja")) {
-//    						tempBrojBodova += 10/entry2.getValue().getBrojTerminaInt();
-//    					}
-//    					
-//    					
-//    					
-//    					
-//    					
-//    					entry2.getValue().setBrojTerminaInt(clanarina.getBrojTerminaInt());
-//    					entry2.getValue().setBrojTermina(clanarina.getBrojTermina());
-//    					entry2.getValue().setCena(clanarina.getCena());
-//    					entry2.getValue().setTip(clanarina.getTip());
-//    					Date datumPlacanja = new Date();
-//    	    			Date datumIsteka = new Date();
-//    	    			
-//    	    			datumIsteka.setMonth(datumPlacanja.getMonth()+1);
-//    	    			
-//    	    			entry2.getValue().setDatumPlacanja(datumPlacanja);
-//    	    			entry2.getValue().setDatumIVremeIsteka(datumIsteka);
-//    	    			entry2.getValue().setStatus(true);
-//    	    			
-//    	    			trenutnaClanarina = entry2.getValue();
-//    				}
-//    				
-//    	    	}
-//    			upisiUFajlClanarine(contextPath);
-//    		}
-//    			
-//    		}
-
-	
-
 	private void proveriIZavrsiTrenutnuClanarinuTrenutnogKupca(String contextPath) {
 		
 		ArrayList<Kupac> tempKupci = new ArrayList<Kupac>();
@@ -1265,11 +1187,93 @@ public class KorisnikDAO {
 		
 	}
 
+	public void proveriTipClanarineKupca(String contextPath) {
+		
+		ArrayList<Kupac> tempKupci = new ArrayList<Kupac>();
+		
+		//trazimo za trenutnog kupca njegove bodove i proveravamo po skali
+		for(Map.Entry<String, Kupac> entry : kupci.entrySet())
+    	{	//nasli smo trenutnog kupca
+			if(trenutniKorisnik.getUsername().equals(entry.getValue().getUsername())) 
+			{
+				double brojBodovaKupca = entry.getValue().getBrojSakupljenihBodova();
+				
+				if(brojBodovaKupca >= 100.0 && brojBodovaKupca <= 200.0) {
+					entry.getValue().getTipKupca().setTip(Tip.SREBRNI);
+					entry.getValue().getTipKupca().setProcenatPopust(5.0);
+				}
+				else if(brojBodovaKupca > 200.0) {
+					entry.getValue().getTipKupca().setTip(Tip.ZLATNI);
+					entry.getValue().getTipKupca().setProcenatPopust(10.0);
+				}
+				else {
+					entry.getValue().getTipKupca().setTip(Tip.BRONZANI);
+					entry.getValue().getTipKupca().setProcenatPopust(0.0);
+				}
+			}
+			tempKupci.add(entry.getValue());
+    	}
+		upisiUFajlKupce(tempKupci, contextPath);
+	}
 	
+	public Collection<Clanarina> findAllClanarineTxt(String contextPath) {
+
+		Collection<Clanarina> tempClanarine = new ArrayList<Clanarina>();
+		
+		proveriTipClanarineKupca(contextPath);
+		
+		BufferedReader in = null;
+		try {
+			File file = new File(contextPath + "/clanarine.txt");
+			
+			//Ovo ispisuje putanju u konzolu
+			//System.out.println(file.getCanonicalPath());
+			
+			in = new BufferedReader(new FileReader(file));
+			String line, tip = "", brojTermina = "", cenaStr = "";
+			int cena;
+			StringTokenizer st;
+			while ((line = in.readLine()) != null) {
+				line = line.trim();
+				if (line.equals("") || line.indexOf('#') == 0)
+					continue;
+				st = new StringTokenizer(line, ";");
+				while (st.hasMoreTokens()) {
+					tip = st.nextToken().trim();
+					brojTermina = st.nextToken().trim();
+					cenaStr = st.nextToken().trim();
+				}
+				cena = Integer.parseInt(cenaStr);
+				int krajnjaCena = 0;
+				for(Map.Entry<String, Kupac> entry : kupci.entrySet())
+		    	{
+					if(trenutniKorisnik.getUsername().equals(entry.getValue().getUsername())) {
+						 krajnjaCena = uradiPopustNaCenu(cena, entry.getValue().getTipKupca().getProcenatPopust());
+					}
+		    	}
+				
+				Clanarina tempClanarina = new Clanarina(tip, brojTermina, krajnjaCena);
+				
+				tempClanarine.add(tempClanarina);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if ( in != null ) {
+				try {
+					in.close();
+				}
+				catch (Exception e) { }
+			}
+		}
+		
+		return tempClanarine;
+		
+	}
 	
-	
-	
-	
+	private int uradiPopustNaCenu(double pocetnaCena, double popust) {
+		return (int)((pocetnaCena/100.0) * (100.0-popust));
+	}
 	
 	
 }
