@@ -28,56 +28,41 @@ var clanarine = new Vue({
 			});
 		}
 	}
-	
-	
-	
-	
-	
+});
+
+var sportskiObjekti = new Vue({
+	el:'#tabelaSportskihObjekata',
+	data: {
+		sportskiObjekti: null,
+		selectedSportskiObjekat: {}
+	},
+	mounted () {
+        axios
+          .get('rest/sportskiObjekti')
+          .then(response => (this.sportskiObjekti = response.data))
+    },
+	methods: {
+		selectSportskiObjekat : function(sportskiObjekat){
+			this.selectedSportskiObjekat = sportskiObjekat;
+			
+			
+			$.post({
+				url: 'rest/sportskiObjekatPage',
+				data: JSON.stringify({"naziv" : this.selectedSportskiObjekat.naziv, 
+				"tipObjekta" : this.selectedSportskiObjekat.tipObjekta,
+				 "status" : this.selectedSportskiObjekat.status, "mapa" : this.selectedSportskiObjekat.mapa, 
+				 "logo" : this.selectedSportskiObjekat.logo, "prosecnaOcena" : this.selectedSportskiObjekat.prosecnaOcena,
+				 "radnoVreme" : this.selectedSportskiObjekat.radnoVreme}),
+				contentType: 'application/json',
+				
+				success: function() {
+				
+				window.location="sportskiObjekatKupacPage.html";
+				
+				}
+			});
+		}
+	}
 	
 	
 });
-
-
-
-
-
-
-
-
-
-
-
-
-
-/*$(document).ready(() => {
-	
-	//--------------------------------------------------------------------------------------//
-	
-	
-	
-	function addClanarinaTr(clanarina){
-		let tr = $('<tr></tr>');
-		let tdTip = $('<td>' + clanarina.tip + '</td>');
-		let tdBrojTermina = $('<td>' + clanarina.brojTermina + '</td>');
-		let tdCena = $('<td>' + clanarina.cena + '</td>');
-	
-		tr.append(tdTip).append(tdBrojTermina).append(tdCena);
-		$('#tabelaClanarina2 tbody').append(tr);
-	}
-	
-	$.get({
-		url: 'rest/clanarine',
-		success: function(clanarine){
-			for(let clanarina of clanarine){
-				addClanarinaTr(clanarina);
-			}
-		}
-	})
-	
-	
-	
-	
-	
-	//--------------------------------------------------------------------------------------//
-	
-})*/

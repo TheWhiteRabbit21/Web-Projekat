@@ -221,6 +221,45 @@ public class SportskiObjektiService {
 		}
 	}
 	
+	@POST
+	@Path("/prijaviTrening")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response prijaviTrening(Trening trening, @Context HttpServletRequest request) {
+		
+		SportskiObjekatDAO dao = (SportskiObjekatDAO) ctx.getAttribute("sportskiObjekatDAO");
+		
+		String contextPath = ctx.getRealPath("");
+		
+		dao.prijaviTrening(trening, contextPath);
+		
+		return Response.status(200).build();
+	}	
+	
+	@GET
+	@Path("/prikaziTrening")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Trening prikaziTrening(){
+
+		try
+		{
+		SportskiObjekatDAO dao = (SportskiObjekatDAO) ctx.getAttribute("sportskiObjekatDAO");
+
+		//System.out.println(sportskiObjekat);
+		
+		String contextPath = ctx.getRealPath("");
+		
+		Trening tr = dao.getTreningZaPrikazati(contextPath);
+
+		return tr;
+		}
+		catch(Exception e){
+			System.out.println(e);
+			return null;
+		}
+	}
+	
+	
 	@GET
 	@Path("/sadrzajSportskihObjekata")
 	@Produces(MediaType.APPLICATION_JSON)
