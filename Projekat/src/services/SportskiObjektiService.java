@@ -228,10 +228,19 @@ public class SportskiObjektiService {
 	public Response prijaviTrening(Trening trening, @Context HttpServletRequest request) {
 		
 		SportskiObjekatDAO dao = (SportskiObjekatDAO) ctx.getAttribute("sportskiObjekatDAO");
+		KorisnikDAO kDao = (KorisnikDAO) ctx.getAttribute("korisnikDAO");
 		
 		String contextPath = ctx.getRealPath("");
 		
-		dao.prijaviTrening(trening, contextPath);
+		String kupac = kDao.getTrenutniKorisnik();
+		
+		if(kDao.proveriKorisnikovuClanarinu(contextPath)) {
+			dao.prijaviTrening(trening, kupac, contextPath);
+			kDao.prijaviTrening(trening, kupac, contextPath);
+		}
+		else {
+			System.out.println("Korisnik nema aktivnu clanarinu pa ne moze da prijavi trening!");
+		}
 		
 		return Response.status(200).build();
 	}

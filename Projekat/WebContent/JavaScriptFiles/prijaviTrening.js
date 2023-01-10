@@ -2,7 +2,9 @@ $(document).ready(() => {
 	
 	var treningNaziv;
 	var treningTip;
+	var treningSportskiObjekat;
 	var treningTrajanje;
+	var treningTrener;
     var treningOpis;
     var treningSlika;
     var treningCena;
@@ -11,7 +13,9 @@ $(document).ready(() => {
 		let tr = $('<tr></tr>');
 		let tdNaziv = $('<td>' + trening.naziv + '</td>');
 		let tdTip = $('<td>' + trening.tip + '</td>');
+		let tdSportskiObjekat = $('<td>' + trening.sportskiObjekat + '</td>');
         let tdTrajanje = $('<td>' + trening.trajanje + '</td>');
+		let tdTrener = $('<td>' + trening.trener + '</td>')
         let tdOpis = $('<td>' + trening.opis + '</td>');
         let tdSlika = $('<td>' + trening.slika + '</td>');
 		let tdCena = $('<td>' + trening.cena + '</td>');
@@ -23,7 +27,9 @@ $(document).ready(() => {
 				url: 'rest/prijaviTrening',
 				data: JSON.stringify({"naziv" : treningNaziv, 
                 "tip" : treningTip,
+				"sportskiObjekat" : treningSportskiObjekat,
                 "trajanje" : treningTrajanje,
+				"trener" : treningTrener,
                 "opis" : treningOpis,
                 "slika" : treningSlika,
 				"cena" : treningCena}),
@@ -37,7 +43,7 @@ $(document).ready(() => {
 			});	
 		}
 	
-		tr.append(tdNaziv).append(tdTip).append(tdTrajanje).append(tdOpis).append(tdSlika).append(tdCena).append(tdPrijavi);
+		tr.append(tdNaziv).append(tdTip).append(tdSportskiObjekat).append(tdTrajanje).append(tdTrener).append(tdOpis).append(tdSlika).append(tdCena).append(tdPrijavi);
 		$('#tabelaPrikazaTreninga tbody').append(tr);
 	}
 	
@@ -47,7 +53,9 @@ $(document).ready(() => {
 			
             treningNaziv = trening.naziv;
             treningTip = trening.tip;
+			treningSportskiObjekat = trening.sportskiObjekat;
             treningTrajanje = trening.trajanje;
+			treningTrener = trening.trener;
             treningOpis = trening.opis;
             treningSlika = trening.slika;
             treningCena = trening.cena;
