@@ -592,5 +592,15 @@ public class SportskiObjekatDAO {
 			
 		}
 	}
+
+	public Trening getTreningZaPrikazati(String contextPath) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public void prijaviTrening(Trening trening, String contextPath) {
+		// TODO Auto-generated method stub
+		
+	}
 	
 }

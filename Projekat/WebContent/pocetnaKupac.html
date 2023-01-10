@@ -46,6 +46,41 @@
 	
 	<!-- ------------------------------------------------------------------------------------ -->
 	
+	<div style="margin-top:30px">
+	
+		<table border="1" id="tabelaSportskihObjekata">
+		<caption> Raspolozivi sportski objekti: </caption>
+			<thead>
+				<tr bgcolor="lightgrey">
+					<th>Naziv</th>
+					<th>Tip objekta</th>
+					<th>Status</th>
+					<th>Lokacija</th>
+					<th>Logo</th>
+					<th>Prosecna ocena</th>
+					<th>Radno vreme</th>
+					<th>Menadzer</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr v-for="so in sportskiObjekti" v-on:click="selectSportskiObjekat(so)" 
+				v-bind:class="{selected:selectedSportskiObjekat.naziv===so.naziv}"> 
+					<td>{{so.naziv}}</td>
+					<td>{{so.tipObjekta}}</td>
+					<td>{{so.status}}</td>
+					<td>{{so.mapa}}</td>
+					<td>{{so.logo}}</td>
+					<td>{{so.prosecnaOcena}}</td>
+					<td>{{so.radnoVreme}}</td>
+					<td>{{so.menadzer}}</td>
+				</tr>
+			</tbody>
+			
+		</table>
+	</div>
+	
+	<!-- ------------------------------------------------------------------------------------ -->
+	
 	<script type="text/javascript" src="JavaScriptFiles/vue.js"></script>
 	<script type="text/javascript" src="JavaScriptFiles/axios.js"></script>
 	<script type="text/javascript" src="JavaScriptFiles/moment.min.js"></script>

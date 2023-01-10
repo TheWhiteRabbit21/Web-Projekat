@@ -14,13 +14,13 @@ $(document).ready(() => {
 		//let tdPlati	= $('<td> <button id="dugmePlati">Plati</button> </td>');
 		let tdPlati	= document.createElement("button");
 		tdPlati.innerHTML = "Plati";
-		tdPlati.onclick = function(){
-			
+		tdPlati.onclick = function()
+		{	
 			$.post({
 				url: 'rest/platiClanarinu',
 				data: JSON.stringify({"tip" : clanarinaTip, 
 				"brojTermina" : clanarinaBrojTermina,
-				 "cena" : clanarinaCena}),
+				"cena" : clanarinaCena}),
 				contentType: 'application/json',
 				
 				success: function() {
@@ -29,7 +29,6 @@ $(document).ready(() => {
 				
 				}
 			});
-			
 		}
 	
 		tr.append(tdTip).append(tdBrojTermina).append(tdCena).append(tdPlati);

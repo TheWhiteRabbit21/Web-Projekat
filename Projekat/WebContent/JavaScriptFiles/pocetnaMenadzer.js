@@ -42,18 +42,6 @@ $(document).ready(function() {
 			$('#sportskiObjekatNaziv').append(so.naziv);
 			sportskiObjekat = so.naziv;
 			
-
-
-			/*
-			$.get({
-				url: 'rest/prikaziTreningeSportskogObjekta/' + so.naziv,
-        		success: function(sadrzaji) {
-					for(let sadrzaj of sadrzaji){
-						addSadrzajiTr(sadrzaj);
-					}
-				}
-			});*/
-			
 			var sadrzaji = new Vue({
 				el: '#tabelaSadrzaja',
 				data: {
@@ -87,20 +75,6 @@ $(document).ready(function() {
 					}
 				}
 			});
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 		}
