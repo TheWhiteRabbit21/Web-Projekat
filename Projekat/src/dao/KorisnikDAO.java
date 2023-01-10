@@ -1305,7 +1305,7 @@ public class KorisnikDAO {
 		return false;
 	}
 
-	public void prijaviTrening(Trening trening, String kupac, String contextPath) {
+	public void prijaviTrening(int istorijaTreningaId, Trening trening, String kupac, String contextPath) {
 
 		ArrayList<Clanarina> tempClanarine = new ArrayList<Clanarina>();
 		ArrayList<Kupac> tempKupci = new ArrayList<Kupac>();
@@ -1317,12 +1317,12 @@ public class KorisnikDAO {
     	{
 			if(kupac.equals(entry.getValue().getUsername())) {
 				
-				Collection<String> poseceniO = new ArrayList<String>(); 
-				poseceniO = entry.getValue().getPoseceniSportskiObjekti();
+				Collection<Integer> poseceniO = new ArrayList<Integer>(); 
+				poseceniO = entry.getValue().getIstorijaTreningaIds();
 				
-				poseceniO.add(trening.getSportskiObjekat());
+				poseceniO.add(istorijaTreningaId);
 				
-				entry.getValue().setPoseceniSportskiObjekti(poseceniO);
+				entry.getValue().setIstorijaTreningaIds(poseceniO);
 				
 				for(Map.Entry<Integer, Clanarina> entry2 : clanarine.entrySet())
     	    	{

@@ -598,7 +598,7 @@ public class SportskiObjekatDAO {
 		}
 	}
 
-	public void prijaviTrening(Trening trening, String kupac, String contextPath) {
+	public Integer prijaviTrening(Trening trening, String kupac, String contextPath) {
 
 		Date currentDate = new Date();
 		
@@ -625,7 +625,7 @@ public class SportskiObjekatDAO {
     	}
 		
 		upisiUFajlIstorijuTreninga(tempIstorijaTreninga, contextPath);
-		
+		return lastITId;
 		
 	}
 
