@@ -42,7 +42,7 @@ $(document).ready(() => {
 	}
 	
 	$.get({
-		url: 'rest/prikaziTrening',
+		url: 'rest/getSadrzajZaPrikazati',
 		success: function(trening){
 			
             treningNaziv = trening.naziv;
