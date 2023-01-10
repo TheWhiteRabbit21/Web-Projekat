@@ -15,6 +15,9 @@ public class Trening implements Serializable {
 	private int cena;
 	
 	
+	public Trening() {
+		super();
+	}
 	
 	public int getCena() {
 		return cena;

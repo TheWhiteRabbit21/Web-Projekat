@@ -42,6 +42,7 @@ $(document).ready(function() {
 							url: 'rest/sadrzajPageEdit',
 							data: JSON.stringify({"naziv" : this.selectedSadrzaj.naziv,
 							"tip" : this.selectedSadrzaj.tip,
+							"sportskiObjekat" : this.selectedSadrzaj.sportskiObjekat,
 							"trajanje" : this.selectedSadrzaj.trajanje,
 							"trener" : this.selectedSadrzaj.trener,
 							"opis" : this.selectedSadrzaj.opis,

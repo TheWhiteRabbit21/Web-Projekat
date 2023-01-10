@@ -22,6 +22,7 @@ import beans.Kupac;
 import beans.Menadzer;
 import beans.SportskiObjekat;
 import beans.Trener;
+import beans.Trening;
 import enums.Pol;
 import enums.Tip;
 import enums.Uloga;
@@ -1273,6 +1274,104 @@ public class KorisnikDAO {
 	
 	private int uradiPopustNaCenu(double pocetnaCena, double popust) {
 		return (int)((pocetnaCena/100.0) * (100.0-popust));
+	}
+
+	public boolean proveriKorisnikovuClanarinu(String contextPath) {
+
+		for(Map.Entry<String, Kupac> entry : kupci.entrySet())
+    	{
+			if(trenutniKorisnik.getUsername().equals(entry.getValue().getUsername())) {
+				if(entry.getValue().getIdClanarine() != 0) {
+					for(Map.Entry<Integer, Clanarina> entry2 : clanarine.entrySet())
+        	    	{
+						if(entry.getValue().getIdClanarine() == entry2.getValue().getId()) {
+							
+							Date currentDate = new Date();
+							//ako su uslovi ispunjeni, clanarina kupca je validna i vraca se true
+							if(entry2.getValue().getStatus() && (entry2.getValue().getBrojTerminaInt() > 0 || entry2.getValue().getBrojTerminaInt() == -1) && currentDate.before(entry2.getValue().getDatumIVremeIsteka())) {
+								return true;
+							}
+							//invalidiraj clanarinu ako je kupcu ostalo nula termina ili je probijen rok isteka clanarine
+							if(entry2.getValue().getStatus() && (entry2.getValue().getBrojTerminaInt() == 0 || currentDate.after(entry2.getValue().getDatumIVremeIsteka()))) {
+								proveriIZavrsiTrenutnuClanarinuTrenutnogKupca(contextPath);
+							}
+							
+						}
+        	    	}
+				}
+				
+			}
+    	}
+		return false;
+	}
+
+	public void prijaviTrening(int istorijaTreningaId, Trening trening, String kupac, String contextPath) {
+
+		ArrayList<Clanarina> tempClanarine = new ArrayList<Clanarina>();
+		ArrayList<Kupac> tempKupci = new ArrayList<Kupac>();
+		
+		loadClanarine(contextPath);
+		loadKupce(contextPath);
+		
+		for(Map.Entry<String, Kupac> entry : kupci.entrySet())
+    	{
+			if(kupac.equals(entry.getValue().getUsername())) {
+				
+				Collection<Integer> poseceniO = new ArrayList<Integer>(); 
+				poseceniO = entry.getValue().getIstorijaTreningaIds();
+				
+				poseceniO.add(istorijaTreningaId);
+				
+				entry.getValue().setIstorijaTreningaIds(poseceniO);
+				
+				for(Map.Entry<Integer, Clanarina> entry2 : clanarine.entrySet())
+    	    	{
+					if(entry.getValue().getIdClanarine() == entry2.getValue().getId()) {
+						
+						if(entry2.getValue().getBrojTerminaInt() == -1) {
+							System.out.println("Korisnik ima beskonacno termina");
+							return;
+						}
+						
+						if(entry2.getValue().getBrojTerminaInt() == 0) {
+							proveriIZavrsiTrenutnuClanarinuTrenutnogKupca(contextPath);
+							return;
+						}
+						
+						int temp = entry2.getValue().getBrojTerminaInt();
+						temp--;
+						entry2.getValue().setBrojTerminaInt(temp);
+					}
+					tempClanarine.add(entry2.getValue());
+    	    	}
+			}
+			tempKupci.add(entry.getValue());
+    	}
+		upisiUFajlClanarine(tempClanarine, contextPath);
+		upisiUFajlKupce(tempKupci, contextPath);
+	}
+
+	private void upisiUFajlClanarine(ArrayList<Clanarina> tempClanarine, String contextPath) {
+		
+		try
+		{
+			ObjectMapper objectMapper = new ObjectMapper();
+
+			objectMapper.configure(DeserializationFeature.ACCEPT_SINGLE_VALUE_AS_ARRAY, true);
+			objectMapper.configure(DeserializationFeature.ACCEPT_EMPTY_STRING_AS_NULL_OBJECT, true);
+		
+			objectMapper.writeValue(new File(contextPath + "/clanarine.json"), tempClanarine);
+		}
+		
+		catch (Exception ex) {
+			System.out.println(ex);
+			ex.printStackTrace();
+			
+		} finally {
+			
+		}
+		
+		
 	}
 	
 	

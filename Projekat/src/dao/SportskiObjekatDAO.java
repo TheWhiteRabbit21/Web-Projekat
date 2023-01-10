@@ -8,6 +8,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.StringTokenizer;
@@ -16,6 +17,7 @@ import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import beans.Clanarina;
+import beans.IstorijaTreninga;
 import beans.SportskiObjekat;
 import beans.Trening;
 
@@ -25,6 +27,7 @@ public class SportskiObjekatDAO {
 	
 	private HashMap<String, SportskiObjekat> sportskiObjekti = new HashMap<String, SportskiObjekat>();
 	private HashMap<String, Trening> sadrzaj = new HashMap<String, Trening>();
+	private HashMap<Integer, IstorijaTreninga> istorijaTreninga = new HashMap<Integer, IstorijaTreninga>();
 	private SportskiObjekat sportskiObjekatZaPrikazati = new SportskiObjekat();
 	private Trening treningZaPrikazati = new Trening();
 	private Clanarina clanarinaZaPrikazati = new Clanarina();
@@ -40,6 +43,8 @@ public class SportskiObjekatDAO {
 	public SportskiObjekatDAO(String contextPath) {
 		loadSportskiObjekti(contextPath);
 		loadSadrzaj(contextPath);
+		loadIstorijaTreningaIdJSON(contextPath);
+		loadIstorijaTreninga(contextPath);
 		ctx = contextPath;
 	}
 	
@@ -593,9 +598,204 @@ public class SportskiObjekatDAO {
 		}
 	}
 
-	public void prijaviTrening(Trening trening, String contextPath) {
-		// TODO Auto-generated method stub
+	public Integer prijaviTrening(Trening trening, String kupac, String contextPath) {
+
+		Date currentDate = new Date();
+		
+		loadIstorijaTreninga(contextPath);
+		
+		if(loadIstorijaTreningaIdJSON(contextPath) == -2) {
+			upisiUFajlIstorijaTreningaIdJSON(0, contextPath);
+		}
+		
+		int lastITId = loadIstorijaTreningaIdJSON(contextPath);
+		lastITId++;
+		upisiUFajlIstorijaTreningaIdJSON(lastITId, contextPath);
+		
+		IstorijaTreninga istT = new IstorijaTreninga(lastITId, currentDate, trening.getSportskiObjekat(), trening.getNaziv(), kupac, trening.getTrener());
+		if(!istorijaTreninga.containsKey(istT.getId())) {
+			istorijaTreninga.put(istT.getId(), istT);
+		}
+		
+		ArrayList<IstorijaTreninga> tempIstorijaTreninga = new ArrayList<IstorijaTreninga>();
+		
+		for(Map.Entry<Integer, IstorijaTreninga> entry : istorijaTreninga.entrySet())
+    	{
+			tempIstorijaTreninga.add(entry.getValue());
+    	}
+		
+		upisiUFajlIstorijuTreninga(tempIstorijaTreninga, contextPath);
+		return lastITId;
 		
 	}
+
+	private void upisiUFajlIstorijuTreninga(ArrayList<IstorijaTreninga> tempIstorijaTreninga, String contextPath) {
+
+
+		ArrayList<IstorijaTreninga> it = new ArrayList<IstorijaTreninga>();
+		
+		for(Map.Entry<Integer, IstorijaTreninga> entry : istorijaTreninga.entrySet())
+    	{
+    		it.add(entry.getValue());
+    	}
+		
+		try
+		{
+			ObjectMapper objectMapper = new ObjectMapper();
+
+			objectMapper.configure(DeserializationFeature.ACCEPT_SINGLE_VALUE_AS_ARRAY, true);
+			objectMapper.configure(DeserializationFeature.ACCEPT_EMPTY_STRING_AS_NULL_OBJECT, true);
+		
+			objectMapper.writeValue(new File(contextPath + "/istorijaTreninga.json"), it);
+		}
+		
+		catch (Exception ex) {
+			System.out.println(ex);
+			ex.printStackTrace();
+			
+		} finally {
+			
+		}
+		
+	}
+
+	private void upisiUFajlIstorijaTreningaIdJSON(int id, String contextPath) {
+
+		try
+		{
+		ObjectMapper objectMapper = new ObjectMapper();
+
+		objectMapper.configure(DeserializationFeature.ACCEPT_SINGLE_VALUE_AS_ARRAY, true);
+		objectMapper.configure(DeserializationFeature.ACCEPT_EMPTY_STRING_AS_NULL_OBJECT, true);
+		
+		objectMapper.writeValue(new File(contextPath + "/istorijaTreningaId.json"), id);
+		}
+		
+		catch (Exception ex) {
+			System.out.println(ex);
+			ex.printStackTrace();
+			
+		} finally {
+			
+		}
+		
+	}
+
+	private int loadIstorijaTreningaIdJSON(String contextPath) {
+		
+		String filePath = contextPath + "istorijaTreningaId.json";
+    	FileWriter fileWriter = null;
+    	BufferedReader in = null;
+    	File file = null;
+    	
+    	try {
+			file = new File(filePath);
+    		in = new BufferedReader(new FileReader(file));
+    		
+    		ObjectMapper objectMapper = new ObjectMapper();
+			objectMapper.configure(DeserializationFeature.ACCEPT_SINGLE_VALUE_AS_ARRAY, true);
+			objectMapper.configure(DeserializationFeature.ACCEPT_EMPTY_STRING_AS_NULL_OBJECT, true);
+			
+			Integer itId = objectMapper.readValue(file, Integer.class);
+			
+			return itId;
+			
+		} catch (FileNotFoundException fnfe) {
+			try {
+				if(file.createNewFile()) {
+					System.out.println("File created: " + file.getName());
+				}
+				else {
+					System.out.println("File not created");
+				}
+				
+			} catch (IOException e) {
+				e.printStackTrace();
+			}finally {
+				if (fileWriter != null) {
+					try {
+						fileWriter.close();
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				}
+			}
+		}	catch (Exception ex) {
+			//ex.printStackTrace();
+			System.out.println("Fajl istorijaTreningaId.json je prazan.");
+		} finally {
+			if (in != null) {
+				try {
+					in.close();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		return -2;//ako je istorijaTreningaId -2 ne bi trebalo da se koristi
+		
+	}
+
+	private void loadIstorijaTreninga(String contextPath) {
+
+		String filePath = contextPath + "istorijaTreninga.json";
+    	FileWriter fileWriter = null;
+    	BufferedReader in = null;
+    	File file = null;
+    	
+    	istorijaTreninga.clear();
+    	
+    	try {
+			file = new File(filePath);
+    		in = new BufferedReader(new FileReader(file));
+    		
+    		ObjectMapper objectMapper = new ObjectMapper();
+			objectMapper.configure(DeserializationFeature.ACCEPT_SINGLE_VALUE_AS_ARRAY, true);
+			objectMapper.configure(DeserializationFeature.ACCEPT_EMPTY_STRING_AS_NULL_OBJECT, true);
+			
+			IstorijaTreninga[] it = objectMapper.readValue(file, IstorijaTreninga[].class);
+
+			for(IstorijaTreninga i : it)
+			{
+				istorijaTreninga.put(i.getId(), i);
+			}
+			
+		} catch (FileNotFoundException fnfe) {
+			try {
+				if(file.createNewFile()) {
+					System.out.println("File created: " + file.getName());
+				}
+				else {
+					System.out.println("File not created");
+				}
+				
+			} catch (IOException e) {
+				e.printStackTrace();
+			}finally {
+				if (fileWriter != null) {
+					try {
+						fileWriter.close();
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				}
+			}
+		}	catch (Exception ex) {
+			//ex.printStackTrace();
+			System.out.println("Fajl istorijaTreninga.json je prazan.");
+		} finally {
+			if (in != null) {
+				try {
+					in.close();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		
+	}
+	
+	
+	
 	
 }

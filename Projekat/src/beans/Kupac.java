@@ -9,7 +9,7 @@ import enums.Tip;
 public class Kupac extends Korisnik {
 
 	
-	private Collection<String> poseceniSportskiObjekti;
+	private Collection<Integer> istorijaTreningaIds;
 	private double brojSakupljenihBodova;
 	private int idClanarine;
 	private TipKupca tipKupca;
@@ -20,18 +20,18 @@ public class Kupac extends Korisnik {
 	
 	public Kupac(Korisnik km) {
 		super(km);
-		this.poseceniSportskiObjekti = new ArrayList<String>();
+		this.istorijaTreningaIds = new ArrayList<Integer>();
 		this.brojSakupljenihBodova = 0;
 		this.idClanarine = 0;
 		this.tipKupca = new TipKupca(Tip.BRONZANI, 0.0);
 	}
 
-	public Collection<String> getPoseceniSportskiObjekti() {
-		return poseceniSportskiObjekti;
+	public Collection<Integer> getIstorijaTreningaIds() {
+		return istorijaTreningaIds;
 	}
 
-	public void setPoseceniSportskiObjekti(Collection<String> poseceniSportskiObjekti) {
-		this.poseceniSportskiObjekti = poseceniSportskiObjekti;
+	public void setIstorijaTreningaIds(Collection<Integer> istorijaTreningaIds) {
+		this.istorijaTreningaIds = istorijaTreningaIds;
 	}
 
 	public double getBrojSakupljenihBodova() {
