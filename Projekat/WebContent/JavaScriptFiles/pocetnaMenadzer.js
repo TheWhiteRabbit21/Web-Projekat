@@ -26,6 +26,19 @@ function addSadrzajiTr(sadrzaj) {
 	$('#tabelaSadrzaja tbody').append(tr);
 }
 
+function addKupacTr(kupac) {
+	let tr = $('<tr></tr>');
+	let tdUsername = $('<td>' + kupac.username + '</td>');
+	let tdIme = $('<td>' + kupac.ime + '</td>');
+	let tdPrezime = $('<td>' + kupac.prezime + '</td>');
+	let tdPol = $('<td>' + kupac.pol + '</td>');
+	let tdDatumRodjenja = $('<td>' + kupac.datumRodjenja + '</td>');
+
+	tr.append(tdUsername).append(tdIme).append(tdPrezime).append(tdPol).append(tdDatumRodjenja);
+	$('#tabelaKorisnikaPosetiliSO tbody').append(tr);
+}
+
+
 function addTreneri(trener, counter){		
 	let option = $('<option value="' + counter + '">' + trener.username +'</option>');
 	$('#trener').append(option);
@@ -72,6 +85,16 @@ $(document).ready(function() {
 								window.location="sadrzajPage.html";
 							}
 						});
+					}
+				}
+			});
+
+
+			$.get({
+				url: 'rest/prikaziKupceKojiSuPosetiliSO/' + so.naziv,
+				success: function(kupci) {					
+					for(let kupac of kupci){
+						addKupacTr(kupac);
 					}
 				}
 			});

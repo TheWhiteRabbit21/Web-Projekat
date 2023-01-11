@@ -6,30 +6,27 @@ import java.util.Collection;
 @SuppressWarnings("serial")
 public class Trener extends Korisnik{
 
-	Collection<IstorijaTreninga> istorijaTreninga;
+	Collection<Integer> istorijaTreningaIds;
 
 	public Trener() {
 		super();
 	}
 	
-	
-	
-	
 	public Trener(Korisnik km) {
 		super(km);
-		this.istorijaTreninga = new ArrayList<IstorijaTreninga>();
+		this.istorijaTreningaIds = new ArrayList<Integer>();
 	}
 	
 	public Trener(Trener t) {
 		
 	}
 
-	public Collection<IstorijaTreninga> getIstorijaTreninga() {
-		return istorijaTreninga;
+	public Collection<Integer> getIstorijaTreningaIds() {
+		return istorijaTreningaIds;
 	}
 
-	public void setIstorijaTreninga(Collection<IstorijaTreninga> istorijaTreninga) {
-		this.istorijaTreninga = istorijaTreninga;
+	public void setIstorijaTreningaIds(Collection<Integer> istorijaTreningaIds) {
+		this.istorijaTreningaIds = istorijaTreningaIds;
 	}
 	
 }

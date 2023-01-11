@@ -17,6 +17,7 @@ import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import beans.Clanarina;
+import beans.IstorijaTreninga;
 import beans.Korisnik;
 import beans.Kupac;
 import beans.Menadzer;
@@ -1362,7 +1363,6 @@ public class KorisnikDAO {
 		
 			objectMapper.writeValue(new File(contextPath + "/clanarine.json"), tempClanarine);
 		}
-		
 		catch (Exception ex) {
 			System.out.println(ex);
 			ex.printStackTrace();
@@ -1370,8 +1370,25 @@ public class KorisnikDAO {
 		} finally {
 			
 		}
+	}
+
+	public Collection<Kupac> getKupceKojiSuPosetiliSportskiObjekat(Collection<IstorijaTreninga> istorijaTreninga,
+			String sportskiObjekat, String contextPath) {
+
+		Collection<Kupac> tempKupci = new ArrayList<Kupac>();
 		
+		for(IstorijaTreninga it : istorijaTreninga) 
+		{
+			for(Map.Entry<String, Kupac> entry : kupci.entrySet())
+	    	{
+				if(it.getSportskiObjekat().equals(sportskiObjekat) && it.getKupac().equals(entry.getValue().getUsername()) && !tempKupci.contains(entry.getValue()))
+				{
+					tempKupci.add(entry.getValue());
+				}
+			}
+		}
 		
+		return tempKupci;
 	}
 	
 	
