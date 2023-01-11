@@ -1,20 +1,25 @@
 package services;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 import javax.annotation.PostConstruct;
 import javax.servlet.ServletContext;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 
 import beans.Clanarina;
+import beans.IstorijaTreninga;
 import beans.Korisnik;
+import beans.Kupac;
 import beans.Menadzer;
 import beans.Trener;
 import dao.KorisnikDAO;
+import dao.SportskiObjekatDAO;
 
 @Path("/")
 public class KorisniciService {
@@ -78,7 +83,28 @@ public class KorisniciService {
 	
 	
 	
-	
+	@GET
+	@Path("/prikaziKupceKojiSuPosetiliSO/{sportskiObjekat}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Collection<Kupac> getTreningeSportskogObjekta(@PathParam("sportskiObjekat") String sportskiObjekat){
+
+		SportskiObjekatDAO dao = (SportskiObjekatDAO) ctx.getAttribute("sportskiObjekatDAO");
+		KorisnikDAO kDao = (KorisnikDAO) ctx.getAttribute("korisnikDAO");
+		
+		String contextPath = ctx.getRealPath("");
+
+		if(sportskiObjekat.contains("%20")){
+			sportskiObjekat.replace("%20", " ");
+		}
+		
+		Collection<IstorijaTreninga> istorijaTreninga = new ArrayList<IstorijaTreninga>();
+		istorijaTreninga = dao.getAllIstorijaTreninga(contextPath);
+		
+		Collection<Kupac> kupci = new ArrayList<Kupac>();
+		
+		kupci = kDao.getKupceKojiSuPosetiliSportskiObjekat(istorijaTreninga, sportskiObjekat, contextPath);
+		return kupci;
+	}
 	
 	
 	

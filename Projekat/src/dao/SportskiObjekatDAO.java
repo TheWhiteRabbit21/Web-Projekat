@@ -794,6 +794,11 @@ public class SportskiObjekatDAO {
 		}
 		
 	}
+
+	public Collection<IstorijaTreninga> getAllIstorijaTreninga(String contextPath) {
+		return istorijaTreninga.values();
+
+	}
 	
 	
 	
