@@ -56,6 +56,9 @@ public class KorisnikDAO {
 		loadUsers(contextPath);
 		loadClanarine(contextPath);
 		loadClanarinaIdJSON(contextPath);
+		loadKupce(contextPath);
+		loadMenadzers(contextPath);
+		loadTrenere(contextPath);
 		ctx = contextPath;
 		
 	}
@@ -68,11 +71,14 @@ public class KorisnikDAO {
 	 */
 	
 	public Collection<Korisnik> findAll() {
+		loadUsers(ctx);
 		return korisnici.values();
 	}
 	
 	public Collection<Menadzer> findAllMenadzere(){
 
+		loadMenadzers(ctx);
+		
 		Collection<Menadzer> temp = new ArrayList<Menadzer>();
 		
 		for(Map.Entry<String, Menadzer> entry : menadzeri.entrySet()) 
@@ -85,6 +91,8 @@ public class KorisnikDAO {
 	
 	public Collection<Trener> findAllTrenere() {
     	
+		loadTrenere(ctx);
+		
     	Collection<Trener> temp = new ArrayList<Trener>();
     	
     	for(Map.Entry<String, Trener> entry : treneri.entrySet())
@@ -97,6 +105,8 @@ public class KorisnikDAO {
 	
 	public Collection<Kupac> findAllKupce(){
 
+		loadKupce(ctx);
+		
 		Collection<Kupac> temp = new ArrayList<Kupac>();
 		
 		for(Map.Entry<String, Kupac> entry : kupci.entrySet()) 
