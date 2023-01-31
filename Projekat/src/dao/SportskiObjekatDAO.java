@@ -799,6 +799,20 @@ public class SportskiObjekatDAO {
 		return istorijaTreninga.values();
 
 	}
+
+	public Collection<IstorijaTreninga> getAllKorisnikovuIstorijuTreninga(String trenutniKorisnik, String contextPath) {
+
+		Collection<IstorijaTreninga> it = new ArrayList<IstorijaTreninga>();
+		
+		for(Map.Entry<Integer, IstorijaTreninga> entry : istorijaTreninga.entrySet())
+    	{
+			if(trenutniKorisnik.equals(entry.getValue().getKupac()))
+				it.add(entry.getValue());
+    	}
+		
+		
+		return it;
+	}
 	
 	
 	

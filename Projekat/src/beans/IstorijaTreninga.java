@@ -6,6 +6,7 @@ public class IstorijaTreninga {
 
 	int id;
 	Date datumIVremePrijave;
+	String datumIVremePrijaveString;
 	String sportskiObjekat;
 	String trening;
 	String kupac;
@@ -16,10 +17,12 @@ public class IstorijaTreninga {
 		super();
 	}
 	
+	@SuppressWarnings("deprecation")
 	public IstorijaTreninga(int id, Date currentDate, String sportskiObjekat, String trening, String kupac, String trener) {
 
 		this.id = id;
 		this.datumIVremePrijave = currentDate;
+		this.datumIVremePrijaveString = datumIVremePrijave.toLocaleString();
 		this.sportskiObjekat = sportskiObjekat;
 		this.trening = trening;
 		this.kupac = kupac;
@@ -41,6 +44,14 @@ public class IstorijaTreninga {
 
 	public void setDatumIVremePrijave(Date datumIVremePrijave) {
 		this.datumIVremePrijave = datumIVremePrijave;
+	}
+
+	public String getDatumIVremePrijaveString() {
+		return datumIVremePrijaveString;
+	}
+
+	public void setDatumIVremePrijaveString(String datumIVremePrijaveString) {
+		this.datumIVremePrijaveString = datumIVremePrijaveString;
 	}
 
 	public String getSportskiObjekat() {
