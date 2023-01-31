@@ -1,3 +1,28 @@
+function addIstorijuTreningaTr(it) {
+	let tr = $('<tr></tr>');
+	let tdSO = $('<td>' + it.sportskiObjekat + '</td>');
+	let tdIme = $('<td>' + it.trening + '</td>');
+	let tdVreme = $('<td>' + it.datumIVremePrijaveString + '</td>');
+
+	tr.append(tdSO).append(tdIme).append(tdVreme);
+	$('#tabelaIstorijeTreningaKorisnika tbody').append(tr);
+}
+
+$(document).ready(function() {
+
+	$.get({
+		url: 'rest/korisnikovaIstorijaTreninga',
+		success: function(istorijaTreninga) {				
+			for(let it of istorijaTreninga){
+				addIstorijuTreningaTr(it);
+			}
+		}
+	});
+
+	
+	
+});
+
 var clanarine = new Vue({
 	el:'#tabelaClanarina',
 	data: {

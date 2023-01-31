@@ -17,6 +17,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import beans.Clanarina;
+import beans.IstorijaTreninga;
 import beans.SportskiObjekat;
 import beans.Trening;
 import dao.KorisnikDAO;
@@ -418,4 +419,27 @@ public class SportskiObjektiService {
 		
 	}
 
+	@GET
+	@Path("/korisnikovaIstorijaTreninga")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Collection<IstorijaTreninga> getIstorijeTreningaKupca(){
+		
+		SportskiObjekatDAO dao = (SportskiObjekatDAO) ctx.getAttribute("sportskiObjekatDAO");
+		KorisnikDAO kDao = (KorisnikDAO) ctx.getAttribute("korisnikDAO");
+		
+		String contextPath = ctx.getRealPath("");
+		
+		String trenutniKorisnik = kDao.getTrenutniKorisnik();
+		
+		Collection<IstorijaTreninga> temp = dao.getAllKorisnikovuIstorijuTreninga(trenutniKorisnik, contextPath);
+		
+		return temp;
+	}
+	
+	
+	
+	
+	
+	
+	
 }
