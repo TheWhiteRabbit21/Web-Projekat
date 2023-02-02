@@ -13,6 +13,7 @@ public class Trening implements Serializable {
 	private String opis;
 	private String slika;
 	private int cena;
+	private boolean isDeleted;
 	
 	
 	public Trening() {
@@ -66,6 +67,14 @@ public class Trening implements Serializable {
 	}
 	public void setSlika(String slika) {
 		this.slika = slika;
+	}
+
+	public boolean isDeleted() {
+		return isDeleted;
+	}
+
+	public void setDeleted(boolean isDeleted) {
+		this.isDeleted = isDeleted;
 	}
 	
 		
