@@ -113,6 +113,21 @@ public class SportskiObjektiService {
 		return Response.status(200).build();
 	}	
 	
+	@POST
+	@Path("/otkaziTrening")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response platiClanarinu(Trening trening, @Context HttpServletRequest request) {
+		
+		SportskiObjekatDAO dao = (SportskiObjekatDAO) ctx.getAttribute("sportskiObjekatDAO");
+		
+		String contextPath = ctx.getRealPath("");
+		
+		dao.otkaziTrening(trening, contextPath);
+		
+		return Response.status(200).build();
+	}
+	
 	@GET
 	@Path("/prikaziTreningeSportskogObjekta/{sportskiObjekat}")
 	@Produces(MediaType.APPLICATION_JSON)
@@ -132,9 +147,9 @@ public class SportskiObjektiService {
 	}
 	
 	@GET
-	@Path("/prikaziTreningeTrenera/{trener}")
+	@Path("/prikaziGrupneTreningeTrenera/{trener}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Collection<Trening> getTreningeTrenera(@PathParam("trener") String trener){
+	public Collection<Trening> getGrupneTreningeTrenera(@PathParam("trener") String trener){
 
 		SportskiObjekatDAO dao = (SportskiObjekatDAO) ctx.getAttribute("sportskiObjekatDAO");
 
@@ -144,7 +159,41 @@ public class SportskiObjektiService {
 		
 		Collection<Trening> treninzi = new ArrayList<Trening>();
 				
-		treninzi = dao.getTreneroveTreninge(trener);
+		treninzi = dao.getTreneroveGrupneTreninge(trener);
+		return treninzi;
+	}
+	
+	@GET
+	@Path("/prikaziOstaleTreningeTrenera/{trener}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Collection<Trening> getOstaleTreningeTrenera(@PathParam("trener") String trener){
+
+		SportskiObjekatDAO dao = (SportskiObjekatDAO) ctx.getAttribute("sportskiObjekatDAO");
+
+		if(trener.contains("%20")){
+			trener.replace("%20", " ");
+		}
+		
+		Collection<Trening> treninzi = new ArrayList<Trening>();
+				
+		treninzi = dao.getTreneroveOstaleTreninge(trener);
+		return treninzi;
+	}
+	
+	@GET
+	@Path("/prikaziPersonalneTreningeTrenera/{trener}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Collection<Trening> getPersonalneTreningeTrenera(@PathParam("trener") String trener){
+
+		SportskiObjekatDAO dao = (SportskiObjekatDAO) ctx.getAttribute("sportskiObjekatDAO");
+
+		if(trener.contains("%20")){
+			trener.replace("%20", " ");
+		}
+		
+		Collection<Trening> treninzi = new ArrayList<Trening>();
+				
+		treninzi = dao.getTrenerovePersonalneTreninge(trener);
 		return treninzi;
 	}
 	
@@ -215,6 +264,29 @@ public class SportskiObjektiService {
 		Clanarina cl = dao.getClanarinuZaPrikazati(contextPath);
 
 		return cl;
+		}
+		catch(Exception e){
+			System.out.println(e);
+			return null;
+		}
+	}
+	
+	@GET
+	@Path("/prikaziTrening")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Trening prikaziTrening(){
+
+		try
+		{
+		SportskiObjekatDAO dao = (SportskiObjekatDAO) ctx.getAttribute("sportskiObjekatDAO");
+
+		//System.out.println(sportskiObjekat);
+		
+		String contextPath = ctx.getRealPath("");
+		
+		Trening tr = dao.getTreningZaPrikazati(contextPath);
+
+		return tr;
 		}
 		catch(Exception e){
 			System.out.println(e);
@@ -390,6 +462,21 @@ public class SportskiObjektiService {
 		String contextPath = ctx.getRealPath("");
 				
 		dao.setClanarinuZaPrikazati(clanarina, contextPath);
+		
+		return Response.status(200).build();
+	}
+	
+	@POST
+	@Path("/personalniTreningPage")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response prikaziPersonalniTreningTrenera(Trening trening, @Context HttpServletRequest request) {
+		
+		SportskiObjekatDAO dao = (SportskiObjekatDAO) ctx.getAttribute("sportskiObjekatDAO");
+		String contextPath = ctx.getRealPath("");
+				
+		//dao.setClanarinuZaPrikazati(clanarina, contextPath);
+		dao.setTreningZaPrikazati(trening, contextPath);
 		
 		return Response.status(200).build();
 	}

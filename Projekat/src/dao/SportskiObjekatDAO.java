@@ -539,7 +539,7 @@ public class SportskiObjekatDAO {
 	
 	}
 
-	public Collection<Trening> getTreneroveTreninge(String trener) {
+	public Collection<Trening> getTreneroveGrupneTreninge(String trener) {
 		
 		Collection<Trening> treninzi = new ArrayList<Trening>();
 		
@@ -547,12 +547,51 @@ public class SportskiObjekatDAO {
     	{
     		if(entry.getValue().getTrener().equals(trener))
     		{
-    			treninzi.add(entry.getValue());
+    			if(!entry.getValue().isDeleted() && entry.getValue().getTip().equalsIgnoreCase("grupni")) 
+    			{    			    				
+    				treninzi.add(entry.getValue());
+    			}
     		}
     	}
 		
 		return treninzi;
 	}
+	
+	public Collection<Trening> getTreneroveOstaleTreninge(String trener) {
+		
+		Collection<Trening> treninzi = new ArrayList<Trening>();
+		
+		for(Map.Entry<String, Trening> entry : sadrzaj.entrySet())
+    	{
+			if(entry.getValue().getTrener().equals(trener))
+    		{
+    			if(!entry.getValue().isDeleted() && !entry.getValue().getTip().equalsIgnoreCase("grupni") && !entry.getValue().getTip().equalsIgnoreCase("personalni")) 
+    			{    			    				
+    				treninzi.add(entry.getValue());
+    			}
+    		}
+    	}
+		
+		return treninzi;
+	}
+
+	public Collection<Trening> getTrenerovePersonalneTreninge(String trener) {
+	
+		Collection<Trening> treninzi = new ArrayList<Trening>();
+	
+		for(Map.Entry<String, Trening> entry : sadrzaj.entrySet())
+		{
+			if(entry.getValue().getTrener().equals(trener))
+    		{
+    			if(!entry.getValue().isDeleted() && entry.getValue().getTip().equalsIgnoreCase("personalni")) 
+    			{    			    				
+    				treninzi.add(entry.getValue());
+    			}
+    		}
+	}
+	
+	return treninzi;
+}
 
 	public void izmeniTrening(Trening t, String contextPath) {
 		
@@ -812,6 +851,34 @@ public class SportskiObjekatDAO {
 		
 		
 		return it;
+	}
+
+	public void setTreningZaPrikazati(Trening trening, String contextPath) {
+		treningZaPrikazati = trening;		
+	}
+
+	
+	public Trening getTreningZaPrikazati(String contextPath) {
+		return treningZaPrikazati;
+	}
+
+
+	public void otkaziTrening(Trening trening, String contextPath) {
+
+		ArrayList<Trening> treninzi = new ArrayList<Trening>();
+		
+		for(Map.Entry<String, Trening> entry : sadrzaj.entrySet())
+    	{
+			if(entry.getValue().getNaziv().equals(trening.getNaziv())) {
+				entry.getValue().setDeleted(true);
+			}
+			treninzi.add(entry.getValue());
+    	}
+		
+		
+		
+		upisiSadrzajUFajl(treninzi, contextPath);
+		
 	}
 	
 	

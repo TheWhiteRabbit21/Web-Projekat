@@ -2,24 +2,24 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
-	<link rel="stylesheet" type="text/css" href="CSSFiles/styles.css">
-	<script type="text/javascript" src="JavaScriptFiles/jquery-3.3.1.min.js"></script>
-	<script type="text/javascript" src="JavaScriptFiles/pocetnaTrener.js"></script>
-	<title>Trener main page</title>
+<link rel="stylesheet" type="text/css" href="CSSFiles/styles.css">
+<script type="text/javascript" src="JavaScriptFiles/jquery-3.3.1.min.js"></script>
+<title>Trener main page</title>
 </head>
 <body>
 
-	<h1>Pocetna strana trenera:</h1><br/>
-	
+	<h1>Pocetna strana trenera:</h1>
+	<br />
+
 	<a href="profilKorisnika.html">Profil korisnika</a>
 
 
 	<!-- ------------------------------------------------------------------------------------ -->
 
-	<div style="margin-top:30px">
-	
-		<table border="1" id="tabelaSadrzaja">
-		<caption> Trenenzi: </caption>
+	<div style="margin-top: 30px">
+
+		<table border="1" id="tabelaPersonalnihTreninga">
+			<caption>Personalni trenenzi:</caption>
 			<thead>
 				<tr bgcolor="lightgrey">
 					<th>Naziv</th>
@@ -28,31 +28,81 @@
 					<th>Trajanje</th>
 					<th>Opis</th>
 					<th>Slika</th>
-					<th>Otkazi trening</th>
 				</tr>
 			</thead>
 			<tbody>
 			
+				<tr v-for="tr in personalniTreninzi" v-on:click="selectTrening(tr)" 
+				v-bind:class="{selected:selectedTrening.naziv===tr.naziv}"> 
+					<td>{{tr.naziv}}</td>
+					<td>{{tr.tip}}</td>
+					<td>{{tr.sportskiObjekat}}</td>
+					<td>{{tr.trajanje}}</td>
+					<td>{{tr.opis}}</td>
+					<td>{{tr.slika}}</td>
 			</tbody>
-			
+
 		</table>
 	</div>
 
 
 	<!-- ------------------------------------------------------------------------------------ -->
 
+	<div style="margin-top: 30px">
 
+		<table border="1" id="tabelaGrupnihTreninga">
+			<caption>Grupni trenenzi:</caption>
+			<thead>
+				<tr bgcolor="lightgrey">
+					<th>Naziv</th>
+					<th>Tip</th>
+					<th>Sportski Objekat</th>
+					<th>Trajanje</th>
+					<th>Opis</th>
+					<th>Slika</th>
+				</tr>
+			</thead>
+			<tbody>
 
+			</tbody>
 
-
+		</table>
+	</div>
 
 	<!-- ------------------------------------------------------------------------------------ -->
 
+	<div style="margin-top: 30px">
+
+		<table border="1" id="tabelaOstalihTreninga">
+			<caption>Ostali trenenzi:</caption>
+			<thead>
+				<tr bgcolor="lightgrey">
+					<th>Naziv</th>
+					<th>Tip</th>
+					<th>Sportski Objekat</th>
+					<th>Trajanje</th>
+					<th>Opis</th>
+					<th>Slika</th>
+				</tr>
+			</thead>
+			<tbody>
+
+			</tbody>
+
+		</table>
+	</div>
 
 	<!-- ------------------------------------------------------------------------------------ -->
-	
-	<div style="margin-top:30px">
-		<a href="index.html">Pocetna stranica</a>	
+
+	<script type="text/javascript" src="JavaScriptFiles/vue.js"></script>
+	<script type="text/javascript" src="JavaScriptFiles/axios.js"></script>
+	<script type="text/javascript" src="JavaScriptFiles/moment.min.js"></script>
+	<script type="text/javascript" src="JavaScriptFiles/pocetnaTrener.js"></script>
+
+	<!-- ------------------------------------------------------------------------------------ -->
+
+	<div style="margin-top: 30px">
+		<a href="index.html">Pocetna stranica</a>
 	</div>
 
 </body>
