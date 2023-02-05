@@ -33,12 +33,31 @@ $('#sportskiObjektiform').submit((event) => {
 
     let naziv = $('#naziv').val();
     let tipObjekta = $('#tipObjekta').val();
+    let prosecnaOcena = $('#prosecnaOcena').val();
+
 
     let url = 'rest/pretraga/';
     
     
-    if(naziv === "" && tipObjekta === ""){
+    if(naziv === "" && tipObjekta === "" && prosecnaOcena === "0"){
 		url = 'rest/sportskiObjekti';
+		$.get({
+        url: url,
+        contentType: 'application/json',
+        success: function(sportskiObjekti) {
+            $("#tabelaSportskihObjekata tbody").html("");
+            console.log(sportskiObjekti);
+            for (let sportskiObjekat of sportskiObjekti) {
+                addSportskiObjekatTr(sportskiObjekat);
+            }
+            $('#naziv').val('');
+            $('#tipObjekta').val('');
+            //$('#prosecnaOcena').val('');
+        	},
+    	})
+	}
+    else if(naziv === "" && tipObjekta === ""){
+        url = 'rest/sportskiObjektiPoOceni/' + prosecnaOcena;
 		$.get({
         url: url,
         contentType: 'application/json',
@@ -52,9 +71,9 @@ $('#sportskiObjektiform').submit((event) => {
             $('#tipObjekta').val('');
         	},
     	})
-	}
+    }
     else if(naziv === ""){
-    	url += "findTipObjekta/" + tipObjekta;
+    	url += "findTipObjekta/" + tipObjekta + "&" + prosecnaOcena;
     	$.get({
         url: url,
         contentType: 'application/json',
@@ -70,7 +89,7 @@ $('#sportskiObjektiform').submit((event) => {
     	})
 	}
 	else if(tipObjekta === ""){
-		url += "findNaziv/" + naziv;
+		url += "findNaziv/" + naziv + "&" + prosecnaOcena;
 		$.get({
         url: url,
         contentType: 'application/json',
@@ -86,7 +105,7 @@ $('#sportskiObjektiform').submit((event) => {
     	})
 	}
 	else{
-		url += naziv + "," + tipObjekta;
+		url += "findObjekat/" + naziv + "&" + tipObjekta + "&" + prosecnaOcena;
 		$.get({
         url: url,
         contentType: 'application/json',
