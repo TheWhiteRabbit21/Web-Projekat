@@ -48,6 +48,14 @@ public class SportskiObjektiService {
 		return dao.findAll();
 	}
 	
+	@GET
+	@Path("/sportskiObjektiPoOceni/{pretragaOcena}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Collection<SportskiObjekat> getSportskeObjektePoOceni(@PathParam("pretragaOcena") String pretragaOcena) {
+		SportskiObjekatDAO dao = (SportskiObjekatDAO) ctx.getAttribute("sportskiObjekatDAO");
+		return dao.findAllPoOceni(pretragaOcena);
+	}
+	
 	@POST
 	@Path("/dodajSportskiObjekat")
 	@Consumes(MediaType.APPLICATION_JSON)
@@ -198,29 +206,23 @@ public class SportskiObjektiService {
 	}
 	
 	@GET
-	@Path("/pretraga/{pretragaString}")
+	@Path("pretraga/findObjekat/{pretragaNaziv}&{pretragaTip}&{pretragaOcena}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Collection<SportskiObjekat> pretragaSportskihObjekata(@PathParam("pretragaString") String pretragaString){
+	public Collection<SportskiObjekat> pretragaSportskihObjekata(@PathParam("pretragaNaziv") String pretragaNaziv,
+			@PathParam("pretragaTip") String pretragaTip, @PathParam("pretragaOcena") String pretragaOcena){
 
 		SportskiObjekatDAO dao = (SportskiObjekatDAO) ctx.getAttribute("sportskiObjekatDAO");
 
-		if(pretragaString.contains("%20")){
-			pretragaString.replace("%20", " ");
+		if(pretragaNaziv.contains("%20")){
+			pretragaNaziv.replace("%20", " ");
 		}
 		
-		String [] parts = pretragaString.split(",");
-		SportskiObjekat sportskiObjekat = null;
+		if(pretragaTip.contains("%20")){
+			pretragaTip.replace("%20", " ");
+		}
 		
-		try{
-			sportskiObjekat = new SportskiObjekat(parts[0], parts[1]);
-		}
-		catch(Exception e){
-			System.out.println(e);
-		}
-
-		//System.out.println(sportskiObjekat);
 		String contextPath = ctx.getRealPath("");
-		Collection<SportskiObjekat> so = dao.pretraziSportskeObjekte(sportskiObjekat, contextPath);
+		Collection<SportskiObjekat> so = dao.pretraziSportskeObjekte(pretragaNaziv, pretragaTip, pretragaOcena, contextPath);
 
 		return so;
 	}
@@ -366,9 +368,9 @@ public class SportskiObjektiService {
 	}
 
 	@GET
-	@Path("/pretraga/findTipObjekta/{pretragaString}")
+	@Path("/pretraga/findTipObjekta/{pretragaString}&{pretragaOcena}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Collection<SportskiObjekat> pretragaSportskihObjekataPoTipu(@PathParam("pretragaString") String pretragaString){
+	public Collection<SportskiObjekat> pretragaSportskihObjekataPoTipu(@PathParam("pretragaString") String pretragaString, @PathParam("pretragaOcena") String pretragaOcena){
 
 		SportskiObjekatDAO dao = (SportskiObjekatDAO) ctx.getAttribute("sportskiObjekatDAO");
 
@@ -377,26 +379,27 @@ public class SportskiObjektiService {
 		}
 		
 		//String [] parts = pretragaString.split(",");
-		SportskiObjekat sportskiObjekat = null;
+		//SportskiObjekat sportskiObjekat = null;
 		//System.out.println(parts);
-		try{
+		/*try{
 			sportskiObjekat = new SportskiObjekat(pretragaString, -1, -1);
 		}
 		catch(Exception e){
 			System.out.println(e);
-		}
+		}*/
 
 		//System.out.println(sportskiObjekat);
 		String contextPath = ctx.getRealPath("");
-		Collection<SportskiObjekat> so = dao.pretraziSportskeObjektePoTipuObjekta(sportskiObjekat, contextPath);
+		
+		Collection<SportskiObjekat> so = dao.pretraziSportskeObjektePoTipuObjekta(pretragaString, pretragaOcena, contextPath);
 
 		return so;
 	}
 	
 	@GET
-	@Path("/pretraga/findNaziv/{pretragaString}")
+	@Path("/pretraga/findNaziv/{pretragaString}&{pretragaOcena}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Collection<SportskiObjekat> pretragaSportskihObjekataPoNazivu(@PathParam("pretragaString") String pretragaString){
+	public Collection<SportskiObjekat> pretragaSportskihObjekataPoNazivu(@PathParam("pretragaString") String pretragaString, @PathParam("pretragaOcena") String pretragaOcena){
 
 		SportskiObjekatDAO dao = (SportskiObjekatDAO) ctx.getAttribute("sportskiObjekatDAO");
 
@@ -404,18 +407,8 @@ public class SportskiObjektiService {
 			pretragaString.replace("%20", " ");
 		}
 		
-		SportskiObjekat sportskiObjekat = null;
-		
-		try{
-			sportskiObjekat = new SportskiObjekat(pretragaString);
-		}
-		catch(Exception e){
-			System.out.println(e);
-		}
-
-		//System.out.println(sportskiObjekat);
 		String contextPath = ctx.getRealPath("");
-		Collection<SportskiObjekat> so = dao.pretraziSportskeObjektePoNazivu(sportskiObjekat, contextPath);
+		Collection<SportskiObjekat> so = dao.pretraziSportskeObjektePoNazivu(pretragaString, pretragaOcena, contextPath);
 
 		return so;
 	}

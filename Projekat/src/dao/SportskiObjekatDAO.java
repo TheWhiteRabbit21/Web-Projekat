@@ -339,9 +339,55 @@ public class SportskiObjekatDAO {
 		
 	}
 	
-	public Collection<SportskiObjekat> pretraziSportskeObjekte(SportskiObjekat sportskiObjekat, String contextPath){
+	public Collection<SportskiObjekat> pretraziSportskeObjekte(String sportskiObjekatNaziv, String sportskiObjekatTip, String prosecnaOcena, String contextPath){
 
-		HashMap<String, SportskiObjekat> vrati = new HashMap<String, SportskiObjekat>();
+		Collection<SportskiObjekat> ret = new ArrayList<SportskiObjekat>();
+		
+		for(Map.Entry<String, SportskiObjekat> entry : sportskiObjekti.entrySet()) 
+		{
+			if(prosecnaOcena.equalsIgnoreCase("0")) {
+				if(entry.getValue().getNaziv().contains(sportskiObjekatNaziv) && entry.getValue().getTipObjekta().contains(sportskiObjekatTip)){
+					ret.add(entry.getValue());
+				}
+			}
+			else if(prosecnaOcena.equalsIgnoreCase("1-2"))
+			{
+				if(entry.getValue().getNaziv().contains(sportskiObjekatNaziv) && entry.getValue().getTipObjekta().contains(sportskiObjekatTip) && 
+						entry.getValue().getProsecnaOcena() >= 1.0 && entry.getValue().getProsecnaOcena() <= 2.0){
+					ret.add(entry.getValue());
+				}
+			}
+			else if(prosecnaOcena.equalsIgnoreCase("2-3"))
+			{
+				if(entry.getValue().getNaziv().contains(sportskiObjekatNaziv) && entry.getValue().getTipObjekta().contains(sportskiObjekatTip) && 
+						entry.getValue().getProsecnaOcena() >= 2.0 && entry.getValue().getProsecnaOcena() <= 3.0){
+					ret.add(entry.getValue());
+				}
+			}
+			else if(prosecnaOcena.equalsIgnoreCase("3-4"))
+			{
+				if(entry.getValue().getNaziv().contains(sportskiObjekatNaziv) && entry.getValue().getTipObjekta().contains(sportskiObjekatTip) && 
+						entry.getValue().getProsecnaOcena() >= 3.0 && entry.getValue().getProsecnaOcena() <= 4.0){
+					ret.add(entry.getValue());
+				}
+			}
+			else if(prosecnaOcena.equalsIgnoreCase("4-5"))
+			{
+				if(entry.getValue().getNaziv().contains(sportskiObjekatNaziv) && entry.getValue().getTipObjekta().contains(sportskiObjekatTip) && 
+						entry.getValue().getProsecnaOcena() >= 4.0 && entry.getValue().getProsecnaOcena() <= 5.0){
+					ret.add(entry.getValue());
+				}
+			}
+			
+		}
+
+
+		return ret;
+	}
+	
+	public Collection<SportskiObjekat> pretraziSportskeObjektePoTipuObjekta(String sportskiObjekatTip, String prosecnaOcena, String contextPath){
+		
+		/*HashMap<String, SportskiObjekat> vrati = new HashMap<String, SportskiObjekat>();
 		HashMap<String, SportskiObjekat> brisi = new HashMap<String, SportskiObjekat>();
 
 		for(SportskiObjekat so: sportskiObjekti.values()) {
@@ -350,17 +396,10 @@ public class SportskiObjekatDAO {
 
 		for(SportskiObjekat so : vrati.values())
 		{
-			if (!(so.getNaziv().contains(sportskiObjekat.getNaziv())) && (!brisi.containsKey(so.getNaziv())))
-	         {
-				System.out.print("izbrisao je jedan!");
-	             brisi.put(so.getNaziv(),so);
-	         }
-
 			if (!(so.getTipObjekta().contains(sportskiObjekat.getTipObjekta())) && (!brisi.containsKey(so.getNaziv())))
 	         {
 	             brisi.put(so.getNaziv(),so);
 	         }
-
 		}
 
 		for(SportskiObjekat so: brisi.values()) {
@@ -369,40 +408,56 @@ public class SportskiObjekatDAO {
 
 		System.out.println(vrati.values());
 		
-		return vrati.values();
+		return vrati.values();*/
 
-	}
-	
-	public Collection<SportskiObjekat> pretraziSportskeObjektePoTipuObjekta(SportskiObjekat sportskiObjekat, String contextPath){
-
-		HashMap<String, SportskiObjekat> vrati = new HashMap<String, SportskiObjekat>();
-		HashMap<String, SportskiObjekat> brisi = new HashMap<String, SportskiObjekat>();
-
-		for(SportskiObjekat so: sportskiObjekti.values()) {
-			vrati.put(so.getNaziv(), so);
-		}
-
-		for(SportskiObjekat so : vrati.values())
+		Collection<SportskiObjekat> ret = new ArrayList<SportskiObjekat>();
+		
+		for(Map.Entry<String, SportskiObjekat> entry : sportskiObjekti.entrySet()) 
 		{
-			if (!(so.getTipObjekta().contains(sportskiObjekat.getTipObjekta())) && (!brisi.containsKey(so.getNaziv())))
-	         {
-	             brisi.put(so.getNaziv(),so);
-	         }
+			if(prosecnaOcena.equalsIgnoreCase("0")) {
+				if(entry.getValue().getTipObjekta().contains(sportskiObjekatTip)){
+					ret.add(entry.getValue());
+				}
+			}
+			else if(prosecnaOcena.equalsIgnoreCase("1-2"))
+			{
+				if(entry.getValue().getTipObjekta().contains(sportskiObjekatTip) && entry.getValue().getProsecnaOcena() >= 1.0
+						&& entry.getValue().getProsecnaOcena() <= 2.0){
+					ret.add(entry.getValue());
+				}
+			}
+			else if(prosecnaOcena.equalsIgnoreCase("2-3"))
+			{
+				if(entry.getValue().getTipObjekta().contains(sportskiObjekatTip) && entry.getValue().getProsecnaOcena() >= 2.0
+						&& entry.getValue().getProsecnaOcena() <= 3.0){
+					ret.add(entry.getValue());
+				}
+			}
+			else if(prosecnaOcena.equalsIgnoreCase("3-4"))
+			{
+				if(entry.getValue().getTipObjekta().contains(sportskiObjekatTip) && entry.getValue().getProsecnaOcena() >= 3.0
+						&& entry.getValue().getProsecnaOcena() <= 4.0){
+					ret.add(entry.getValue());
+				}
+			}
+			else if(prosecnaOcena.equalsIgnoreCase("4-5"))
+			{
+				if(entry.getValue().getTipObjekta().contains(sportskiObjekatTip) && entry.getValue().getProsecnaOcena() >= 4.0
+						&& entry.getValue().getProsecnaOcena() <= 5.0){
+					ret.add(entry.getValue());
+				}
+			}
+			
 		}
-
-		for(SportskiObjekat so: brisi.values()) {
-			vrati.remove(so.getNaziv());
-		}
-
-		System.out.println(vrati.values());
 		
-		return vrati.values();
-
+		
+		return ret;
+		
 	}
 	
-	public Collection<SportskiObjekat> pretraziSportskeObjektePoNazivu(SportskiObjekat sportskiObjekat, String contextPath){
+	public Collection<SportskiObjekat> pretraziSportskeObjektePoNazivu(String sportskiObjekatNaziv, String prosecnaOcena, String contextPath){
 
-		HashMap<String, SportskiObjekat> vrati = new HashMap<String, SportskiObjekat>();
+		/*HashMap<String, SportskiObjekat> vrati = new HashMap<String, SportskiObjekat>();
 		HashMap<String, SportskiObjekat> brisi = new HashMap<String, SportskiObjekat>();
 
 		for(SportskiObjekat so: sportskiObjekti.values()) {
@@ -425,8 +480,52 @@ public class SportskiObjekatDAO {
 
 		System.out.println(vrati.values());
 		
-		return vrati.values();
+		return vrati.values();*/
 
+		Collection<SportskiObjekat> ret = new ArrayList<SportskiObjekat>();
+		
+		for(Map.Entry<String, SportskiObjekat> entry : sportskiObjekti.entrySet()) 
+		{
+			if(prosecnaOcena.equalsIgnoreCase("0")) {
+				if(entry.getValue().getNaziv().contains(sportskiObjekatNaziv)){
+					ret.add(entry.getValue());
+				}
+			}
+			else if(prosecnaOcena.equalsIgnoreCase("1-2"))
+			{
+				if(entry.getValue().getNaziv().contains(sportskiObjekatNaziv) && entry.getValue().getProsecnaOcena() >= 1.0
+						&& entry.getValue().getProsecnaOcena() <= 2.0){
+					ret.add(entry.getValue());
+				}
+			}
+			else if(prosecnaOcena.equalsIgnoreCase("2-3"))
+			{
+				if(entry.getValue().getNaziv().contains(sportskiObjekatNaziv) && entry.getValue().getProsecnaOcena() >= 2.0
+						&& entry.getValue().getProsecnaOcena() <= 3.0){
+					ret.add(entry.getValue());
+				}
+			}
+			else if(prosecnaOcena.equalsIgnoreCase("3-4"))
+			{
+				if(entry.getValue().getNaziv().contains(sportskiObjekatNaziv) && entry.getValue().getProsecnaOcena() >= 3.0
+						&& entry.getValue().getProsecnaOcena() <= 4.0){
+					ret.add(entry.getValue());
+				}
+			}
+			else if(prosecnaOcena.equalsIgnoreCase("4-5"))
+			{
+				if(entry.getValue().getNaziv().contains(sportskiObjekatNaziv) && entry.getValue().getProsecnaOcena() >= 4.0
+						&& entry.getValue().getProsecnaOcena() <= 5.0){
+					ret.add(entry.getValue());
+				}
+			}
+			
+		}
+		
+		
+		return ret;
+		
+		
 	}
 	
 	public SportskiObjekat prikaziSportskiObjekatMenadzer(String menadzer, String contextPath) {
@@ -857,11 +956,9 @@ public class SportskiObjekatDAO {
 		treningZaPrikazati = trening;		
 	}
 
-	
 	public Trening getTreningZaPrikazati(String contextPath) {
 		return treningZaPrikazati;
 	}
-
 
 	public void otkaziTrening(Trening trening, String contextPath) {
 
@@ -879,6 +976,37 @@ public class SportskiObjekatDAO {
 		
 		upisiSadrzajUFajl(treninzi, contextPath);
 		
+	}
+
+	public Collection<SportskiObjekat> findAllPoOceni(String pretragaOcena) {
+
+		Collection<SportskiObjekat> ret = new ArrayList<SportskiObjekat>();
+		
+		for(Map.Entry<String, SportskiObjekat> entry : sportskiObjekti.entrySet())
+    	{
+			if(pretragaOcena.equalsIgnoreCase("1-2")) {
+				if(entry.getValue().getProsecnaOcena() >= 1.0 && entry.getValue().getProsecnaOcena() <= 2.0) {
+					ret.add(entry.getValue());
+				}
+			}
+			else if(pretragaOcena.equalsIgnoreCase("2-3")) {
+				if(entry.getValue().getProsecnaOcena() >= 2.0 && entry.getValue().getProsecnaOcena() <= 3.0) {
+					ret.add(entry.getValue());
+				}
+			}
+			else if(pretragaOcena.equalsIgnoreCase("3-4")) {
+				if(entry.getValue().getProsecnaOcena() >= 3.0 && entry.getValue().getProsecnaOcena() <= 4.0) {
+					ret.add(entry.getValue());
+				}
+			}
+			else if(pretragaOcena.equalsIgnoreCase("4-5")) {
+				if(entry.getValue().getProsecnaOcena() >= 4.0 && entry.getValue().getProsecnaOcena() <= 5.0) {
+					ret.add(entry.getValue());
+				}
+			}
+    	}
+		
+		return ret;
 	}
 	
 	
