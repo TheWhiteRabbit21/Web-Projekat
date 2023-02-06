@@ -8,6 +8,8 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -31,6 +33,7 @@ public class SportskiObjekatDAO {
 	private SportskiObjekat sportskiObjekatZaPrikazati = new SportskiObjekat();
 	private Trening treningZaPrikazati = new Trening();
 	private Clanarina clanarinaZaPrikazati = new Clanarina();
+	private Collection<String> tipovi = new ArrayList<String>();
 	
 	public SportskiObjekatDAO() {
 		
@@ -1004,6 +1007,127 @@ public class SportskiObjekatDAO {
 					ret.add(entry.getValue());
 				}
 			}
+    	}
+		
+		return ret;
+	}
+
+	
+	Comparator<SportskiObjekat> compareByNaziv = new Comparator<SportskiObjekat>() {
+		@Override
+		public int compare(SportskiObjekat s1, SportskiObjekat s2) {
+			return s1.getNaziv().compareTo(s2.getNaziv());
+		}
+	};
+	
+	Comparator<SportskiObjekat> compareByLokacija = new Comparator<SportskiObjekat>() {
+		@Override
+		public int compare(SportskiObjekat s1, SportskiObjekat s2) {
+			return s1.getMapa().compareTo(s2.getMapa());
+		}
+	};
+	
+	Comparator<SportskiObjekat> compareByProsecnaOcena = new Comparator<SportskiObjekat>() {
+		@Override
+		public int compare(SportskiObjekat s1, SportskiObjekat s2) {
+			return s1.getProsecnaOcena().compareTo(s2.getProsecnaOcena());
+		}
+	};
+	
+	public Collection<SportskiObjekat> sortByName(String direction, String contextPath) {
+
+		ArrayList<SportskiObjekat> ret = new ArrayList<SportskiObjekat>();
+
+		for(Map.Entry<String, SportskiObjekat> entry : sportskiObjekti.entrySet())
+    	{
+			ret.add(entry.getValue());
+    	}
+		
+		if(direction.equals("asc") || direction.equals("0")) {
+			Collections.sort(ret, compareByNaziv);
+		}
+		else if(direction.equals("desc")) {
+			Collections.sort(ret, compareByNaziv);
+			Collections.reverse(ret);
+		}
+		
+		return ret;
+	}
+	
+	public Collection<SportskiObjekat> sortByLocation(String direction, String contextPath) {
+
+		ArrayList<SportskiObjekat> ret = new ArrayList<SportskiObjekat>();
+
+		for(Map.Entry<String, SportskiObjekat> entry : sportskiObjekti.entrySet())
+    	{
+			ret.add(entry.getValue());
+    	}
+		
+		if(direction.equals("asc") || direction.equals("0")) {
+			Collections.sort(ret, compareByLokacija);
+		}
+		else if(direction.equals("desc")) {
+			Collections.sort(ret, compareByLokacija);
+			Collections.reverse(ret);
+		}
+		
+		return ret;
+	}
+	
+	public Collection<SportskiObjekat> sortByAverageRating(String direction, String contextPath) {
+
+		ArrayList<SportskiObjekat> ret = new ArrayList<SportskiObjekat>();
+
+		for(Map.Entry<String, SportskiObjekat> entry : sportskiObjekti.entrySet())
+    	{
+			ret.add(entry.getValue());
+    	}
+		
+		if(direction.equals("asc") || direction.equals("0")) {
+			Collections.sort(ret, compareByProsecnaOcena);
+		}
+		else if(direction.equals("desc")) {
+			Collections.sort(ret, compareByProsecnaOcena);
+			Collections.reverse(ret);
+		}
+		
+		return ret;
+	}
+
+	
+	public Collection<SportskiObjekat> filterByType(String tip, String contextPath) {
+		
+		ArrayList<SportskiObjekat> ret = new ArrayList<SportskiObjekat>();
+
+		for(Map.Entry<String, SportskiObjekat> entry : sportskiObjekti.entrySet())
+    	{
+			if(entry.getValue().getTipObjekta().equalsIgnoreCase(tip)) {
+				ret.add(entry.getValue());
+			}
+    	}
+		
+		return ret;
+	}
+
+	public Collection<String> getFilterTipove(String contextPath) {
+
+		for(Map.Entry<String, SportskiObjekat> entry : sportskiObjekti.entrySet())
+    	{
+			if(!tipovi.contains(entry.getValue().getTipObjekta()))
+			tipovi.add(entry.getValue().getTipObjekta());
+    	}
+		
+		return tipovi;
+	}
+
+	public Collection<SportskiObjekat> getOtvoreneSO(String contextPath) {
+		
+		ArrayList<SportskiObjekat> ret = new ArrayList<SportskiObjekat>();
+		
+		for(Map.Entry<String, SportskiObjekat> entry : sportskiObjekti.entrySet())
+    	{
+			if(entry.getValue().getStatus().equalsIgnoreCase("radi"))
+			ret.add(entry.getValue());
     	}
 		
 		return ret;

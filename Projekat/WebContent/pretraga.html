@@ -9,34 +9,75 @@
 </head>
 <body>
 
-<h1>Pretraga sportskih objekata: </h1>
+	<h1>Pretraga sportskih objekata:</h1>
 
-<div>
+	<div>
+		<div>
+			<form id="sportskiObjektiform">
+				<label>Naziv: </label> <input type="text" id="naziv"
+					placeholder="Naziv" /> <label>Tip Objekta</label> <input
+					type="text" id="tipObjekta" placeholder="Tip Objekta" /> <label>Prosecna
+					ocena</label> <select id="prosecnaOcena">
+					<option value="0"></option>
+					<option value="1-2">1-2</option>
+					<option value="2-3">2-3</option>
+					<option value="3-4">3-4</option>
+					<option value="4-5">4-5</option>
+				</select>
+				<button type="submit">Pretrazi</button>
+			</form>
+		</div>
+		<div>
+			<form id="sortByName">
+				<label>Sortiranje po imenu: </label> <select id="sortName">
+					<option value="0"></option>
+					<option value="asc">Rastuce</option>
+					<option value="desc">Opadajuce</option>
+				</select>
+				<button type="submit">Sortiraj po imenu</button>
+			</form>
+		</div>
+		<div>
+			<form id="sortByLocation">
+				<label>Sortiranje po lokaciji: </label> <select id="sortLocation">
+					<option value="0"></option>
+					<option value="asc">Rastuce</option>
+					<option value="desc">Opadajuce</option>
+				</select>
+				<button type="submit">Sortiraj po lokaciji</button>
+			</form>
+		</div>
+		<div>
+			<form id="sortByRating">
+				<label>Sortiranje po prosecnim ocenama: </label> <select
+					id="sortRating">
+					<option value="0"></option>
+					<option value="asc">Rastuce</option>
+					<option value="desc">Opadajuce</option>
+				</select>
+				<button type="submit">Sortiraj po prosecnim ocenama</button>
+			</form>
+		</div>
+		<div>
+			<form id="filterByTip">
+				<label>Filtriranje po tipu objekta: </label> <select id="filterTip">
 
-	<form id="sportskiObjektiform">
-      <label>Naziv</label>
-      <input type="text" id="naziv" placeholder="Naziv" />
-      <label>Tip Objekta</label>
-      <input type="text" id="tipObjekta" placeholder="Tip Objekta" />
-            
-      <select id="prosecnaOcena">
-  			<option value="0"></option>
-  			<option value="1-2">1-2</option>
-  			<option value="2-3">2-3</option>
-  			<option value="3-4">3-4</option>
-  			<option value="4-5">4-5</option>
-  		</select>
-            
-      <button type="submit">Pretrazi</button>
-       
-    </form>
+				</select>
+				<button type="submit">Filtriraj po tipu</button>
+			</form>
+		</div>
+		<div>
+			<form id="filterByOtvorenost">
+				<label>Filtriraj otvorene objekte: </label>
+				<button type="submit">Filtriraj</button>
+			</form>
+		</div>
+	</div>
 
-</div>
+	<div style="margin-top: 30px">
 
-<div style="margin-top:30px">
-	
 		<table border="1" id="tabelaSportskihObjekata">
-		<caption> Raspolozivi sportski objekti: </caption>
+			<caption>Raspolozivi sportski objekti:</caption>
 			<thead>
 				<tr bgcolor="lightgrey">
 					<th>Naziv</th>
@@ -50,16 +91,16 @@
 				</tr>
 			</thead>
 			<tbody>
-			
+
 			</tbody>
-			
+
 		</table>
 	</div>
 
-<!-- ------------------------------------------------------------------------------------ -->
-	
-	<div style="margin-top:30px">
-		<a href="index.html">Pocetna stranica</a>	
+	<!-- ------------------------------------------------------------------------------------ -->
+
+	<div style="margin-top: 30px">
+		<a href="index.html">Pocetna stranica</a>
 	</div>
 
 </body>

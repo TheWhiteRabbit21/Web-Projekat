@@ -516,6 +516,61 @@ public class SportskiObjektiService {
 		return temp;
 	}
 	
+	@GET
+	@Path("sort/sportskiObjekat/naziv/{direction}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Collection<SportskiObjekat> sortSportskeObjekteName(@PathParam("direction") String direction) {
+		SportskiObjekatDAO dao = (SportskiObjekatDAO) ctx.getAttribute("sportskiObjekatDAO");
+		String contextPath = ctx.getRealPath("");
+		return dao.sortByName(direction, contextPath);
+	}
+	
+	@GET
+	@Path("sort/sportskiObjekat/lokacija/{direction}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Collection<SportskiObjekat> sortSportskeObjekteLocation(@PathParam("direction") String direction) {
+		SportskiObjekatDAO dao = (SportskiObjekatDAO) ctx.getAttribute("sportskiObjekatDAO");
+		String contextPath = ctx.getRealPath("");
+		return dao.sortByLocation(direction, contextPath);
+	}
+	
+	@GET
+	@Path("sort/sportskiObjekat/prosecnaOcena/{direction}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Collection<SportskiObjekat> sortSportskeObjekteAverageRating(@PathParam("direction") String direction) {
+		SportskiObjekatDAO dao = (SportskiObjekatDAO) ctx.getAttribute("sportskiObjekatDAO");
+		String contextPath = ctx.getRealPath("");
+		return dao.sortByAverageRating(direction, contextPath);
+	}
+	
+	@GET
+	@Path("filter/sportskiObjekat/tip/{tip}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Collection<SportskiObjekat> filterSportskeObjekteTip(@PathParam("tip") String tip) {
+		SportskiObjekatDAO dao = (SportskiObjekatDAO) ctx.getAttribute("sportskiObjekatDAO");
+		String contextPath = ctx.getRealPath("");
+		return dao.filterByType(tip, contextPath);
+	}
+	
+	@GET
+	@Path("filterTipovi")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Collection<String> getFilterTipove() {
+		SportskiObjekatDAO dao = (SportskiObjekatDAO) ctx.getAttribute("sportskiObjekatDAO");
+		String contextPath = ctx.getRealPath("");
+		return dao.getFilterTipove(contextPath);
+	}
+	
+	@GET
+	@Path("filter/sportskiObjekat/otvoreni")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Collection<SportskiObjekat> getOtvoreniSportskiObjekti() {
+		SportskiObjekatDAO dao = (SportskiObjekatDAO) ctx.getAttribute("sportskiObjekatDAO");
+		String contextPath = ctx.getRealPath("");
+		return dao.getOtvoreneSO(contextPath);
+	}
+	
+	
 	
 	
 	
