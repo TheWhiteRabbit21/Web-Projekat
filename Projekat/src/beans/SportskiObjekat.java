@@ -12,7 +12,7 @@ public class SportskiObjekat implements Serializable{
 	private String status;	//radi/ne radi
 	private String mapa;	
 	private String logo;	
-	private double prosecnaOcena;
+	private Double prosecnaOcena;
 	private String radnoVreme;
 	private String menadzer;
 	
@@ -21,7 +21,7 @@ public class SportskiObjekat implements Serializable{
 	}
 	
 	public SportskiObjekat(String naziv, String tipObjekta, Collection<String> sadrzaj, 
-			String status, String mapa,	String logo, double prosecnaOcena, String radnoVreme, String menadzer) {
+			String status, String mapa,	String logo, Double prosecnaOcena, String radnoVreme, String menadzer) {
 		this.naziv = naziv;
 		this.tipObjekta = tipObjekta;
 		this.sadrzaj = sadrzaj;
@@ -45,10 +45,10 @@ public class SportskiObjekat implements Serializable{
 	}
 
 
-	public SportskiObjekat(String tipObjekta, int i, int j) {
-		super();
-		this.tipObjekta = tipObjekta;
-	}
+//	public SportskiObjekat(String tipObjekta, int i, int j) {
+//		super();
+//		this.tipObjekta = tipObjekta;
+//	}
 
 	public String getNaziv() {
 		return naziv;
@@ -74,10 +74,10 @@ public class SportskiObjekat implements Serializable{
 	public void setStatus(String status) {
 		this.status = status;
 	}
-	public double getProsecnaOcena() {
+	public Double getProsecnaOcena() {
 		return prosecnaOcena;
 	}
-	public void setProsecnaOcena(double prosecnaOcena) {
+	public void setProsecnaOcena(Double prosecnaOcena) {
 		this.prosecnaOcena = prosecnaOcena;
 	}
 	public String getRadnoVreme() {
