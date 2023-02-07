@@ -12,7 +12,7 @@ function addSportskiObjekatTr(sportskiObjekat) {
 	$('#tabelaSportskogObjekta tbody').append(tr);
 }
 
-function addSadrzajiTr(sadrzaj) {
+function addSadrzajTr(sadrzaj) {
 	let tr = $('<tr></tr>');
 	let tdNaziv = $('<td>' + sadrzaj.naziv + '</td>');
 	let tdTip = $('<td>' + sadrzaj.tip + '</td>');
@@ -43,6 +43,15 @@ function addTreneri(trener, counter){
 	let option = $('<option value="' + counter + '">' + trener.username +'</option>');
 	$('#trener').append(option);
 }
+
+function addTipOption(tip){
+		
+    let option = $('<option value="' + tip + '">' + tip +'</option>');
+    $('#filterTip').append(option);
+
+}
+
+//--------------------------------------------------------------------------------------//
 
 $(document).ready(function() {
 	
@@ -151,19 +160,115 @@ $(document).ready(function() {
 			})
 	});
 	
+	//--------------------------------------------------------------------------------------//
 	
+	$('#treningPretragaCenaForm').submit((event) => {
+
+        event.preventDefault();
 	
+		let cena = $('#cena').val();
 	
+		let url = 'rest/pretraga/treningCena/' + cena;
 	
+		$.get({
+			url: url,
+			contentType: 'application/json',
+			success: function (treninzi) {
+				$("#tabelaSadrzaja tbody").html("");
+				for (let trening of treninzi) {
+					addSadrzajTr(trening);
+				}
+			},
+		});
+	});
 	
+	$('#treningPretragaTrajanjeForm').submit((event) => {
+
+        event.preventDefault();
 	
+		let trajanje = $('#trajanje').val();
 	
+		let url = 'rest/pretraga/treningTrajanje/' + trajanje;
 	
+		$.get({
+			url: url,
+			contentType: 'application/json',
+			success: function (treninzi) {
+				$("#tabelaSadrzaja tbody").html("");
+				for (let trening of treninzi) {
+					addSadrzajTr(trening);
+				}
+			},
+		});
+	});
 	
+	$('#sortByPrice').submit((event) => {
+
+        event.preventDefault();
+        let direction = $('#sortPrice').val();
+        let url = 'rest/sort/trening/cena/' + direction;
+
+        $.get({
+            url: url,
+            contentType: 'application/json',
+            success: function (treninzi) {
+                $("#tabelaSadrzaja tbody").html("");
+                for (let trening of treninzi) {
+                    addSadrzajTr(trening);
+				}
+            },
+        })
+    });
+
+	$('#sortByDuration').submit((event) => {
+
+        event.preventDefault();
+        let direction = $('#sortDuration').val();
+        let url = 'rest/sort/trening/trajanje/' + direction;
+
+        $.get({
+            url: url,
+            contentType: 'application/json',
+            success: function (treninzi) {
+                $("#tabelaSadrzaja tbody").html("");
+                for (let trening of treninzi) {
+                    addSadrzajTr(trening);
+				}
+            },
+        })
+    });
+
+	$.get({
+		url: 'rest/filterTipoviTreninga',
+		success: function(tipovi){
+			//ovde dodati prvi red za value=0
+			$('#filterTip').append('<option value="0"></option>');
+			for(let tip of tipovi){
+					addTipOption(tip);
+			}
+		}
+	})
+
+	$('#filterByTip').submit((event) => {
+
+        event.preventDefault();
+        let tip = $('#filterTip').val();
+        let url = 'rest/filter/trening/tip/' + tip;
+
+        $.get({
+            url: url,
+            contentType: 'application/json',
+            success: function (treninzi) {
+                $("#tabelaSadrzaja tbody").html("");
+                for (let trening of treninzi) {
+                    addSadrzajTr(trening);
+                }
+            },
+        })
+    });
 	
-	
-	
-	
-	
-	
+
+
+	//--------------------------------------------------------------------------------------//
+
 });
