@@ -13,9 +13,6 @@ function addSportskiObjekatTr(sportskiObjekat) {
 	//tr.click(clickClosure(sportskiObjekat));
 }
 
-
-
-
 $(document).ready(function() {
 	
 	$.get({
@@ -57,8 +54,6 @@ $(document).ready(function() {
 					}
 				}
 			});
-
-
 		}
 	});
 	

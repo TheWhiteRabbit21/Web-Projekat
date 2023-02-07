@@ -60,10 +60,81 @@
 	
 	<!-- ------------------------------------------------------------------------------------ -->
 	
-	<div>
+	<h1>Pretraga Korisnika:</h1>
 	
-	<table border="1" id="tabelaKorisnika">
-		<caption> Registrovani korisnici na sistemu: </caption>
+	<div>
+		<div>
+			<form id="korisnikPretragaImeForm">
+				<label>Ime: </label> 
+				<input type="text" id="pretragaIme" placeholder="Ime" /> 
+				<button type="submit">Pretrazi</button>
+			</form>
+		</div>
+		<div>
+			<form id="korisnikPretragaPrezimeForm">
+				<label>Prezime: </label> 
+				<input type="text" id="pretragaPrezime" placeholder="Prezime" /> 
+				<button type="submit">Pretrazi</button>
+			</form>
+		</div>
+		<div>
+			<form id="korisnikPretragaUsernameForm">
+				<label>Username: </label> 
+				<input type="text" id="pretragaUsername" placeholder="Username" /> 
+				<button type="submit">Pretrazi</button>
+			</form>
+		</div>
+		<div>
+			<form id="sortByName">
+				<label>Sortiranje po imenu: </label> 
+				<select id="sortName">
+					<option value="0"></option>
+					<option value="asc">Rastuce</option>
+					<option value="desc">Opadajuce</option>
+				</select>
+				<button type="submit">Sortiraj po imenu</button>
+			</form>
+		</div>
+		<div>
+			<form id="sortBySurname">
+				<label>Sortiranje po prezimenu: </label> 
+				<select id="sortSurname">
+					<option value="0"></option>
+					<option value="asc">Rastuce</option>
+					<option value="desc">Opadajuce</option>
+				</select>
+				<button type="submit">Sortiraj po prezimenu</button>
+			</form>
+		</div>
+		<div>
+			<form id="sortByUsername">
+				<label>Sortiranje po korsnickom imenu: </label> 
+				<select id="sortUsername">
+					<option value="0"></option>
+					<option value="asc">Rastuce</option>
+					<option value="desc">Opadajuce</option>
+				</select>
+				<button type="submit">Sortiraj po korisnickom imenu</button>
+			</form>
+		</div>
+		<div>
+			<form id="filterByUloga">
+				<label>Filtriranje po ulozi korisnika: </label> 
+				<select id="filterUloga">
+
+				</select>
+				<button type="submit">Filtriraj po ulozi</button>
+			</form>
+		</div>
+	</div>
+	
+	
+	
+	<!-- ------------------------------------------------------------------------------------ -->
+	
+	<div>
+		<table border="1" id="tabelaKorisnika">
+			<caption> Registrovani korisnici na sistemu: </caption>
 			<thead>
 				<tr bgcolor="lightgrey">
 					<th>Username</th>
@@ -79,8 +150,6 @@
 			</tbody>
 			
 		</table>
-	
-	
 	</div>
 	
 	<!-- ------------------------------------------------------------------------------------ -->

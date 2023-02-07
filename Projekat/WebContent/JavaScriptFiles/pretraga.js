@@ -20,6 +20,8 @@ function addTipOption(tip){
 
 }
 
+//--------------------------------------------------------------------------------------//
+
 $(document).ready(function () {
     /*$.get({
         //url: 'rest/products',
@@ -32,10 +34,10 @@ $(document).ready(function () {
     });*/
 
     $.get({
-		url: 'rest/filterTipovi',
+		url: 'rest/filterTipoviSO',
 		success: function(tipovi){
 			//ovde dodati prvi red za value=0
-			$('#menadzer').append('<option value="0"></option>');
+			$('#filterTip').append('<option value="0"></option>');
 			for(let tip of tipovi){
 					addTipOption(tip);
 			}

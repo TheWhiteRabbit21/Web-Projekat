@@ -495,8 +495,6 @@ public class SportskiObjektiService {
 		String contextPath = ctx.getRealPath("");
 		
 		dao.izmeniTrening(trening, contextPath);
-		
-		
 	}
 
 	@GET
@@ -549,16 +547,16 @@ public class SportskiObjektiService {
 	public Collection<SportskiObjekat> filterSportskeObjekteTip(@PathParam("tip") String tip) {
 		SportskiObjekatDAO dao = (SportskiObjekatDAO) ctx.getAttribute("sportskiObjekatDAO");
 		String contextPath = ctx.getRealPath("");
-		return dao.filterByType(tip, contextPath);
+		return dao.filterByTypeSO(tip, contextPath);
 	}
 	
 	@GET
-	@Path("filterTipovi")
+	@Path("filterTipoviSO")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Collection<String> getFilterTipove() {
+	public Collection<String> getFilterTipoveSO() {
 		SportskiObjekatDAO dao = (SportskiObjekatDAO) ctx.getAttribute("sportskiObjekatDAO");
 		String contextPath = ctx.getRealPath("");
-		return dao.getFilterTipove(contextPath);
+		return dao.getFilterTipoveSO(contextPath);
 	}
 	
 	@GET
@@ -569,6 +567,73 @@ public class SportskiObjektiService {
 		String contextPath = ctx.getRealPath("");
 		return dao.getOtvoreneSO(contextPath);
 	}
+	
+	@GET
+	@Path("/pretraga/treningCena/{pretragaCena}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Collection<Trening> pretragaTreningaPoCeni(@PathParam("pretragaCena") String pretragaCena){
+
+		SportskiObjekatDAO dao = (SportskiObjekatDAO) ctx.getAttribute("sportskiObjekatDAO");
+		
+		String contextPath = ctx.getRealPath("");
+		Collection<Trening> tr = dao.pretraziTreningePoCeni(pretragaCena, contextPath);
+
+		return tr;
+	}
+	
+	@GET
+	@Path("/pretraga/treningTrajanje/{pretragaTrajanje}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Collection<Trening> pretragaTreningaPoTrajanju(@PathParam("pretragaTrajanje") String pretragaTrajanje){
+
+		SportskiObjekatDAO dao = (SportskiObjekatDAO) ctx.getAttribute("sportskiObjekatDAO");
+		
+		String contextPath = ctx.getRealPath("");
+		Collection<Trening> tr = dao.pretraziTreningePoTrajanju(pretragaTrajanje, contextPath);
+
+		return tr;
+	}
+	
+	@GET
+	@Path("sort/trening/cena/{direction}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Collection<Trening> sortTreningeByPrice(@PathParam("direction") String direction) {
+		SportskiObjekatDAO dao = (SportskiObjekatDAO) ctx.getAttribute("sportskiObjekatDAO");
+		String contextPath = ctx.getRealPath("");
+		return dao.sortTreningeByPrice(direction, contextPath);
+	}
+	
+	@GET
+	@Path("sort/trening/trajanje/{direction}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Collection<Trening> sortTreningeByDuration(@PathParam("direction") String direction) {
+		SportskiObjekatDAO dao = (SportskiObjekatDAO) ctx.getAttribute("sportskiObjekatDAO");
+		String contextPath = ctx.getRealPath("");
+		return dao.sortTreningeByDuration(direction, contextPath);
+	}
+	
+	
+	@GET
+	@Path("filter/trening/tip/{tip}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Collection<Trening> filterTreningeByTip(@PathParam("tip") String tip) {
+		SportskiObjekatDAO dao = (SportskiObjekatDAO) ctx.getAttribute("sportskiObjekatDAO");
+		String contextPath = ctx.getRealPath("");
+		return dao.filterByTypeTreninga(tip, contextPath);
+	}
+	
+	@GET
+	@Path("filterTipoviTreninga")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Collection<String> getFilterTipoveTreninga() {
+		SportskiObjekatDAO dao = (SportskiObjekatDAO) ctx.getAttribute("sportskiObjekatDAO");
+		String contextPath = ctx.getRealPath("");
+		return dao.getFilterTipoveTreninga(contextPath);
+	}
+	
+	
+	
+	
 	
 	
 	

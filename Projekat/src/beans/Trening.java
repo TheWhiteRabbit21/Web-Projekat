@@ -8,11 +8,11 @@ public class Trening implements Serializable {
 	private String naziv;
 	private String tip;
 	private String sportskiObjekat;
-	private double trajanje;
+	private Double trajanje;
 	private String trener;
 	private String opis;
 	private String slika;
-	private int cena;
+	private Integer cena;
 	private boolean isDeleted;
 	
 	
@@ -20,10 +20,10 @@ public class Trening implements Serializable {
 		super();
 	}
 	
-	public int getCena() {
+	public Integer getCena() {
 		return cena;
 	}
-	public void setCena(int cena) {
+	public void setCena(Integer cena) {
 		this.cena = cena;
 	}
 	public String getNaziv() {
@@ -44,10 +44,10 @@ public class Trening implements Serializable {
 	public void setSportskiObjekat(String sportskiObjekat) {
 		this.sportskiObjekat = sportskiObjekat;
 	}
-	public double getTrajanje() {
+	public Double getTrajanje() {
 		return trajanje;
 	}
-	public void setTrajanje(double trajanje) {
+	public void setTrajanje(Double trajanje) {
 		this.trajanje = trajanje;
 	}
 	public String getTrener() {

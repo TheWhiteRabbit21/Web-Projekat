@@ -33,7 +33,9 @@ public class SportskiObjekatDAO {
 	private SportskiObjekat sportskiObjekatZaPrikazati = new SportskiObjekat();
 	private Trening treningZaPrikazati = new Trening();
 	private Clanarina clanarinaZaPrikazati = new Clanarina();
-	private Collection<String> tipovi = new ArrayList<String>();
+	
+	private Collection<String> tipoviSO = new ArrayList<String>();
+	private Collection<String> tipoviTreninga = new ArrayList<String>();
 	
 	public SportskiObjekatDAO() {
 		
@@ -1034,6 +1036,20 @@ public class SportskiObjekatDAO {
 		}
 	};
 	
+	Comparator<Trening> compareByCena = new Comparator<Trening>() {
+		@Override
+		public int compare(Trening t1, Trening t2) {
+			return t1.getCena().compareTo(t2.getCena());
+		}
+	};
+	
+	Comparator<Trening> compareByTrajanje = new Comparator<Trening>() {
+		@Override
+		public int compare(Trening t1, Trening t2) {
+			return t1.getTrajanje().compareTo(t2.getTrajanje());
+		}
+	};
+	
 	public Collection<SportskiObjekat> sortByName(String direction, String contextPath) {
 
 		ArrayList<SportskiObjekat> ret = new ArrayList<SportskiObjekat>();
@@ -1095,13 +1111,16 @@ public class SportskiObjekatDAO {
 	}
 
 	
-	public Collection<SportskiObjekat> filterByType(String tip, String contextPath) {
+	public Collection<SportskiObjekat> filterByTypeSO(String tip, String contextPath) {
 		
 		ArrayList<SportskiObjekat> ret = new ArrayList<SportskiObjekat>();
 
 		for(Map.Entry<String, SportskiObjekat> entry : sportskiObjekti.entrySet())
     	{
-			if(entry.getValue().getTipObjekta().equalsIgnoreCase(tip)) {
+			if(tip.equals("0")) {
+				ret.add(entry.getValue());
+			}
+			else if(entry.getValue().getTipObjekta().equalsIgnoreCase(tip)) {
 				ret.add(entry.getValue());
 			}
     	}
@@ -1109,15 +1128,15 @@ public class SportskiObjekatDAO {
 		return ret;
 	}
 
-	public Collection<String> getFilterTipove(String contextPath) {
+	public Collection<String> getFilterTipoveSO(String contextPath) {
 
 		for(Map.Entry<String, SportskiObjekat> entry : sportskiObjekti.entrySet())
     	{
-			if(!tipovi.contains(entry.getValue().getTipObjekta()))
-			tipovi.add(entry.getValue().getTipObjekta());
+			if(!tipoviSO.contains(entry.getValue().getTipObjekta()))
+			tipoviSO.add(entry.getValue().getTipObjekta());
     	}
 		
-		return tipovi;
+		return tipoviSO;
 	}
 
 	public Collection<SportskiObjekat> getOtvoreneSO(String contextPath) {
@@ -1132,6 +1151,158 @@ public class SportskiObjekatDAO {
 		
 		return ret;
 	}
+
+	public Collection<Trening> pretraziTreningePoCeni(String pretragaCena, String contextPath) {
+
+		ArrayList<Trening> ret = new ArrayList<Trening>();
+		
+		for(Map.Entry<String, Trening> entry : sadrzaj.entrySet()) 
+		{
+			if(pretragaCena.equals("-1")) {
+				ret.add(entry.getValue());
+			}
+			else if(pretragaCena.equals("0")) {
+				if(entry.getValue().getCena() == 0) {
+					ret.add(entry.getValue());
+				}
+			}
+			else if(pretragaCena.equals("0-500")) {
+				if(entry.getValue().getCena() >= 0 && entry.getValue().getCena() <= 500) {
+					ret.add(entry.getValue());
+				}
+			}
+			else if(pretragaCena.equals("500-1000")) {
+				if(entry.getValue().getCena() >= 500 && entry.getValue().getCena() <= 1000) {
+					ret.add(entry.getValue());
+				}
+			}
+			else if(pretragaCena.equals("1000-1500")) {
+				if(entry.getValue().getCena() >= 1000 && entry.getValue().getCena() <= 1500) {
+					ret.add(entry.getValue());
+				}
+			}
+			else if(pretragaCena.equals("1500+")) {
+				if(entry.getValue().getCena() >= 1500) {
+					ret.add(entry.getValue());
+				}
+			}
+			
+		}
+		
+		return ret;
+	}
+	
+	public Collection<Trening> pretraziTreningePoTrajanju(String pretragaTrajanje, String contextPath) {
+
+		ArrayList<Trening> ret = new ArrayList<Trening>();
+		
+		for(Map.Entry<String, Trening> entry : sadrzaj.entrySet()) 
+		{
+			if(pretragaTrajanje.equals("-1")) {
+				ret.add(entry.getValue());
+			}
+			else if(pretragaTrajanje.equals("10-30")) {
+				if(entry.getValue().getTrajanje() >= 10.0 && entry.getValue().getTrajanje() <= 30.0) {
+					ret.add(entry.getValue());
+				}
+			}
+			else if(pretragaTrajanje.equals("30-60")) {
+				if(entry.getValue().getTrajanje() >= 30.0 && entry.getValue().getTrajanje() <= 60.0) {
+					ret.add(entry.getValue());
+				}
+			}
+			else if(pretragaTrajanje.equals("60+")) {
+				if(entry.getValue().getTrajanje() >= 60.0) {
+					ret.add(entry.getValue());
+				}
+			}
+			
+		}
+		
+		return ret;
+	}
+
+	
+	public Collection<Trening> sortTreningeByPrice(String direction, String contextPath) {
+
+		ArrayList<Trening> ret = new ArrayList<Trening>();
+
+		for(Map.Entry<String, Trening> entry : sadrzaj.entrySet())
+    	{
+			ret.add(entry.getValue());
+    	}
+		
+		if(direction.equals("asc") || direction.equals("0")) {
+			Collections.sort(ret, compareByCena);
+		}
+		else if(direction.equals("desc")) {
+			Collections.sort(ret, compareByCena);
+			Collections.reverse(ret);
+		}
+		
+		return ret;
+	}
+	
+	public Collection<Trening> sortTreningeByDuration(String direction, String contextPath) {
+
+		ArrayList<Trening> ret = new ArrayList<Trening>();
+
+		for(Map.Entry<String, Trening> entry : sadrzaj.entrySet())
+    	{
+			ret.add(entry.getValue());
+    	}
+		
+		if(direction.equals("asc") || direction.equals("0")) {
+			Collections.sort(ret, compareByTrajanje);
+		}
+		else if(direction.equals("desc")) {
+			Collections.sort(ret, compareByTrajanje);
+			Collections.reverse(ret);
+		}
+		
+		return ret;
+	}
+
+	public Collection<Trening> filterByTypeTreninga(String tip, String contextPath) {
+
+		ArrayList<Trening> ret = new ArrayList<Trening>();
+
+		for(Map.Entry<String, Trening> entry : sadrzaj.entrySet())
+    	{
+			if(tip.equals("0")) {
+				ret.add(entry.getValue());
+			}
+			else if(entry.getValue().getTip().equalsIgnoreCase(tip)) {
+				ret.add(entry.getValue());
+			}
+    	}
+		
+		return ret;
+	}
+
+	public Collection<String> getFilterTipoveTreninga(String contextPath) {
+
+		for(Map.Entry<String, Trening> entry : sadrzaj.entrySet())
+    	{
+			if(!tipoviTreninga.contains(entry.getValue().getTip()))
+			tipoviTreninga.add(entry.getValue().getTip());
+    	}
+		
+		return tipoviTreninga;
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 	

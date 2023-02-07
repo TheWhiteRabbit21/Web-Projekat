@@ -37,6 +37,73 @@
 		</table>
 	</div>
 	
+	
+	<!-- ------------------------------------------------------------------------------------ -->
+	
+	<h1>Pretraga treninga:</h1>
+	
+	<div>
+		<div>
+			<form id="treningPretragaCenaForm">
+				<label>Cena: </label> 
+				<select id="cena">
+					<option value="-1"></option>
+					<option value="0">Bez doplate</option>
+					<option value="0-500">0-500din</option>
+					<option value="500-1000">500-1000din</option>
+					<option value="1000-1500">1000-1500din</option>
+					<option value="1500+">1500+ din</option>
+				</select>
+				<button type="submit">Pretrazi</button>
+			</form>
+		</div>
+		<div>
+			<form id="treningPretragaTrajanjeForm">
+				<label>Trajanje: </label> 
+				<select id="trajanje">
+					<option value="-1"></option>
+					<option value="10-30">10-30min</option>
+					<option value="30-60">30-60min</option>
+					<option value="60+">60+ min</option>
+				</select>
+				<button type="submit">Pretrazi</button>
+			</form>
+		</div>
+		<div>
+			<form id="sortByPrice">
+				<label>Sortiranje po ceni: </label> 
+				<select id="sortPrice">
+					<option value="0"></option>
+					<option value="asc">Rastuce</option>
+					<option value="desc">Opadajuce</option>
+				</select>
+				<button type="submit">Sortiraj po ceni</button>
+			</form>
+		</div>
+		<div>
+			<form id="sortByDuration">
+				<label>Sortiranje po trajanju: </label> 
+				<select id="sortDuration">
+					<option value="0"></option>
+					<option value="asc">Rastuce</option>
+					<option value="desc">Opadajuce</option>
+				</select>
+				<button type="submit">Sortiraj po trajanju</button>
+			</form>
+		</div>
+		<div>
+			<form id="filterByTip">
+				<label>Filtriranje po tipu treninga: </label> 
+				<select id="filterTip">
+
+				</select>
+				<button type="submit">Filtriraj po tipu</button>
+			</form>
+		</div>
+		
+		
+	</div>
+	
 	<!-- ------------------------------------------------------------------------------------ -->
 	
 	<div style="margin-top:30px">
@@ -47,11 +114,11 @@
 				<tr bgcolor="lightgrey">
 					<th>Naziv</th>
 					<th>Tip</th>
-					<th>Trajanje</th>
+					<th>Trajanje(min)</th>
 					<th>Trener</th>
 					<th>Opis</th>
 					<th>Slika</th>	
-					<th>Cena</th>
+					<th>Cena(din)</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -87,11 +154,11 @@
 			<td><label id="sportskiObjekatNaziv"></label></tr>
 		<tr><td>Slika:* </td>
 			<td><input class="obaveznoPolje" type="text" id="slika"></td></tr>
-		<tr><td>Trajanje: </td>
+		<tr><td>Trajanje(min): </td>
 			<td><input type="text" id="trajanje"></td></tr>
 		<tr><td>Opis: </td>
 			<td><input type="text" id="opis"></td></tr>
-		<tr><td>Cena: </td>
+		<tr><td>Cena(din): </td>
 			<td><input type="text" id="cena"></td></tr>
 		<tr><td>Trener koji drzi trening: </td>
 			<td><select id="trener">
