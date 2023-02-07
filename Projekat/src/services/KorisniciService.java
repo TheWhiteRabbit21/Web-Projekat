@@ -80,9 +80,6 @@ public class KorisniciService {
 		return dao.findAllClanarineTxt(contextPath);
 	}
 	
-	
-	
-	
 	@GET
 	@Path("/prikaziKupceKojiSuPosetiliSO/{sportskiObjekat}")
 	@Produces(MediaType.APPLICATION_JSON)
@@ -106,29 +103,92 @@ public class KorisniciService {
 		return kupci;
 	}
 	
+	@GET
+	@Path("/pretraga/korisnikIme/{pretragaIme}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Collection<Korisnik> pretragaKorisnikaPoImenu(@PathParam("pretragaIme") String pretragaIme){
+
+		KorisnikDAO dao = (KorisnikDAO) ctx.getAttribute("korisnikDAO");
+		String contextPath = ctx.getRealPath("");
+		
+		if(pretragaIme.contains("%20")){
+			pretragaIme.replace("%20", " ");
+		}
+		
+		Collection<Korisnik> k = dao.pretraziKorisnikePoImenu(pretragaIme, contextPath);
+
+		return k;
+	}
 	
+	@GET
+	@Path("/pretraga/korisnikPrezime/{pretragaPrezime}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Collection<Korisnik> pretragaKorisnikaPoPrezimenu(@PathParam("pretragaPrezime") String pretragaPrezime){
+
+		KorisnikDAO dao = (KorisnikDAO) ctx.getAttribute("korisnikDAO");
+		String contextPath = ctx.getRealPath("");
+		
+		if(pretragaPrezime.contains("%20")){
+			pretragaPrezime.replace("%20", " ");
+		}
+		
+		Collection<Korisnik> k = dao.pretraziKorisnikePoPrezimenu(pretragaPrezime, contextPath);
+
+		return k;
+	}
 	
+	@GET
+	@Path("/pretraga/korisnikUsername/{pretragaUsername}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Collection<Korisnik> pretragaKorisnikaPoKorisnickomImenu(@PathParam("pretragaUsername") String pretragaUsername){
+
+		KorisnikDAO dao = (KorisnikDAO) ctx.getAttribute("korisnikDAO");
+		String contextPath = ctx.getRealPath("");
+		
+		if(pretragaUsername.contains("%20")){
+			pretragaUsername.replace("%20", " ");
+		}
+		
+		Collection<Korisnik> k = dao.pretraziKorisnikePoKorisnickomImenu(pretragaUsername, contextPath);
+
+		return k;
+	}
 	
+	@GET
+	@Path("sort/korisnik/ime/{direction}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Collection<Korisnik> sortKorisnikName(@PathParam("direction") String direction) {
+		KorisnikDAO dao = (KorisnikDAO) ctx.getAttribute("korisnikDAO");
+		String contextPath = ctx.getRealPath("");
+		return dao.sortByName(direction, contextPath);
+	}
 	
+	@GET
+	@Path("sort/korisnik/prezime/{direction}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Collection<Korisnik> sortKorisnikSurname(@PathParam("direction") String direction) {
+		KorisnikDAO dao = (KorisnikDAO) ctx.getAttribute("korisnikDAO");
+		String contextPath = ctx.getRealPath("");
+		return dao.sortBySurname(direction, contextPath);
+	}
 	
+	@GET
+	@Path("sort/korisnik/korisnickoIme/{direction}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Collection<Korisnik> sortKorisnikUsername(@PathParam("direction") String direction) {
+		KorisnikDAO dao = (KorisnikDAO) ctx.getAttribute("korisnikDAO");
+		String contextPath = ctx.getRealPath("");
+		return dao.sortByUsername(direction, contextPath);
+	}
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+	@GET
+	@Path("filter/korisnik/uloga/{uloga}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Collection<Korisnik> filterTreningeByTip(@PathParam("uloga") String uloga) {
+		KorisnikDAO dao = (KorisnikDAO) ctx.getAttribute("korisnikDAO");
+		String contextPath = ctx.getRealPath("");
+		return dao.filterByUlogaKorisnika(uloga, contextPath);
+	}
 	
 	
 	

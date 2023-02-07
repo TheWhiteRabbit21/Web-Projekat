@@ -8,6 +8,8 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -1400,6 +1402,164 @@ public class KorisnikDAO {
 		
 		return tempKupci;
 	}
+
+	public Collection<Korisnik> pretraziKorisnikePoImenu(String pretragaIme, String contextPath) {
+
+		Collection<Korisnik> ret = new ArrayList<Korisnik>();
+		
+		for(Map.Entry<String, Korisnik> entry : korisnici.entrySet()) 
+		{
+			if(entry.getValue().getIme().contains(pretragaIme)) {
+				ret.add(entry.getValue());
+			}
+		}
+		
+		return ret;
+	}
+
+	public Collection<Korisnik> pretraziKorisnikePoPrezimenu(String pretragaPrezime, String contextPath) {
+		
+		Collection<Korisnik> ret = new ArrayList<Korisnik>();
+		
+		for(Map.Entry<String, Korisnik> entry : korisnici.entrySet()) 
+		{
+			if(entry.getValue().getPrezime().contains(pretragaPrezime)) {
+				ret.add(entry.getValue());
+			}
+		}
+		
+		return ret;
+	}
+
+	public Collection<Korisnik> pretraziKorisnikePoKorisnickomImenu(String pretragaUsername, String contextPath) {
+		
+		Collection<Korisnik> ret = new ArrayList<Korisnik>();
+		
+		for(Map.Entry<String, Korisnik> entry : korisnici.entrySet()) 
+		{
+			if(entry.getValue().getUsername().contains(pretragaUsername)) {
+				ret.add(entry.getValue());
+			}
+		}
+		
+		return ret;
+	}
+
+	Comparator<Korisnik> compareByName = new Comparator<Korisnik>() {
+		@Override
+		public int compare(Korisnik k1, Korisnik k2) {
+			return k1.getIme().compareTo(k2.getIme());
+		}
+	};
+	
+	Comparator<Korisnik> compareBySurname = new Comparator<Korisnik>() {
+		@Override
+		public int compare(Korisnik k1, Korisnik k2) {
+			return k1.getPrezime().compareTo(k2.getPrezime());
+		}
+	};
+	
+	Comparator<Korisnik> compareByUsername = new Comparator<Korisnik>() {
+		@Override
+		public int compare(Korisnik k1, Korisnik k2) {
+			return k1.getUsername().compareTo(k2.getUsername());
+		}
+	};
+	
+	public Collection<Korisnik> sortByName(String direction, String contextPath) {
+
+		ArrayList<Korisnik> ret = new ArrayList<Korisnik>();
+		
+		for(Map.Entry<String, Korisnik> entry : korisnici.entrySet())
+		{
+			ret.add(entry.getValue());
+		}
+		
+		if(direction.equals("asc") || direction.equals("0")) {
+			Collections.sort(ret, compareByName);
+		}
+		else if(direction.equals("desc")) {
+			Collections.sort(ret, compareByName);
+			Collections.reverse(ret);
+		}		
+		
+		return ret;
+	}
+	
+	public Collection<Korisnik> sortBySurname(String direction, String contextPath) {
+
+		ArrayList<Korisnik> ret = new ArrayList<Korisnik>();
+		
+		for(Map.Entry<String, Korisnik> entry : korisnici.entrySet())
+		{
+			ret.add(entry.getValue());
+		}
+		
+		if(direction.equals("asc") || direction.equals("0")) {
+			Collections.sort(ret, compareBySurname);
+		}
+		else if(direction.equals("desc")) {
+			Collections.sort(ret, compareBySurname);
+			Collections.reverse(ret);
+		}		
+		
+		return ret;
+	}
+	
+	public Collection<Korisnik> sortByUsername(String direction, String contextPath) {
+
+		ArrayList<Korisnik> ret = new ArrayList<Korisnik>();
+		
+		for(Map.Entry<String, Korisnik> entry : korisnici.entrySet())
+		{
+			ret.add(entry.getValue());
+		}
+		
+		if(direction.equals("asc") || direction.equals("0")) {
+			Collections.sort(ret, compareByUsername);
+		}
+		else if(direction.equals("desc")) {
+			Collections.sort(ret, compareByUsername);
+			Collections.reverse(ret);
+		}		
+		
+		return ret;
+	}
+	
+	public Collection<Korisnik> filterByUlogaKorisnika(String uloga, String contextPath) {
+		
+		ArrayList<Korisnik> ret = new ArrayList<Korisnik>();
+
+		for(Map.Entry<String, Korisnik> entry : korisnici.entrySet())
+    	{
+			if(uloga.equals("0")) {
+				ret.add(entry.getValue());
+			}
+			else if(entry.getValue().getUloga().toString().equalsIgnoreCase(uloga)) {
+				ret.add(entry.getValue());
+			}
+    	}
+		
+		return ret;
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 }
