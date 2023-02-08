@@ -166,7 +166,7 @@ $(document).ready(function() {
 
         event.preventDefault();
 	
-		let cena = $('#cena').val();
+		let cena = $('#pretragaCena').val();
 	
 		let url = 'rest/pretraga/treningCena/' + cena;
 	
@@ -186,7 +186,7 @@ $(document).ready(function() {
 
         event.preventDefault();
 	
-		let trajanje = $('#trajanje').val();
+		let trajanje = $('#pretragaTrajanje').val();
 	
 		let url = 'rest/pretraga/treningTrajanje/' + trajanje;
 	
