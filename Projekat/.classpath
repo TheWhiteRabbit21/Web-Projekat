@@ -48,6 +48,6 @@
 			<attribute name="owner.project.facets" value="jst.web"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="/Web-Projekat/Projekat/WebContent/WEB-INF/lib/activation-1.1.1.jar"/>
+	<classpathentry kind="lib" path="D:/Nemanja/Fakultet/Web programiranje/2022/Projekat 2022/Projekat-final/Web-Projekat/Projekat/WebContent/WEB-INF/lib/activation-1.1.1.jar"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>
